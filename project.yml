@@ -1,0 +1,177 @@
+name: mobileup-ios-samples
+
+variables:
+  appVersion: &app_version "1.0"
+
+options:
+  groupSortPosition: top
+  generateEmptyDirectories: true
+  createIntermediateGroups: true
+  developmentLanguage: ru
+  groupOrdering:
+    - pattern: Source
+      order: [Application, Configs, Base, Routers, UI, Resources]
+    - pattern: Base
+      order: [SUI, UIKit, Foundation]
+    - pattern: Extensions
+      order: [SUI, UIKit, Foundation]
+    - pattern: Resources
+      order: [Assets, Localizable]
+      
+configs:
+  Debug: debug
+  Dev: dev
+  Prod: prod
+  Release: release
+      
+targets:
+  com.samples.app:
+    type: application
+    platform: iOS
+    deploymentTarget: "16.0"
+    sources:
+      - path: Source
+        excludes:
+          - "**/.gitkeep"
+      - path: Source/Base/SUI
+        excludes:
+          - ".gitkeep"
+      - path: Source/Base/UIKit
+        excludes:
+          - ".gitkeep"
+      - path: Source/Base/Foundation
+        excludes:
+          - ".gitkeep"
+      - path: Source/Routers
+        excludes:
+          - ".gitkeep"
+      - path: Source/Resources/Localizable
+        excludes:
+          - ".gitkeep"
+    settings:
+        base:
+            MARKETING_VERSION: *app_version
+            CURRENT_PROJECT_VERSION: "1"
+            SWIFT_VERSION: "5.0"
+            PRODUCT_NAME: com.samples.app
+            PRODUCT_BUNDLE_IDENTIFIER: com.mobileUp.Example
+        configs:
+            Debug:
+                CODE_SIGN_IDENTITY: iPhone Developer
+                PROVISIONING_PROFILE_SPECIFIER:
+            Dev:
+                CODE_SIGN_IDENTITY: iPhone Distribution
+                PROVISIONING_PROFILE_SPECIFIER:
+            Prod:
+                CODE_SIGN_IDENTITY: iPhone Distribution
+                PROVISIONING_PROFILE_SPECIFIER:
+            Release:
+                CODE_SIGN_IDENTITY: iPhone Distribution
+                PROVISIONING_PROFILE_SPECIFIER:
+    info:
+      path: Source/Configs/Info.plist
+      properties:
+        UILaunchStoryboardName: LaunchScreen
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
+        CFBundleDisplayName: $(BUNDLE_DISPLAY_NAME)
+        UIApplicationSupportsIndirectInputEvents: true
+        CFBundlePackageType: $(PRODUCT_BUNDLE_PACKAGE_TYPE)
+        CFBundleShortVersionString: *app_version
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        LSRequiresIPhoneOS: true
+        NSCameraUsageDescription:
+        NSUserTrackingUsageDescription:
+        UIApplicationSceneManifest:
+          UIApplicationSupportsMultipleScenes: false
+          UISceneConfigurations:
+            UIWindowSceneSessionRoleApplication:
+              - UISceneConfigurationName: Default Configuration
+                UISceneDelegateClassName: $(PRODUCT_MODULE_NAME).SceneDelegate
+        INSTANCE: $(INSTANCE)
+        MOBILE_API_URL: $(MOBILE_API_URL)
+        DEEPLINK_SCHEME: $(DEEPLINK_SCHEME)
+        APP_DISPLAY_NAME: $(APP_DISPLAY_NAME)
+        CFBundleURLTypes:
+          - CFBundleTypeRole: Editor
+            CFBundleURLSchemes: [template]
+    configFiles:
+      Debug: Source/Configs/debug.xcconfig
+      Dev: Source/Configs/dev.xcconfig
+      Prod: Source/Configs/prod.xcconfig
+      Release: Source/Configs/release.xcconfig
+    preBuildScripts:
+      - script: |
+                export PATH="$PATH:/opt/homebrew/bin"
+
+                if which swiftlint >/dev/null; then
+                  swiftlint --config .swiftlint.yml
+                else
+                  echo "warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint"
+                fi
+        name: SwiftLint
+        basedOnDependencyAnalysis: false
+      - script: |
+                PATH_TO_GOOGLE_PLISTS="${PROJECT_DIR}/Source/Configs"
+
+                case "${CONFIGURATION}" in
+
+                    "Debug" | "Dev" )
+                        cp -r "$PATH_TO_GOOGLE_PLISTS/GoogleService-Info-dev.plist" "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist" ;;
+        
+                    "Prod" | "Release" )
+                        cp -r "$PATH_TO_GOOGLE_PLISTS/GoogleService-Info-prod.plist" "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist" ;;
+
+                    *)
+                        ;;
+                esac
+        name: Google plist
+        basedOnDependencyAnalysis: false
+    buildToolPlugins:
+      - plugin: RswiftGenerateInternalResources
+        package: Rswift
+    dependencies:
+      - package: SnapKit
+      - package: Rswift
+        product: RswiftLibrary
+      - package: Utils
+      - package: Firebase
+        product: FirebaseAnalytics
+      - package: TabBarController
+      - package: Cache
+      - package: KeychainAccess
+      - package: Kingfisher
+      - package: Moya
+      - package: Pulse
+        product: PulseUI
+      
+packages:
+  SnapKit:
+    url: https://github.com/SnapKit/SnapKit.git
+    exactVersion: 5.7.1
+  Rswift:
+    url: https://github.com/mac-cain13/R.swift
+    exactVersion: 7.8.0
+  Utils:
+    url: https://github.com/MobileUpLLC/Utils
+    exactVersion: 0.1.0
+  Firebase:
+    url: https://github.com/firebase/firebase-ios-sdk.git
+    exactVersion: 11.5.0
+  TabBarController:
+    url: https://github.com/MobileUpLLC/TabBarController
+    exactVersion: 1.0.0
+  Cache:
+    url: https://github.com/hyperoslo/Cache.git
+    exactVersion: 7.4.0
+  KeychainAccess:
+    url: https://github.com/kishikawakatsumi/KeychainAccess.git
+    exactVersion: 4.2.2
+  Kingfisher:
+    url: https://github.com/onevcat/Kingfisher.git
+    exactVersion: 8.1.1
+  Moya:
+    url: https://github.com/Moya/Moya.git
+    exactVersion: 15.0.3
+  Pulse:
+    url: https://github.com/kean/Pulse
+    exactVersion: 5.1.2

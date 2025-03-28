@@ -1,0 +1,45 @@
+"examples-title" = "Библиотека готовых решений";
+"examples-web-page" = "WebPage";
+"examples-skeleton" = "Skeleton";
+"examples-qr-scanner" = "QrScanner";
+"examples-help" = "Help";
+"examples-onboarding" = "Onboarding";
+"examples-bottomSheet" = "Bottom sheet example";
+"examples-multipleBottomSheet" = "Multiple bottom sheet example";
+"examples-network" = "Network example";
+"examples-web-page-navigation-title" = "Mobile Up";
+"examples-error-handling" = "Error handling example";
+
+"examples-toast" = "Toast example";
+
+"examples-storage" = "Storage using example";
+
+"storage-title" = "Storage usage example";
+"storage-placeholder" = "Enter message to save it";
+
+"storage-save-to-cache" = "Save to cache";
+"storage-load-from-cache" = "Load from cache";
+"storage-clear-cache" = "Clear cache";
+"storage-cache-text" = "Cache: %s";
+
+"storage-title-save-to-disk" = "Save to disk";
+"storage-title-load-from-disk" = "Load from disk";
+"storage-title-clear-disk" = "Clear disk";
+"storage-disk-text" = "Disk: %s";
+
+"storage-save-to-keychain" = "Save to keychain";
+"storage-load-from-keychain" = "Load from keychain";
+"storage-clear-keychain" = "Clear keychain";
+"storage-keychain-text" = "Keychain: %s";
+
+"storage-ok-button-title" = "OK";
+
+"show-examples-button-title" = "show Examples module";
+"show-bottomSheet-button-title" = "show BottomSheet";
+"show-logout-alert-button-title" = "show logout alert";
+"logout-alert-title" = "Действительно хотите выйти?";
+"logout-alert-message" = "Остаться - будет показан боттомшит, выйти - будет показан следующий алерт";
+"alert-stay-button-title" = "Остаться";
+"alert-logout-button-title" = "Выйти";
+"alert-cancel-button-title" = "Отмена";
+"second-alert-message" = "Данные аккунта будут удалены";

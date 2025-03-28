@@ -1,0 +1,11 @@
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+INSTANCE = release
+
+BUNDLE_NAME = $(PRODUCT_NAME).$(INSTANCE)
+BUNDLE_DISPLAY_NAME = $(mobileup-ios-samples)
+
+MOBILE_API_URL = https:$(SLASH)/raw.githubusercontent.com/MobileUpLLC/Polkadot.js-Resources/refs/heads/main/v8
+
+APP_DISPLAY_NAME = Template app

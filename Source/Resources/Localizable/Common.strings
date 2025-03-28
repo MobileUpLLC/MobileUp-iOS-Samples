@@ -1,0 +1,15 @@
+// Error
+"error-state-title" = "Something went wrong";
+"error-state-subtitle" = "Please try again";
+"error-state-button-title" = "Try again";
+
+// Date
+"date-today-name" = "Today";
+"date-yesterday-name" = "Yesterday";
+
+// Network
+"#network-common-error-title" = "Ошибка";
+"#network-internet-connection-error-text" = "Пожалуйста проверьте настройки сети и попробуйте снова";
+"#network-decoding-error-text" = "Decoding Error";
+"#network-gateway-time-out-error-text" = "Gateway Time-out";
+"#network-internet-connection-error-title" = "Нет подключения к интернету";
