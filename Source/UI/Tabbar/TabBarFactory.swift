@@ -1,5 +1,6 @@
 enum TabBarFactory {
     static func createTabbarController() -> CustomTabBarController {
+        let typicalTasksController = TypicalTasksFactory.createTypicalTasksController()
         let examplesController = ExamplesFactory.createExamplesController()
         let bottomSheetController = BottomSheetExampleFactory.createBottomSheetExampleController()
         
@@ -7,7 +8,7 @@ enum TabBarFactory {
         let viewModel = TabbarViewModel(coordinator: coordinator, pushService: .shared, mobileService: .shared)
         let controller = CustomTabBarController(
             viewModel: viewModel,
-            controllers: [examplesController, bottomSheetController]
+            controllers: [typicalTasksController, examplesController, bottomSheetController]
         )
         coordinator.router = controller
 
