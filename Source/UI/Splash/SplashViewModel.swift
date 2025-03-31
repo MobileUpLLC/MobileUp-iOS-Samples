@@ -33,16 +33,13 @@ final class SplashViewModel: ViewModel {
                 }
             }
         }
-        
-        // Без задержки почему-то не открывает экран
+    }
+    
+    func onViewAppear() {
         if authRepository.refreshToken == nil {
-            onMainAfter(deadline: .now() + 1) {
-                completion(.entrance)
-            }
+            completion(.entrance)
         } else {
-            onMainAfter(deadline: .now() + 1) {
-                completion(.tabBar)
-            }
+            completion(.tabBar)
         }
     }
 }
