@@ -73,5 +73,5 @@ struct GreenBottomSheetView: View {
 }
 
 #Preview {
-    BottomSheetExampleView(viewModel: .init(coordinator: .init()))
+    BottomSheetExampleView(viewModel: .init(coordinator: .init(), authRepository: AuthRepository()))
 }

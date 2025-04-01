@@ -13,3 +13,7 @@
 "#network-decoding-error-text" = "Decoding Error";
 "#network-gateway-time-out-error-text" = "Gateway Time-out";
 "#network-internet-connection-error-title" = "Нет подключения к интернету";
+
+// Rules
+"rule-email" = "Неверный формат почты";
+"rule-for-field-not-empty" = "Поле должно быть заполнено";

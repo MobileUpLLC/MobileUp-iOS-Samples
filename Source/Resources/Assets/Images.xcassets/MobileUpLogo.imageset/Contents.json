@@ -1,6 +1,7 @@
 {
-  "colors" : [
+  "images" : [
     {
+      "filename" : "BarcaLogo.svg",
       "idiom" : "universal"
     }
   ],

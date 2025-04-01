@@ -130,6 +130,7 @@ targets:
       - plugin: RswiftGenerateInternalResources
         package: Rswift
     dependencies:
+      - package: FormView
       - package: SnapKit
       - package: Rswift
         product: RswiftLibrary
@@ -145,6 +146,9 @@ targets:
         product: PulseUI
       
 packages:
+  FormView:
+    url: https://github.com/MobileUpLLC/FormView
+    exactVersion: 1.2.0
   SnapKit:
     url: https://github.com/SnapKit/SnapKit.git
     exactVersion: 5.7.1

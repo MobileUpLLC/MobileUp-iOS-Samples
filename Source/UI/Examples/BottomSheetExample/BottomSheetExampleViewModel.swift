@@ -6,9 +6,11 @@ final class BottomSheetExampleViewModel: ObservableObject {
     @Published var isDeleteAlertPresented = false
     
     private let coordinator: BottomSheetExampleCoordinator
+    private let authRepository: AuthRepository
 
-    init(coordinator: BottomSheetExampleCoordinator) {
+    init(coordinator: BottomSheetExampleCoordinator, authRepository: AuthRepository) {
         self.coordinator = coordinator
+        self.authRepository = authRepository
     }
     
     func onShowBottomSheetButtonTapped() {
@@ -25,6 +27,14 @@ final class BottomSheetExampleViewModel: ObservableObject {
     
     func onAlertLogoutButtonTapped() {
         isDeleteAlertPresented = true
+    }
+    
+    func onDeleteAccountButtonTapped() {
+        do {
+            try authRepository.clearKeychainDataInStorage()
+        } catch {
+            coordinator.showErrorToast(with: error)
+        }
     }
     
     func onShowSkeletonButtonTapped() {

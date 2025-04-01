@@ -1,0 +1,13 @@
+"authorization-email-not-registered-title" = "Почта не существует";
+"registration-email-already-registered" = "Почта уже зарегестрирована";
+"authorization-incorrect-password-title" = "Неверный пароль";
+"email-confirm-code-title" = "Подтверждение почты";
+"confirmation-code-resend-button-title" = "Отправить код";
+"confirmation-code-again-resend-button-title" = "Отправить еще раз (через %@)";
+"confirmation-code-invalid-code" = "Неверный код";
+"authorization-sign-button-title" = "Войти";
+"authorization-input-email-title" = "Почта";
+"registration-email-field-title" = "Введите почту";
+"authorization-input-password-title" = "Пароль";
+"registration-password-field-title" = "Введите пароль";
+"authorization-forgot-password-title" = "Забыли пароль?";

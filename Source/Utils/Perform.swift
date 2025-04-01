@@ -4,7 +4,7 @@ struct Perform {
     @discardableResult
     init(
         operation: @escaping () async throws -> Void,
-        onError: Closure.Generic<Error>? = nil
+        onError: Closure.Generic<ServerError>? = nil
     ) {
         Task {
             do {
@@ -13,6 +13,7 @@ struct Perform {
                 Log.perform.error(logEntry: .text(error.localizedDescription))
                 
                 onMain {
+                    let error = error as? ServerError ?? .unknown(details: ErrorDetails(error: error))
                     onError?(error)
                 }
             }

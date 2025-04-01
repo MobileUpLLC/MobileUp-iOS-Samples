@@ -3,6 +3,9 @@ import Moya
 
 enum AuthApi {
     case refresh(token: String)
+    case authorizeUser(request: EmailAuthRequest)
+    case sendRecoveryConfirmationCode(request: EmailRequest)
+    case checkConfirmationСode(request: ConfirmationCodeRequest)
 }
 
 extension AuthApi: MobileApiTargetType {
@@ -22,6 +25,12 @@ extension AuthApi: MobileApiTargetType {
         switch self {
         case .refresh:
             return "/chains.json"
+        case .authorizeUser:
+            return "/auth-service/api/v1/auth"
+        case .checkConfirmationСode:
+            return "/auth-service/api/v1/auth/email/checkConfirmationCode"
+        case .sendRecoveryConfirmationCode:
+            return "/auth-service/api/v1/user/email/sendConfirmationCode"
         }
     }
     
@@ -29,6 +38,10 @@ extension AuthApi: MobileApiTargetType {
         switch self {
         case .refresh:
             return .get
+        case .authorizeUser,
+                .sendRecoveryConfirmationCode,
+                .checkConfirmationСode:
+            return .post
         }
     }
     
@@ -36,6 +49,12 @@ extension AuthApi: MobileApiTargetType {
         switch self {
         case .refresh:
             return .requestPlain
+        case .authorizeUser(let emailAuthRequest):
+            return .requestJSONEncodable(emailAuthRequest)
+        case .sendRecoveryConfirmationCode(let emailRequest):
+            return .requestJSONEncodable(emailRequest)
+        case .checkConfirmationСode(let codeRequest):
+            return .requestJSONEncodable(codeRequest)
         }
     }
     
@@ -43,7 +62,10 @@ extension AuthApi: MobileApiTargetType {
         let params: [String: Any] = [:]
         
         switch self {
-        case .refresh:
+        case .refresh,
+                .authorizeUser,
+                .sendRecoveryConfirmationCode,
+                .checkConfirmationСode:
             break
         }
         
@@ -60,6 +82,10 @@ extension AuthApi: MobileApiTargetType {
         switch self {
         case .refresh:
             return false
+        case .authorizeUser,
+                .sendRecoveryConfirmationCode,
+                .checkConfirmationСode:
+            return true
         }
     }
     
@@ -67,6 +93,10 @@ extension AuthApi: MobileApiTargetType {
         switch self {
         case .refresh:
             return true
+        case .authorizeUser,
+                .sendRecoveryConfirmationCode,
+                .checkConfirmationСode:
+            return false
         }
     }
 }
