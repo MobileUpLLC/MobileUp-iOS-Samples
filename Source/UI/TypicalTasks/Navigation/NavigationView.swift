@@ -24,6 +24,7 @@ struct NavigationView: View {
             }
         }
         .background(.white)
+        .shareSheet(isShareSheetShown: $viewModel.isShareSheetShown, shareSheetItems: viewModel.shareSheetItems)
     }
 }
 

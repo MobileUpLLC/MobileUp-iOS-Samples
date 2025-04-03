@@ -1,6 +1,7 @@
 "navigation-stack-title" = "Навигационный стек";
 "presentation-title" = "Модальная презентация";
 "data-transfer-title" = "Передача данных между модулями";
+"share-sheet-title" = "Показать Share Sheet";
 
 "navigation-push-controller-button" = "Добавить контроллер в стек";
 "navigation-pop-controller-button" = "Убрать контроллер из стека";
@@ -9,3 +10,5 @@
 
 "presentation-present-full-screen-controller-button" = "Презентовать на весь экран";
 "presentation-present-transparent-full-screen-controller-button" = "Презентовать на весь экран без фона";
+
+"share-sheet-message" = "Пример Share Sheet";

@@ -2,8 +2,10 @@ import Foundation
 
 final class NavigationViewModel: ObservableObject {
     @Published var textFromNextModule: String?
+    @Published var isShareSheetShown = false
     
     var navigationItems: [NavigationViewItem] = []
+    var shareSheetItems: [Any] = []
     
     private let coordinator: NavigationCoordinator
     private let navigationRepository: NavigationRepository
@@ -37,6 +39,13 @@ final class NavigationViewModel: ObservableObject {
         }
     }
     
+    private func showShareSheet() {
+        let shareMessage = R.string.navigation.shareSheetMessage()
+        
+        shareSheetItems = [shareMessage]
+        isShareSheetShown = true
+    }
+    
     private func getNavigationItems() -> [NavigationViewItem] {
         return [
             .init(
@@ -55,6 +64,12 @@ final class NavigationViewModel: ObservableObject {
                 title: R.string.navigation.dataTransferTitle(),
                 action: { [weak self] in
                     self?.showDataTransferModule()
+                }
+            ),
+            .init(
+                title: R.string.navigation.shareSheetTitle(),
+                action: { [weak self] in
+                    self?.showShareSheet()
                 }
             )
         ]
