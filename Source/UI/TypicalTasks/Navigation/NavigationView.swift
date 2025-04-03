@@ -25,6 +25,11 @@ struct NavigationView: View {
         }
         .background(.white)
         .shareSheet(isShareSheetShown: $viewModel.isShareSheetShown, shareSheetItems: viewModel.shareSheetItems)
+        .sheet(isPresented: $viewModel.isBottomSheetPresented) {
+            GreenBottomSheetView(showSkeletonButtonHandler: viewModel.onShowSkeletonButtonTapped)
+                .enablePresentationBackgroundInteraction(upThrough: .medium)
+                .presentationDetents([.fraction(0.5)])
+        }
     }
 }
 

@@ -3,6 +3,7 @@ import Foundation
 final class NavigationViewModel: ObservableObject {
     @Published var textFromNextModule: String?
     @Published var isShareSheetShown = false
+    @Published var isBottomSheetPresented = false
     
     var navigationItems: [NavigationViewItem] = []
     var shareSheetItems: [Any] = []
@@ -25,6 +26,14 @@ final class NavigationViewModel: ObservableObject {
         item.action()
     }
     
+    func onShowSkeletonButtonTapped() {
+        isBottomSheetPresented = false
+        
+        onMainAfter(deadline: .now() + .one) { [weak self] in
+            self?.coordinator.showSkeletonModule()
+        }
+    }
+    
     private func showNavigationStackModule() {
         coordinator.showNavigationStackModule()
     }
@@ -44,6 +53,14 @@ final class NavigationViewModel: ObservableObject {
         
         shareSheetItems = [shareMessage]
         isShareSheetShown = true
+    }
+    
+    private func showBottomSheet() {
+        isBottomSheetPresented = true
+    }
+    
+    private func showMultipleBottomSheetModule() {
+        coordinator.showMultipleBottomSheetModule()
     }
     
     private func getNavigationItems() -> [NavigationViewItem] {
@@ -70,6 +87,18 @@ final class NavigationViewModel: ObservableObject {
                 title: R.string.navigation.shareSheetTitle(),
                 action: { [weak self] in
                     self?.showShareSheet()
+                }
+            ),
+            .init(
+                title: R.string.navigation.bottomSheetTitle(),
+                action: { [weak self] in
+                    self?.showBottomSheet()
+                }
+            ),
+            .init(
+                title: R.string.navigation.multipleBottomSheetTitle(),
+                action: { [weak self] in
+                    self?.showMultipleBottomSheetModule()
                 }
             )
         ]
