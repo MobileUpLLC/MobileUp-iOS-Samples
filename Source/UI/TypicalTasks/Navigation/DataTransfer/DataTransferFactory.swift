@@ -1,6 +1,6 @@
 enum DataTransferFactory {
     static func createDataTransferController(
-        onTextSubmit: @escaping (String) -> Void
+        onTextSubmit: Closure.String?
     ) -> DataTransferController {
         let coordinator = DataTransferCoordinator()
         let navigationRepository = NavigationRepository()

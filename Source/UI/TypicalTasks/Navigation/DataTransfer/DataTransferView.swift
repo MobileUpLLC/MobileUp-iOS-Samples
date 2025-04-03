@@ -17,6 +17,9 @@ struct DataTransferView: View {
             Button("Submit text") {
                 viewModel.onSubmitTextButtonTapped()
             }
+            Button(R.string.navigation.dataTransferTitle()) {
+                viewModel.onShowDataTransferModuleButtonTapped()
+            }
             Spacer()
         }
         .background(.white)

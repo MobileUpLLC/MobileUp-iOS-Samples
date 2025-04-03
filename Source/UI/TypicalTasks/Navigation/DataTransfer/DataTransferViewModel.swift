@@ -3,14 +3,14 @@ import Foundation
 final class DataTransferViewModel: ObservableObject {
     @Published var textToSend: String = ""
     
-    private var onTextSubmit: (String) -> Void
+    private var onTextSubmit: Closure.String?
     private let coordinator: DataTransferCoordinator
     private let navigationRepository: NavigationRepository
     
     init(
         coordinator: DataTransferCoordinator,
         navigationRepository: NavigationRepository,
-        onTextSubmit: @escaping (String) -> Void
+        onTextSubmit: Closure.String?
     ) {
         self.coordinator = coordinator
         self.navigationRepository = navigationRepository
@@ -18,8 +18,15 @@ final class DataTransferViewModel: ObservableObject {
     }
     
     func onSubmitTextButtonTapped() {
-//        onTextSubmit(textToSend)
-        navigationRepository.sendTextSubmitEvent(text: textToSend)
+        if let onTextSubmit {
+            onTextSubmit(textToSend)
+        } else {
+            navigationRepository.sendTextSubmitEvent(text: textToSend)
+        }
+    }
+    
+    func onShowDataTransferModuleButtonTapped() {
+        coordinator.showDataTransferModule()
     }
 }
 
