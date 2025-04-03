@@ -53,7 +53,7 @@ struct ScrollWithToolBarView<Content: View, ToolBar: View>: View {
         var body: some View {
             ScrollWithToolBarView {
                 SkeletonContentView()
-            } bottomToolBar: { isContentFill in
+            } bottomToolBar: { _ in
                 Button("Button") {}
             }
         }

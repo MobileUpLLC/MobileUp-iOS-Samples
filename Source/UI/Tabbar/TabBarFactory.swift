@@ -1,3 +1,5 @@
+import UIKit
+
 enum TabBarFactory {
     static func createTabbarController() -> CustomTabBarController {
         let typicalTasksController = TypicalTasksFactory.createTypicalTasksController()

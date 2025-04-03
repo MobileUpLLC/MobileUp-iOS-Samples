@@ -21,12 +21,22 @@ final class TypicalTasksViewModel: ViewModel {
         coordinator.showAuthorizationModule()
     }
     
+    private func showNavigationModule() {
+        coordinator.showNavigationModule()
+    }
+    
     private func getTypicalTasks() -> [TypicalTasksViewItem] {
         return [
             .init(
                 title: R.string.typicalTasks.typicalTasksAuthorization(),
                 action: { [weak self] in
                     self?.showAuthorizationModule()
+                }
+            ),
+            .init(
+                title: R.string.typicalTasks.typicalTasksNavigation(),
+                action: { [weak self] in
+                    self?.showNavigationModule()
                 }
             )
         ]

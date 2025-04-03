@@ -17,6 +17,7 @@ final class DeepLinkService {
     static let shared = DeepLinkService()
     
     var onDeeplinkReceived: Closure.Generic<DeepLink>? {
+        // swiftlint:disable:next property_willset_didset_single_line
         didSet {
             guard let buffer else {
                 return

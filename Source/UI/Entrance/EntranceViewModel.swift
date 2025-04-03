@@ -11,4 +11,8 @@ final class EntranceViewModel: ViewModel {
     func onAuthorizationButtonTapped() {}
     
     func onRegistrationButtonTapped() {}
+    
+    func onTabBarButtonTapped() {
+        coordinator.showTabbarModule()
+    }
 }

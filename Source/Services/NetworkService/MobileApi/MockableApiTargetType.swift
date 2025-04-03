@@ -13,6 +13,7 @@ protocol MockableMobileApiTarget: MobileApiTargetType {
     func getMockFileName() -> String?
 }
 
+// swiftlint:disable no_emoji
 extension MockableMobileApiTarget {
     var sampleData: Data { getSampleData() }
 
@@ -46,6 +47,7 @@ extension MockableMobileApiTarget {
         }
     }
 }
+// swiftlint:enable no_emoji
 
 extension AuthApi: MockableMobileApiTarget {
     var isMockEnabled: Bool { getIsMockEnabled() }

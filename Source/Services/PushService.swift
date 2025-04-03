@@ -5,6 +5,7 @@ class PushService: NSObject {
     static let shared = PushService()
     
     var onPushReceive: Closure.Generic<PushPayloadModel>? {
+        // swiftlint:disable:next property_willset_didset_single_line
         didSet {
             guard let buffer else {
                 return

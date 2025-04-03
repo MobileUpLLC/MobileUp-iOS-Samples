@@ -6,4 +6,9 @@ final class TypicalTasksCoordinator {
         
         router?.push(controller: controller, isAnimated: true)
     }
+    
+    func showNavigationModule() {
+        let controller = NavigationFactory.createNavigationController()
+        router?.push(controller: controller, isAnimated: true)
+    }
 }

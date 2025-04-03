@@ -4,6 +4,7 @@ class ApplicationLifecycleUtil {
     static var isApplicationActive: Bool { UIApplication.shared.applicationState == .active }
     
     var onApplicationDidBecomeActive: Closure.Void? {
+        // swiftlint:disable:next property_willset_didset_single_line
         didSet {
             NotificationCenter.default.removeObserver(
                 self,
@@ -21,6 +22,7 @@ class ApplicationLifecycleUtil {
     }
     
     var onApplicationWillEnterForeground: Closure.Void? {
+        // swiftlint:disable:next property_willset_didset_single_line
         didSet {
             NotificationCenter.default.removeObserver(
                 self,
@@ -38,6 +40,7 @@ class ApplicationLifecycleUtil {
     }
     
     var onApplicationWillResignActive: Closure.Void? {
+        // swiftlint:disable:next property_willset_didset_single_line
         didSet {
             NotificationCenter.default.removeObserver(
                 self,

@@ -20,6 +20,9 @@ struct EntranceView: View {
                         Button(R.string.entrance.entranceAuthorizationButtonTitle()) {
                             viewModel.onAuthorizationButtonTapped()
                         }
+                        Button(R.string.entrance.entranceTabBarButtonTitle()) {
+                            viewModel.onTabBarButtonTapped()
+                        }
                     }
                 }
             }

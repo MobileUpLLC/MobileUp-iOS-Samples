@@ -5,6 +5,7 @@ class HostingController<T: View>: UIHostingController<T>, Navigatable {
     var isBackButtonHidden: Bool { false }
     var isNavigationBarHidden: Bool { false }
     var isTabBarHidden: Bool { false }
+    var isRootInNavigationStack: Bool { getIsRootInNavigationStack() }
     
     override init(rootView: T) {
         super.init(rootView: rootView)
@@ -38,5 +39,13 @@ class HostingController<T: View>: UIHostingController<T>, Navigatable {
     
     @available(*, unavailable) @MainActor dynamic required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+    }
+    
+    private func getIsRootInNavigationStack() -> Bool {
+        if navigationController?.viewControllers.first === self {
+            return true
+        } else {
+            return false
+        }
     }
 }

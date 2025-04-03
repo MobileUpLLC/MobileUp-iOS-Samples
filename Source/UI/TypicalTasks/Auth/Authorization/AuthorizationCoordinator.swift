@@ -12,7 +12,11 @@ final class AuthorizationCoordinator {
     }
     
     func showConfirmCodeScreen(with email: String) {
-        let controller = ConfirmationCodeFactory.createConfirmationCodeController(email: email, resendCodeInterval: 60, displayType: .push)
+        let controller = ConfirmationCodeFactory.createConfirmationCodeController(
+            email: email,
+            resendCodeInterval: 60,
+            displayType: .push
+        )
         
         router?.push(controller: controller, isAnimated: true)
     }
