@@ -4,9 +4,6 @@ protocol Navigatable {
     var navigationBarItem: NavigationBarItem { get }
     var isNavigationBarHidden: Bool { get }
     var isBackButtonHidden: Bool { get }
-    /// Показывает является ли текущий контроллер первым в стеке.
-    /// - Attention: Выдает корректный результат только в методах `viewDidLoad()`/`viewWillAppear()`
-    var isRootInNavigationStack: Bool { get }
     
     func configureNavigationBar()
 }
@@ -16,7 +13,7 @@ extension Navigatable where Self: UIViewController {
         configureNavigationBarCentralItem()
         configureNavigationBarLeftItem()
         configureNavigationBarRightItems()
-        configureNavigationBarBackground()
+        configureNavigationBarAppearance()
     }
 
     func configureNavigationBarVisibility() {
@@ -125,23 +122,15 @@ extension Navigatable where Self: UIViewController {
     private func configureLargeTitleIfNeeded() {
         if case .title(let title) = navigationBarItem.centralItem.type {
             navigationItem.title = title
-                navigationController?.navigationBar.largeTitleTextAttributes = [
-                    NSAttributedString.Key.foregroundColor: UIColor.black,
-                    NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 34)
-                ]
         } else {
             navigationItem.title = nil
         }
     }
     
-    private func configureNavigationBarBackground() {
-        configureNavigationBarAppearance(
-            backgroundColor: .clear,
-            foregroundColor: .black
-        )
-    }
-    
-    private func configureNavigationBarAppearance(backgroundColor: UIColor, foregroundColor: UIColor) {
+    private func configureNavigationBarAppearance() {
+        let backgroundColor = UIColor.clear
+        let foregroundColor = UIColor.black
+        
         // Заголовок и фон
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
