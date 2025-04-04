@@ -39,10 +39,7 @@ extension Navigatable where Self: UIViewController {
         if navigationBarItem.isLargeTitle {
             configureLargeTitleIfNeeded()
         } else {
-            navigationItem.titleView = NavigationBarCentralItemView(
-                item: navigationBarItem.centralItem,
-                foregroundColor: navigationBarItem.foregroundColor
-            )
+            navigationItem.titleView = NavigationBarCentralItemView(item: navigationBarItem.centralItem)
         }
     }
 
@@ -138,18 +135,10 @@ extension Navigatable where Self: UIViewController {
     }
     
     private func configureNavigationBarBackground() {
-        switch navigationBarItem.background {
-        case .color(let color):
-            configureNavigationBarAppearance(
-                backgroundColor: color,
-                foregroundColor: navigationBarItem.foregroundColor
-            )
-        default:
-            configureNavigationBarAppearance(
-                backgroundColor: .clear,
-                foregroundColor: .black
-            )
-        }
+        configureNavigationBarAppearance(
+            backgroundColor: .clear,
+            foregroundColor: .black
+        )
     }
     
     private func configureNavigationBarAppearance(backgroundColor: UIColor, foregroundColor: UIColor) {

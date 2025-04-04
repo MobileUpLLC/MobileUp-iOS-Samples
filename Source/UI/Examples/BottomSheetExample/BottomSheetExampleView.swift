@@ -57,7 +57,7 @@ struct BottomSheetExampleView: View {
 }
 
 struct GreenBottomSheetView: View {
-    let showSkeletonButtonHandler: () -> Void
+    let showSkeletonButtonHandler: Closure.Void
     
     var body: some View {
         ZStack {

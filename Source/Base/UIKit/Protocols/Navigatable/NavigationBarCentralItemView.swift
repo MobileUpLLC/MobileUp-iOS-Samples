@@ -3,7 +3,6 @@ import SnapKit
 
 final class NavigationBarCentralItemView: BaseView {
     private let item: NavigationBarCentralItem
-    private let foregroundColor: UIColor
     
     override func initSetup() {
         super.initSetup()
@@ -26,9 +25,8 @@ final class NavigationBarCentralItemView: BaseView {
         addTapGestureRecognizer()
     }
     
-    required init(item: NavigationBarCentralItem, foregroundColor: UIColor) {
+    required init(item: NavigationBarCentralItem) {
         self.item = item
-        self.foregroundColor = foregroundColor
         
         super.init(frame: .zero)
     }

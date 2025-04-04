@@ -14,12 +14,20 @@ struct DataTransferView: View {
             TextField("Type something", text: $viewModel.textToSend)
                 .textFieldStyle(.roundedBorder)
                 .padding()
-            Button("Submit text") {
-                viewModel.onSubmitTextButtonTapped()
+            Group {
+                Button(R.string.common.okButtonTitle()) {
+                    viewModel.onSubmitTextButtonTapped()
+                }
+                Button(R.string.navigation.navigationPushControllerButton()) {
+                    viewModel.onPushControllerButtonTapped()
+                }
+                Button(R.string.navigation.navigationPopToNavigationControllerButton()) {
+                    viewModel.onPopToNavigationControllerButtonTapped()
+                }
             }
-            Button(R.string.navigation.dataTransferTitle()) {
-                viewModel.onShowDataTransferModuleButtonTapped()
-            }
+            .buttonStyle(.borderedProminent)
+            .frame(maxWidth: .infinity)
+            .padding()
             Spacer()
         }
         .background(.white)

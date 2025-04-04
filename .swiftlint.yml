@@ -195,6 +195,6 @@ custom_rules:
     severity: warning
 
 
-warning_threshold: 10
+warning_threshold: 1
 
 reporter: "xcode"

@@ -8,10 +8,10 @@ final class PresentationViewModel: ObservableObject {
     }
     
     func onShowFullScreenControllerButtonTapped() {
-        coordinator.showFullScreenController()
+        coordinator.showFullScreenController(isTransparent: false)
     }
     
     func onShowTransparentFullScreenControllerButtonTapped() {
-        coordinator.showTransparentFullScreenController()
+        coordinator.showFullScreenController(isTransparent: true)
     }
 }

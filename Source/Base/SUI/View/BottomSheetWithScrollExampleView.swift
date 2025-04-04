@@ -1,12 +1,12 @@
 import SwiftUI
 
 struct BottomSheetWithScrollExampleView: View {
-    @ObservedObject var viewModel: BottomSheetWithScrollExampleViewModel
+    private let items = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
     
     var body: some View {
             VStack(spacing: .zero) {
                 VStack(spacing: 8) {
-                    ForEach(viewModel.scrollableBottomSheetItems, id: \.self) { item in
+                    ForEach(items, id: \.self) { item in
                         Text(item)
                             .font(.title)
                             .padding(30)
@@ -18,9 +18,5 @@ struct BottomSheetWithScrollExampleView: View {
 }
 
 #Preview {
-    BottomSheetWithScrollExampleView(
-        viewModel: BottomSheetWithScrollExampleViewModel(
-            coordinator: BottomSheetWithScrollExampleCoordinator()
-        )
-    )
+    BottomSheetWithScrollExampleView()
 }

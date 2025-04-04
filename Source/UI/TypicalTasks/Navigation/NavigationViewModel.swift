@@ -24,10 +24,6 @@ final class NavigationViewModel: ObservableObject {
         }
     }
     
-    func onItemTap(item: NavigationViewItem) {
-        item.action()
-    }
-    
     func onShowSkeletonButtonTapped() {
         isBottomSheetPresented = false
         
@@ -81,6 +77,7 @@ final class NavigationViewModel: ObservableObject {
         isAlertPresented = true
     }
     
+    // swiftlint:disable function_body_length
     private func getNavigationItems() -> [NavigationViewItem] {
         return [
             .init(
@@ -139,4 +136,5 @@ final class NavigationViewModel: ObservableObject {
             )
         ]
     }
+    // swiftlint:enable function_body_length
 }

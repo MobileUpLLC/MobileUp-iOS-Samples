@@ -16,6 +16,8 @@
 
 // Button
 "close-button-title" = "Закрыть";
+"ok-button-title" = "ОК";
+
 // Rules
 "rule-email" = "Неверный формат почты";
 "rule-for-field-not-empty" = "Поле должно быть заполнено";

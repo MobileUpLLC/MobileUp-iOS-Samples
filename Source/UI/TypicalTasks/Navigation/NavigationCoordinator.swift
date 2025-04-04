@@ -11,7 +11,7 @@ final class NavigationCoordinator {
         router?.push(controller: controller, isAnimated: true)
     }
     
-    func showDataTransferModule(onTextSubmit: @escaping (String) -> Void) {
+    func showDataTransferModule(onTextSubmit: Closure.String?) {
         let controller = DataTransferFactory.createDataTransferController(onTextSubmit: onTextSubmit)
         router?.push(controller: controller, isAnimated: true)
     }

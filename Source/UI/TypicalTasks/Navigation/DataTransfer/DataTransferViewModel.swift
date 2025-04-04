@@ -25,8 +25,12 @@ final class DataTransferViewModel: ObservableObject {
         }
     }
     
-    func onShowDataTransferModuleButtonTapped() {
+    func onPushControllerButtonTapped() {
         coordinator.showDataTransferModule()
+    }
+    
+    func onPopToNavigationControllerButtonTapped() {
+        coordinator.popToNavigationController()
     }
 }
 

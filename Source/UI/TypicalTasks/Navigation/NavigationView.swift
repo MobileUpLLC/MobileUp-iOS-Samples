@@ -10,18 +10,22 @@ struct NavigationView: View {
     @ObservedObject var viewModel: NavigationViewModel
 
     var body: some View {
-        VStack(alignment: .leading, spacing: .zero) {
+        VStack(alignment: .leading, spacing: 0) {
             Text(R.string.typicalTasks.typicalTasksNavigation())
                 .font(UIFont.Heading.primary.asFont)
                 .foregroundStyle(.black)
                 .padding(.vertical, 20)
                 .padding(.horizontal, 28)
-            
-            NavigationContentView(items: viewModel.navigationItems, onItemTap: viewModel.onItemTap(item:))
             if let text = viewModel.textFromNextModule {
                 Text("Text from next module:")
+                    .font(.headline)
+                    .padding(.horizontal, 16)
                 Text(text)
+                    .font(.subheadline)
+                    .padding(.bottom, 20)
+                    .padding(.horizontal, 16)
             }
+            NavigationContentView(items: viewModel.navigationItems)
         }
         .background(.white)
         .shareSheet(isShareSheetShown: $viewModel.isShareSheetShown, shareSheetItems: viewModel.shareSheetItems)
@@ -31,17 +35,13 @@ struct NavigationView: View {
                 .presentationDetents([.fraction(0.5)])
         }
         .sheet(isPresented: $viewModel.isScrollableBottomSheetPresented) {
-            BottomSheetWithScrollExampleView(
-                viewModel: BottomSheetWithScrollExampleViewModel(
-                    coordinator: BottomSheetWithScrollExampleCoordinator()
-                )
-            )
+            BottomSheetWithScrollExampleView()
         }
         .alert(
             R.string.navigation.alertTitle(),
             isPresented: $viewModel.isAlertPresented,
             actions: {
-                Button("OK") { viewModel.onAlertButtonTapped() }
+                Button(R.string.common.okButtonTitle()) { viewModel.onAlertButtonTapped() }
             },
             message: { Text(R.string.navigation.alertMessage()) }
         )
@@ -50,7 +50,6 @@ struct NavigationView: View {
 
 private struct NavigationContentView: View {
     let items: [NavigationViewItem]
-    let onItemTap: Closure.Generic<NavigationViewItem>
     
     private let columns: [GridItem] = [GridItem(.fixed(UIScreen.main.bounds.width))]
     
@@ -60,7 +59,7 @@ private struct NavigationContentView: View {
                 ForEach(items) { item in
                     NavigationCellView(text: item.title)
                         .contentShape(Rectangle())
-                        .onTapGesture { onItemTap(item) }
+                        .onTapGesture { item.action() }
                 }
             }
         }
