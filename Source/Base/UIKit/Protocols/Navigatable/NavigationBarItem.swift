@@ -1,5 +1,3 @@
-import UIKit.UIColor
-
 struct NavigationBarItem {
     static let `default` = Self()
 
