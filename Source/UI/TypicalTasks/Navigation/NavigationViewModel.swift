@@ -5,6 +5,7 @@ final class NavigationViewModel: ObservableObject {
     @Published var isShareSheetShown = false
     @Published var isBottomSheetPresented = false
     @Published var isScrollableBottomSheetPresented = false
+    @Published var isAlertPresented = false
     
     var navigationItems: [NavigationViewItem] = []
     var shareSheetItems: [Any] = []
@@ -33,6 +34,10 @@ final class NavigationViewModel: ObservableObject {
         onMainAfter(deadline: .now() + .one) { [weak self] in
             self?.coordinator.showSkeletonModule()
         }
+    }
+    
+    func onAlertButtonTapped() {
+        isAlertPresented = false
     }
     
     private func showNavigationStackModule() {
@@ -66,6 +71,14 @@ final class NavigationViewModel: ObservableObject {
     
     private func showScrollableBottomSheet() {
         isScrollableBottomSheetPresented = true
+    }
+    
+    private func showToastExample() {
+        coordinator.showToastExampleModule()
+    }
+    
+    private func showAlert() {
+        isAlertPresented = true
     }
     
     private func getNavigationItems() -> [NavigationViewItem] {
@@ -110,6 +123,18 @@ final class NavigationViewModel: ObservableObject {
                 title: R.string.navigation.bottomSheetWithScrollTitle(),
                 action: { [weak self] in
                     self?.showScrollableBottomSheet()
+                }
+            ),
+            .init(
+                title: R.string.navigation.toastTitle(),
+                action: { [weak self] in
+                    self?.showToastExample()
+                }
+            ),
+            .init(
+                title: R.string.navigation.showAlertTitle(),
+                action: { [weak self] in
+                    self?.showAlert()
                 }
             )
         ]

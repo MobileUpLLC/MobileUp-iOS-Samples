@@ -37,6 +37,14 @@ struct NavigationView: View {
                 )
             )
         }
+        .alert(
+            R.string.navigation.alertTitle(),
+            isPresented: $viewModel.isAlertPresented,
+            actions: {
+                Button("OK") { viewModel.onAlertButtonTapped() }
+            },
+            message: { Text(R.string.navigation.alertMessage()) }
+        )
     }
 }
 

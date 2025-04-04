@@ -25,4 +25,9 @@ final class NavigationCoordinator {
         let controller = MultipleBottomSheetExampleFactory.createMultipleBottomSheetExampleController()
         router?.push(controller: controller, isAnimated: true)
     }
+    
+    func showToastExampleModule() {
+        let controller = ToastExampleFactory.createToastExampleController()
+        router?.push(controller: controller, isAnimated: true)
+    }
 }

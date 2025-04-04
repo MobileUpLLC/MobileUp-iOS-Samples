@@ -5,6 +5,8 @@
 "bottom-sheet-title" = "Показать Bottom Sheet";
 "multiple-bottom-sheet-title" = "Использование нескольких Bottom Sheet";
 "bottom-sheet-with-scroll-title" = "Показать Bottom Sheet со скроллом";
+"toast-title" = "Тосты";
+"show-alert-title" = "Показать Алерт";
 
 "navigation-push-controller-button" = "Добавить контроллер в стек";
 "navigation-pop-controller-button" = "Убрать контроллер из стека";
@@ -15,3 +17,5 @@
 "presentation-present-transparent-full-screen-controller-button" = "Презентовать на весь экран без фона";
 
 "share-sheet-message" = "Пример Share Sheet";
+"alert-title" = "Пример Алерта";
+"alert-message" = "Нажмите ОК, чтобы закрыть";
