@@ -4,6 +4,7 @@ final class NavigationViewModel: ObservableObject {
     @Published var textFromNextModule: String?
     @Published var isShareSheetShown = false
     @Published var isBottomSheetPresented = false
+    @Published var isScrollableBottomSheetPresented = false
     
     var navigationItems: [NavigationViewItem] = []
     var shareSheetItems: [Any] = []
@@ -63,6 +64,10 @@ final class NavigationViewModel: ObservableObject {
         coordinator.showMultipleBottomSheetModule()
     }
     
+    private func showScrollableBottomSheet() {
+        isScrollableBottomSheetPresented = true
+    }
+    
     private func getNavigationItems() -> [NavigationViewItem] {
         return [
             .init(
@@ -99,6 +104,12 @@ final class NavigationViewModel: ObservableObject {
                 title: R.string.navigation.multipleBottomSheetTitle(),
                 action: { [weak self] in
                     self?.showMultipleBottomSheetModule()
+                }
+            ),
+            .init(
+                title: R.string.navigation.bottomSheetWithScrollTitle(),
+                action: { [weak self] in
+                    self?.showScrollableBottomSheet()
                 }
             )
         ]

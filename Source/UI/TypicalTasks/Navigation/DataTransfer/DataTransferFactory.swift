@@ -1,7 +1,5 @@
 enum DataTransferFactory {
-    static func createDataTransferController(
-        onTextSubmit: Closure.String?
-    ) -> DataTransferController {
+    static func createDataTransferController(onTextSubmit: Closure.String?) -> DataTransferController {
         let coordinator = DataTransferCoordinator()
         let navigationRepository = NavigationRepository()
         let viewModel = DataTransferViewModel(

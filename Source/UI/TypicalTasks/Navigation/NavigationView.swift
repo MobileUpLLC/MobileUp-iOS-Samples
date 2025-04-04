@@ -30,6 +30,13 @@ struct NavigationView: View {
                 .enablePresentationBackgroundInteraction(upThrough: .medium)
                 .presentationDetents([.fraction(0.5)])
         }
+        .sheet(isPresented: $viewModel.isScrollableBottomSheetPresented) {
+            BottomSheetWithScrollExampleView(
+                viewModel: BottomSheetWithScrollExampleViewModel(
+                    coordinator: BottomSheetWithScrollExampleCoordinator()
+                )
+            )
+        }
     }
 }
 

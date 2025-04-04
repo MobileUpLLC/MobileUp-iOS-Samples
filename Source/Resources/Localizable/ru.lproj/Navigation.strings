@@ -4,6 +4,7 @@
 "share-sheet-title" = "Показать Share Sheet";
 "bottom-sheet-title" = "Показать Bottom Sheet";
 "multiple-bottom-sheet-title" = "Использование нескольких Bottom Sheet";
+"bottom-sheet-with-scroll-title" = "Показать Bottom Sheet со скроллом";
 
 "navigation-push-controller-button" = "Добавить контроллер в стек";
 "navigation-pop-controller-button" = "Убрать контроллер из стека";
