@@ -13,7 +13,6 @@ struct ConfirmationCodeView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            Text(R.string.auth.emailConfirmCodeTitle())
             OTPInputView(
                 text: $viewModel.code,
                 state: $viewModel.codeOTPBlockState,
@@ -25,6 +24,7 @@ struct ConfirmationCodeView: View {
                 onResendButtonTapAction: viewModel.handleResendButtonTap
             )
         }
+        .background(.white)
         .onChange(of: viewModel.codeOTPBlockState) { state in
             if state == .error {
                 shake = true
@@ -77,7 +77,7 @@ private struct ResendSMSView: View {
 #Preview {
     ConfirmationCodeView(
         viewModel: ConfirmationCodeViewModel(
-            email: "test@gmail.com",
+            credentials: "test@gmail.com",
             displayType: .present,
             coordinator: ConfirmationCodeCoordinator(),
             authRepository: AuthRepository(),

@@ -2,7 +2,7 @@ import UIKit
 
 enum ConfirmationCodeFactory {
     static func createConfirmationCodeController(
-        email: String,
+        credentials: String,
         resendCodeInterval: TimeInterval,
         displayType: ConfirmationCodeDisplayType
     ) -> ConfirmationCodeController {
@@ -10,7 +10,7 @@ enum ConfirmationCodeFactory {
         let authRepository = AuthRepository()
         let timerService = TimerService(timerInterval: resendCodeInterval, timerUpdateRate: .one)
         let viewModel = ConfirmationCodeViewModel(
-            email: email,
+            credentials: credentials,
             displayType: displayType,
             coordinator: coordinator,
             authRepository: authRepository,

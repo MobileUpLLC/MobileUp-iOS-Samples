@@ -1,5 +1,3 @@
-import UIKit
-
 enum AuthorizationFactory {
     static func createAuthorizationController() -> AuthorizationController {
         let coordinator = AuthorizationCoordinator()

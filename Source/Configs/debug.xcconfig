@@ -10,4 +10,7 @@ DEEPLINK_SCHEME = template:$(SLASH)/
 
 MOBILE_API_URL = https:$(SLASH)/raw.githubusercontent.com/MobileUpLLC/Polkadot.js-Resources/refs/heads/main/v8
 
+TERMS_OF_USE_URL = https:/$(SLASH)mobileup.ru
+PRIVACY_POLICY_URL = https:/$(SLASH)mobileup.ru
+
 APP_DISPLAY_NAME = Template app

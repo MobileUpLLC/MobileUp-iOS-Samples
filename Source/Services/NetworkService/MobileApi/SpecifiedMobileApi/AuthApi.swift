@@ -3,9 +3,12 @@ import Moya
 
 enum AuthApi {
     case refresh(token: String)
-    case authorizeUser(request: EmailAuthRequest)
+    case authorizeUserWithEmail(request: EmailAuthRequest)
+    case authorizeUserWithPhone(request: PhoneAuthRequest)
     case sendRecoveryConfirmationCode(request: EmailRequest)
+    case sendConfirmationCode(request: EmailAuthRequest)
     case checkConfirmationСode(request: ConfirmationCodeRequest)
+    case authorizeUserDevice(request: UDIDRequest)
 }
 
 extension AuthApi: MobileApiTargetType {
@@ -25,12 +28,18 @@ extension AuthApi: MobileApiTargetType {
         switch self {
         case .refresh:
             return "/chains.json"
-        case .authorizeUser:
-            return "/auth-service/api/v1/auth"
+        case .authorizeUserWithEmail:
+            return "/auth-service/api/v1/authWithEmail"
+        case .authorizeUserWithPhone:
+            return "/auth-service/api/v1/authWithPhone"
+        case .sendConfirmationCode:
+            return "/auth/email/send_confirmation_code"
         case .checkConfirmationСode:
             return "/auth-service/api/v1/auth/email/checkConfirmationCode"
         case .sendRecoveryConfirmationCode:
             return "/auth-service/api/v1/user/email/sendConfirmationCode"
+        case .authorizeUserDevice:
+            return "/auth-service/api/v1/auth/userDevice"
         }
     }
     
@@ -38,9 +47,12 @@ extension AuthApi: MobileApiTargetType {
         switch self {
         case .refresh:
             return .get
-        case .authorizeUser,
+        case .authorizeUserWithEmail,
                 .sendRecoveryConfirmationCode,
-                .checkConfirmationСode:
+                .checkConfirmationСode,
+                .authorizeUserDevice,
+                .authorizeUserWithPhone,
+                .sendConfirmationCode:
             return .post
         }
     }
@@ -49,12 +61,18 @@ extension AuthApi: MobileApiTargetType {
         switch self {
         case .refresh:
             return .requestPlain
-        case .authorizeUser(let emailAuthRequest):
+        case .authorizeUserWithEmail(let emailAuthRequest):
             return .requestJSONEncodable(emailAuthRequest)
+        case .authorizeUserWithPhone(let phoneAuthRequest):
+            return .requestJSONEncodable(phoneAuthRequest)
         case .sendRecoveryConfirmationCode(let emailRequest):
             return .requestJSONEncodable(emailRequest)
+        case .sendConfirmationCode(let emailAuthRequest):
+            return .requestJSONEncodable(emailAuthRequest)
         case .checkConfirmationСode(let codeRequest):
             return .requestJSONEncodable(codeRequest)
+        case .authorizeUserDevice(let udidRequest):
+            return .requestJSONEncodable(udidRequest)
         }
     }
     
@@ -63,8 +81,11 @@ extension AuthApi: MobileApiTargetType {
         
         switch self {
         case .refresh,
-                .authorizeUser,
+                .authorizeUserWithEmail,
                 .sendRecoveryConfirmationCode,
+                .sendConfirmationCode,
+                .authorizeUserDevice,
+                .authorizeUserWithPhone,
                 .checkConfirmationСode:
             break
         }
@@ -80,9 +101,12 @@ extension AuthApi: MobileApiTargetType {
         
     private func getIsAccessTokenRequired() -> Bool {
         switch self {
-        case .refresh:
+        case .refresh,
+                .sendConfirmationCode,
+                .authorizeUserDevice:
             return false
-        case .authorizeUser,
+        case .authorizeUserWithEmail,
+                .authorizeUserWithPhone,
                 .sendRecoveryConfirmationCode,
                 .checkConfirmationСode:
             return true
@@ -93,10 +117,26 @@ extension AuthApi: MobileApiTargetType {
         switch self {
         case .refresh:
             return true
-        case .authorizeUser,
+        case .authorizeUserWithEmail,
                 .sendRecoveryConfirmationCode,
+                .sendConfirmationCode,
+                .authorizeUserDevice,
+                .authorizeUserWithPhone,
                 .checkConfirmationСode:
             return false
+        }
+    }
+    
+    private func getAuthorizationType() -> AuthorizationType? {
+        switch self {
+        case .sendConfirmationCode,
+                .checkConfirmationСode,
+                .authorizeUserWithEmail,
+                .authorizeUserDevice,
+                .refresh,
+                .authorizeUserWithPhone,
+                .sendRecoveryConfirmationCode:
+            return .bearer
         }
     }
 }

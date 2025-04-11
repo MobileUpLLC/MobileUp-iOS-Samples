@@ -42,7 +42,7 @@ final class AuthorizationViewModel: ViewModel {
             }
             
             let request = EmailAuthRequest(email: email, password: password)
-            try await authRepository.authorizeUser(with: request)
+            try await authRepository.authorizeUserWithEmail(with: request)
             onMain { [weak self] in
                 self?.showTabBarScreen()
             }

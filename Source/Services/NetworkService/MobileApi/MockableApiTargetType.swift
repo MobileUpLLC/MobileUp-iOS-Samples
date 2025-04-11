@@ -54,9 +54,11 @@ extension AuthApi: MockableMobileApiTarget {
         switch self {
         case .refresh:
             return nil
-        case .authorizeUser:
+        case .authorizeUserWithEmail, .authorizeUserWithPhone:
             return "MockAuthorizeUserModel"
-        case .sendRecoveryConfirmationCode:
+        case .authorizeUserDevice:
+            return "MockTempTokenModel"
+        case .sendRecoveryConfirmationCode, .sendConfirmationCode:
             return "MockUserRegistrationModel"
         case .checkConfirmationСode:
             return "MockTokenModel"
@@ -67,9 +69,12 @@ extension AuthApi: MockableMobileApiTarget {
         switch self {
         case .refresh:
             return false
-        case .authorizeUser,
+        case .authorizeUserWithEmail,
                 .sendRecoveryConfirmationCode,
-                .checkConfirmationСode:
+                .checkConfirmationСode,
+                .authorizeUserDevice,
+                .authorizeUserWithPhone,
+                .sendConfirmationCode:
             return true
         }
     }

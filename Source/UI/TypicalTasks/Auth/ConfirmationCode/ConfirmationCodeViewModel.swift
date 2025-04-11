@@ -19,26 +19,39 @@ final class ConfirmationCodeViewModel: ViewModel {
     @Published private(set) var state: ConfirmCodeViewState
     @Published var sendCodeCooldown: String = .empty
     
-    let email: String
+    let credentials: String
     let displayType: ConfirmationCodeDisplayType
     
     private let coordinator: ConfirmationCodeCoordinator
     private let authRepository: AuthRepository
     private let timerService: TimerService
+    private let dateComponentsFormatter = DateComponentsFormatter()
     
     init(
-        email: String,
+        credentials: String,
         displayType: ConfirmationCodeDisplayType,
         coordinator: ConfirmationCodeCoordinator,
         authRepository: AuthRepository,
         timerService: TimerService
     ) {
-        self.email = email
+        self.credentials = credentials
         self.displayType = displayType
         self.coordinator = coordinator
         self.authRepository = authRepository
         self.timerService = timerService
         state = .initial
+        
+        super.init()
+        
+        setupDateComponentsFormatter()
+        
+        timerService.onRemainingTimeChangeAction = { [weak self] remainingTimeComponents in
+            self?.updateCodeCooldown(with: remainingTimeComponents)
+        }
+        
+        if timerService.getRemainingTime == nil {
+            timerService.startTimer()
+        }
     }
     
     func handleResendButtonTap() {
@@ -68,7 +81,7 @@ final class ConfirmationCodeViewModel: ViewModel {
             }
             onMainAfter(deadline: .now() + 1) { [weak self] in
                 self?.clearOTPView()
-                self?.close()
+                self?.handleSuccessValidation()
             }
         } onError: { [weak self] error in
             self?.state = .error
@@ -93,9 +106,33 @@ final class ConfirmationCodeViewModel: ViewModel {
         }
     }
     
-    private func close() {
+    private func handleSuccessValidation() {
+        close { [weak self] in
+            guard let self else {
+                return
+            }
+            
+            coordinator.showTabBarScreen()
+        }
+    }
+    
+    private func updateCodeCooldown(with newRemainingTimeComponents: DateComponents?) {
+        var remainingTime: String = .empty
+        
+        if
+            let newRemainingTimeComponents,
+            let newRemainingTime = dateComponentsFormatter.string(from: newRemainingTimeComponents)
+        {
+            remainingTime = newRemainingTime
+        }
+        
+        sendCodeCooldown = remainingTime
+    }
+    
+    private func close(onCloseAction: Closure.Void? = nil) {
         switch displayType {
         case .push:
+            onCloseAction?()
             coordinator.pop()
         case .present:
             coordinator.dismiss()
@@ -110,7 +147,7 @@ final class ConfirmationCodeViewModel: ViewModel {
                 return
             }
             
-            let request = EmailRequest(email: email)
+            let request = EmailRequest(email: credentials)
             try await authRepository.sendRecoveryConfirmationCode(with: request)
                         
             onMain { [weak self] in
@@ -133,6 +170,12 @@ final class ConfirmationCodeViewModel: ViewModel {
                 self?.coordinator.showErrorToast()
             }
         }
+    }
+    
+    private func setupDateComponentsFormatter() {
+        dateComponentsFormatter.allowedUnits = [.minute, .second]
+        dateComponentsFormatter.unitsStyle = .positional
+        dateComponentsFormatter.zeroFormattingBehavior = .pad
     }
     
     private func clearOTPView() {

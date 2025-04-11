@@ -25,6 +25,7 @@ struct AuthorizationView: View {
                 .disabled(isSignButtonDisabled)
             }
         }
+        .background(.white)
         .onTapGesture {
             isFocused = false
         }

@@ -7,8 +7,11 @@ final class EntranceViewModel: ViewModel {
         self.coordinator = coordinator
     }
     
-    // TODO: UPUP-1022 Реализовать авторизацию и регистрацию
-    func onAuthorizationButtonTapped() {}
+    func onAuthorizationButtonTapped() {
+        coordinator.showAuthorizationModule()
+    }
     
-    func onRegistrationButtonTapped() {}
+    func onRegistrationButtonTapped() {
+        coordinator.showRegistrationModule()
+    }
 }
