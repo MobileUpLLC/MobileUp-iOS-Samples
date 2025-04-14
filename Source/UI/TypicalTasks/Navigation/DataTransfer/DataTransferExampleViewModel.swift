@@ -35,7 +35,3 @@ final class DataTransferExampleViewModel: ObservableObject {
         coordinator.popToNavigationExampleController()
     }
 }
-
-extension String: Eventable {
-    static let eventId = UUID()
-}

@@ -4,57 +4,60 @@ class ApplicationLifecycleUtil {
     static var isApplicationActive: Bool { UIApplication.shared.applicationState == .active }
     
     var onApplicationDidBecomeActive: Closure.Void? {
-        // swiftlint:disable:next property_willset_didset_single_line
-        didSet {
-            NotificationCenter.default.removeObserver(
-                self,
-                name: UIApplication.didBecomeActiveNotification,
-                object: nil
-            )
-            
-            NotificationCenter.default.addObserver(
-                self,
-                selector: #selector(didBecomeActive),
-                name: UIApplication.didBecomeActiveNotification,
-                object: nil
-            )
-        }
+        didSet { handleApplicationDidBecomeActive() }
     }
     
     var onApplicationWillEnterForeground: Closure.Void? {
-        // swiftlint:disable:next property_willset_didset_single_line
-        didSet {
-            NotificationCenter.default.removeObserver(
-                self,
-                name: UIApplication.willEnterForegroundNotification,
-                object: nil
-            )
-            
-            NotificationCenter.default.addObserver(
-                self,
-                selector: #selector(willEnterForeground),
-                name: UIApplication.willEnterForegroundNotification,
-                object: nil
-            )
-        }
+        didSet { handleApplicationWillEnterForeground() }
     }
     
     var onApplicationWillResignActive: Closure.Void? {
-        // swiftlint:disable:next property_willset_didset_single_line
-        didSet {
-            NotificationCenter.default.removeObserver(
-                self,
-                name: UIApplication.willResignActiveNotification,
-                object: nil
-            )
-            
-            NotificationCenter.default.addObserver(
-                self,
-                selector: #selector(willResignActive),
-                name: UIApplication.willResignActiveNotification,
-                object: nil
-            )
-        }
+        didSet { handleApplicationWillResignActive() }
+    }
+    
+    private func handleApplicationDidBecomeActive() {
+        NotificationCenter.default.removeObserver(
+            self,
+            name: UIApplication.didBecomeActiveNotification,
+            object: nil
+        )
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(didBecomeActive),
+            name: UIApplication.didBecomeActiveNotification,
+            object: nil
+        )
+    }
+    
+    private func handleApplicationWillEnterForeground() {
+        NotificationCenter.default.removeObserver(
+            self,
+            name: UIApplication.willEnterForegroundNotification,
+            object: nil
+        )
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(willEnterForeground),
+            name: UIApplication.willEnterForegroundNotification,
+            object: nil
+        )
+    }
+    
+    private func handleApplicationWillResignActive() {
+        NotificationCenter.default.removeObserver(
+            self,
+            name: UIApplication.willResignActiveNotification,
+            object: nil
+        )
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(willResignActive),
+            name: UIApplication.willResignActiveNotification,
+            object: nil
+        )
     }
     
     @objc private func willResignActive() {

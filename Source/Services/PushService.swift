@@ -5,18 +5,7 @@ class PushService: NSObject {
     static let shared = PushService()
     
     var onPushReceive: Closure.Generic<PushPayloadModel>? {
-        // swiftlint:disable:next property_willset_didset_single_line
-        didSet {
-            guard let buffer else {
-                return
-            }
-            
-            self.buffer = nil
-            
-            onMain { [weak self] in
-                self?.onPushReceive?(buffer)
-            }
-        }
+        didSet { handleOnPushReceive() }
     }
     
     private var buffer: PushPayloadModel?
@@ -51,6 +40,18 @@ class PushService: NSObject {
             onPushReceive(model)
         } else {
             buffer = model
+        }
+    }
+    
+    private func handleOnPushReceive() {
+        guard let buffer else {
+            return
+        }
+        
+        self.buffer = nil
+        
+        onMain { [weak self] in
+            self?.onPushReceive?(buffer)
         }
     }
     

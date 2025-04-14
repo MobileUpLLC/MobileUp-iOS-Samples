@@ -12,11 +12,11 @@ final class NavigationStackExampleViewModel: ObservableObject {
     }
     
     func onPopControllerButtonTapped() {
-        coordinator.pop()
+        coordinator.popToPreviousController()
     }
     
     func onPopToRootControllerButtonTapped() {
-        coordinator.popToRoot()
+        coordinator.popToTypicalTasksController()
     }
     
     func onPopToNavigationControllerButtonTapped() {

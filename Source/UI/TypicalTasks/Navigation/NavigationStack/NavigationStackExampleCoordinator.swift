@@ -7,11 +7,11 @@ final class NavigationStackExampleCoordinator {
         router?.push(controller: controller, isAnimated: true)
     }
     
-    func pop() {
+    func popToPreviousController() {
         router?.pop(isAnimated: true)
     }
     
-    func popToRoot() {
+    func popToTypicalTasksController() {
         router?.popToRoot(isAnimated: true)
     }
     

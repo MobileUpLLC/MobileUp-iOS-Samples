@@ -27,6 +27,7 @@ final class NavigationExampleViewModel: ObservableObject {
     func onShowSkeletonButtonTapped() {
         isBottomSheetPresented = false
         
+        // Задержка нужна, чтобы успевать закрыть предыдущий боттом шит
         onMainAfter(deadline: .now() + .one) { [weak self] in
             self?.coordinator.showSkeletonModule()
         }
