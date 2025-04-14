@@ -36,7 +36,6 @@ struct SwiftUIListView: View {
     }
 }
 
-/// Используется
 private struct SwiftUIListContentView: View {
     let viewItems: [ListViewItem]
     let onRefresh: (Bool) -> Void

@@ -36,7 +36,6 @@ struct SimpleListView: View {
     }
 }
 
-/// Используется для простых списков без пагинации.
 private struct SimpleListContentView: View {
     let viewItems: [ListViewItem]
     let onRefresh: (Bool) -> Void

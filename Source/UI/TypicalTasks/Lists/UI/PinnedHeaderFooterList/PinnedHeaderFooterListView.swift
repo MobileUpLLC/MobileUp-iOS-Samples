@@ -36,8 +36,6 @@ struct PinnedHeaderFooterListView: View {
     }
 }
 
-/// Используется для простых списков без пагинации, но где есть необходимость закрепить header и/или footer.
-/// Также может использоваться, если в списке много элементов и присутствуют лаги на UI из-за рендера сразу всех вью.
 private struct PinnedHeaderFooterListContentView: View {
     let viewItems: [ListViewItem]
     let onRefresh: (Bool) -> Void
