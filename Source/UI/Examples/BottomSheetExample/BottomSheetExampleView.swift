@@ -49,7 +49,9 @@ struct BottomSheetExampleView: View {
             isPresented: $viewModel.isDeleteAlertPresented,
             actions: {
                 Button(R.string.examples.alertCancelButtonTitle(), role: .cancel) { }
-                Button(R.string.examples.alertLogoutButtonTitle(), role: .destructive) { }
+                Button(R.string.examples.alertLogoutButtonTitle(), role: .destructive) {
+                    viewModel.onDeleteAlertLogoutButtonTapped()
+                }
             },
             message: { Text(R.string.examples.secondAlertMessage()) }
         )

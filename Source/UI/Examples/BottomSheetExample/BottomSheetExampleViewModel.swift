@@ -29,7 +29,7 @@ final class BottomSheetExampleViewModel: ObservableObject {
         isDeleteAlertPresented = true
     }
     
-    func onDeleteAccountButtonTapped() {
+    func onDeleteAlertLogoutButtonTapped() {
         do {
             try authRepository.clearKeychainDataInStorage()
         } catch {

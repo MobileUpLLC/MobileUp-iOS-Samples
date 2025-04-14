@@ -36,15 +36,14 @@ struct InputFieldView: View {
             FormField(value: $text, rules: validationRules) { failedRules in
                 VStack(alignment: .leading, spacing: 0) {
                     SingleInputField(
+                        title: title,
+                        isError: checkErrorState(with: failedRules),
+                        mask: mask,
                         text: $text,
                         isFocusedState: $isFocusedState,
-                        title: title,
                         placeholder: placeholder,
-                        mask: mask,
                         isSecureEnabled: type == .password || type == .confirmPassword,
-                        isRequired: isRequired,
-                        isError: checkErrorState(with: failedRules),
-                        autocapitalization: autocapitalization
+                        isRequired: isRequired
                     )
                     FieldHintsView(hints: getHints(with: failedRules))
                         .frame(minHeight: 16)
@@ -161,53 +160,99 @@ struct SingleInputField: View {
     @State private var isSecure = true
     @FocusState private var isFocused: Bool
     
+    private let title: String
+    private let isError: Bool
+    private let mask: String?
     private let isSecureEnabled: Bool
     private let placeholder: String?
     private let autocapitalization: TextInputAutocapitalization?
     private var isEmptyState: Bool { text.isEmpty && isFocused == false }
     
     var body: some View {
-        HStack(spacing: 0) {
-            InputField(
-                text: $text,
-                placeholder: placeholder ?? .empty,
-                isSecure: isSecureEnabled ? isSecure : false
-            )
-            .textInputAutocapitalization(autocapitalization)
-            .frame(height: 24)
-            .lineLimit(1)
-            .textInputAutocapitalization(.never)
-            .focused($isFocused)
-            .opacity(isEmptyState ? 0 : 1)
-            .font(UIFont.Body.primary.asFont)
-            .disabled(isDisabled)
-            if isFocused {
-                Spacer(minLength: 8)
-                Image(systemName: "x.circle")
-                    .opacity(text.isEmpty ? 0 : 1)
-                    .onTapGesture { withAnimation { text = .empty } }
+        VStack(alignment: .leading, spacing: 0) {
+            Text(title)
+            HStack(spacing: 0) {
+                InputField(
+                    text: $text,
+                    placeholder: placeholder ?? .empty,
+                    isSecure: isSecureEnabled ? isSecure : false
+                )
+                .textInputAutocapitalization(autocapitalization)
+                .frame(height: 24)
+                .lineLimit(1)
+                .textInputAutocapitalization(.never)
+                .focused($isFocused)
+                .opacity(isEmptyState ? 0 : 1)
+                .font(UIFont.Body.primary.asFont)
+                .foregroundStyle(getFieldTextColor())
+                .tint(getFieldTextColor())
+                .disabled(isDisabled)
+                if isFocused {
+                    Spacer(minLength: 8)
+                    Image(systemName: "x.circle")
+                        .renderingMode(.template)
+                        .foregroundStyle(.blue)
+                        .opacity(text.isEmpty ? 0 : 1)
+                        .onTapGesture { withAnimation { text = .empty } }
+                }
             }
+        }
+        .frame(height: 82)
+        .background(.gray)
+        .roundedCorner(16, corners: .allCorners)
+        .defaultStroke(cornerRadius: 16, lineWidth: 1, color: getStrokeColor(), isHidden: isDisabled)
+        .contentShape(Rectangle())
+        .animation(.spring(duration: 0.25), value: isEmptyState)
+        .onTapGesture {
+            if isDisabled == false {
+                isFocused.toggle()
+            }
+        }
+        .onChange(of: text) { newText in
+            if let mask {
+                text = newText.formattedValue(mask: mask)
+            }
+        }
+        .onChange(of: isFocused) { newValue in
+            isFocusedState = newValue
         }
     }
     
     init(
+        title: String,
+        isError: Bool,
+        mask: String? = nil,
         text: Binding<String>,
         isDisabled: Binding<Bool> = .constant(false),
         isFocusedState: Binding<Bool> = .constant(false),
-        title: String,
         placeholder: String? = nil,
-        mask: String? = nil,
         isSecureEnabled: Bool,
         isRequired: Bool,
-        isError: Bool,
         autocapitalization: TextInputAutocapitalization? = nil
     ) {
+        self.title = title
+        self.isError = isError
+        self.mask = mask
         self._text = text
         self._isDisabled = isDisabled
         self._isFocusedState = isFocusedState
         self.placeholder = placeholder
         self.isSecureEnabled = isSecureEnabled
         self.autocapitalization = autocapitalization
+    }
+    
+    private func getStrokeColor() -> Color {
+        if isError {
+            return .red
+        } else if isDisabled {
+            return .clear
+        } else {
+            return isFocused ? .blue : .white
+        }
+    }
+    
+    private func getFieldTextColor() -> Color {
+        isDisabled ? .gray : .white
     }
 }
 

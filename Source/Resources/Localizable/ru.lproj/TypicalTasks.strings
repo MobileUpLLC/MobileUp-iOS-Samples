@@ -1,3 +1,9 @@
 "typical-tasks-title" = "Библиотека решенных типовых задач";
 "typical-tasks-authorization" = "Авторизация";
 "typical-tasks-navigation" = "Навигация";
+"typical-tasks-registration" = "Регистрация";
+"typical-tasks-delete-account-sheet-title" = "Удалить аккаунт";
+"typical-tasks-limited-by-auth-title" = "Недоступный для неавторизованного юзера экран";
+"typical-tasks-authorized-message" = "Пользователь авторизирован";
+"typical-tasks-not-authorized-message" = "Пожалуйста авторизируйтесь";
+"typical-tasks-phone-authorization" = "Авторизация через телефон";

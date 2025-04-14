@@ -9,6 +9,12 @@ final class ConfirmationCodeCoordinator {
         router?.pop(isAnimated: true)
     }
     
+    func showTabBarScreen() {
+        let controller = TabBarFactory.createTabbarController()
+        
+        router?.showApplicationRoot(controller: controller, animated: true)
+    }
+    
     func dismiss() {
         router?.dismiss(isAnimated: true, completion: nil)
     }

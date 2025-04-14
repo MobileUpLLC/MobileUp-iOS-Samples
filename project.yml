@@ -89,6 +89,8 @@ targets:
                 UISceneDelegateClassName: $(PRODUCT_MODULE_NAME).SceneDelegate
         INSTANCE: $(INSTANCE)
         MOBILE_API_URL: $(MOBILE_API_URL)
+        TERMS_OF_USE_URL: $(TERMS_OF_USE_URL)
+        PRIVACY_POLICY_URL: $(PRIVACY_POLICY_URL)
         DEEPLINK_SCHEME: $(DEEPLINK_SCHEME)
         APP_DISPLAY_NAME: $(APP_DISPLAY_NAME)
         CFBundleURLTypes:
@@ -142,6 +144,7 @@ targets:
       - plugin: RswiftGenerateInternalResources
         package: Rswift
     dependencies:
+      - package: InputMask
       - package: FormView
       - package: SnapKit
       - package: Rswift
@@ -158,6 +161,9 @@ targets:
         product: PulseUI
       
 packages:
+  InputMask:
+    url: https://github.com/RedMadRobot/input-mask-ios
+    exactVersion: 6.1.0
   FormView:
     url: https://github.com/MobileUpLLC/FormView
     exactVersion: 1.2.0

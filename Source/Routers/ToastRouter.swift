@@ -44,6 +44,26 @@ extension ToastItem {
             return UIImage(systemName: "xmark.circle") ?? UIImage()
         }
     }
+    
+    static func createWentWrongToastItem(
+        with message: String = R.string.common.errorStateTitle(),
+        toastType: ToastType = .local,
+        bottomInset: CGFloat = 0
+    ) -> ToastItem {
+        return ToastItem(
+            viewItem: .init(
+                style: .failure,
+                message: message,
+                leftIcon: nil,
+                rightIcon: nil
+            ),
+            toastType: toastType,
+            direction: .bottom,
+            duration: .three,
+            isHideOnTap: true,
+            onTap: {}
+        )
+    }
 }
 
 protocol ToastRouter: AnyObject {
