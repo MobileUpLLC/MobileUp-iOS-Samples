@@ -1,22 +1,20 @@
 import SwiftUI
 
 extension View {
-    func wrappedInScrollView(isScrollable: Bool) -> some View {
-        modifier(ScrollableModifier(isScrollable: isScrollable))
+    func wrappedInScrollView() -> some View {
+        modifier(ScrollableModifier())
     }
 }
 
 private struct ScrollableModifier: ViewModifier {
-    let isScrollable: Bool
-    
     func body(content: Content) -> some View {
-        if isScrollable {
-            ScrollView(showsIndicators: false) {
-                ViewExpander()
+        ViewThatFits(in: .vertical) {
+            content
+            ScrollView(.vertical) {
                 content
             }
-        } else {
-            content
+            .scrollIndicators(.hidden)
+            .scrollContentBackground(.hidden)
         }
     }
 }

@@ -8,6 +8,6 @@ final class TransparentPresentationExampleViewModel: ObservableObject {
     }
     
     func onCloseButtonTapped() {
-        coordinator.dismiss()
+        coordinator.close()
     }
 }

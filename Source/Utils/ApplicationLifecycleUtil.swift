@@ -3,17 +3,9 @@ import UIKit
 class ApplicationLifecycleUtil {
     static var isApplicationActive: Bool { UIApplication.shared.applicationState == .active }
     
-    var onApplicationDidBecomeActive: Closure.Void? {
-        didSet { handleApplicationDidBecomeActive() }
-    }
-    
-    var onApplicationWillEnterForeground: Closure.Void? {
-        didSet { handleApplicationWillEnterForeground() }
-    }
-    
-    var onApplicationWillResignActive: Closure.Void? {
-        didSet { handleApplicationWillResignActive() }
-    }
+    var onApplicationDidBecomeActive: Closure.Void? { didSet { handleApplicationDidBecomeActive() } }
+    var onApplicationWillEnterForeground: Closure.Void? { didSet { handleApplicationWillEnterForeground() } }
+    var onApplicationWillResignActive: Closure.Void? { didSet { handleApplicationWillResignActive() } }
     
     private func handleApplicationDidBecomeActive() {
         NotificationCenter.default.removeObserver(

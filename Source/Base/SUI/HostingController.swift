@@ -24,6 +24,12 @@ class HostingController<T: View>: UIHostingController<T>, Navigatable {
         customTabBarController?.setTabBarViewVisibility(isHidden: isTabBarHidden)
     }
     
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        navigationItem.setHidesBackButton(isBackButtonHidden, animated: false)
+    }
+    
     override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         super.motionEnded(motion, with: event)
         

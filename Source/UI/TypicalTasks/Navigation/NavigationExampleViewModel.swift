@@ -1,4 +1,4 @@
-import Foundation
+import UIKit
 
 final class NavigationExampleViewModel: ObservableObject {
     @Published var textFromNextModule: String?
@@ -9,6 +9,7 @@ final class NavigationExampleViewModel: ObservableObject {
     
     var navigationItems: [NavigationExampleViewItem] = []
     var shareSheetItems: [Any] = []
+    var shareSheetActivities: [UIActivity] = [CustomActivity()]
     
     private let coordinator: NavigationExampleCoordinator
     private let navigationRepository: NavigationRepository

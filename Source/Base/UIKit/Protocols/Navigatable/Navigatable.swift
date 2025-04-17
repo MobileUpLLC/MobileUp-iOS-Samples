@@ -141,10 +141,10 @@ extension Navigatable where Self: UIViewController {
             .font: UIFont.boldSystemFont(ofSize: 34)
         ]
         appearance.shadowColor = .clear
+        
         // Кастомная кнопка назад
         let backButton = UIImage(systemName: "chevron.left")
         appearance.setBackIndicatorImage(backButton, transitionMaskImage: backButton)
-        
         navigationItem.standardAppearance = appearance
         navigationItem.scrollEdgeAppearance = appearance
         navigationItem.compactAppearance = appearance

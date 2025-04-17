@@ -12,7 +12,7 @@ struct BottomSheetWithScrollExampleView: View {
                             .padding(30)
                     }
                 }
-                .wrappedInScrollView(isScrollable: true)
+                .wrappedInScrollView()
             }
         }
 }

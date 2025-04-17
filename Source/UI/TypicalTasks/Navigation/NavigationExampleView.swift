@@ -30,7 +30,11 @@ struct NavigationExampleView: View {
             NavigationExampleContentView(items: viewModel.navigationItems)
         }
         .background(.white)
-        .shareSheet(isShareSheetShown: $viewModel.isShareSheetShown, shareSheetItems: viewModel.shareSheetItems)
+        .shareSheet(
+            isShareSheetShown: $viewModel.isShareSheetShown,
+            shareSheetItems: viewModel.shareSheetItems,
+            activities: viewModel.shareSheetActivities
+        )
         .sheet(isPresented: $viewModel.isBottomSheetPresented) {
             GreenBottomSheetView(showSkeletonButtonHandler: viewModel.onShowSkeletonButtonTapped)
                 .enablePresentationBackgroundInteraction(upThrough: .medium)

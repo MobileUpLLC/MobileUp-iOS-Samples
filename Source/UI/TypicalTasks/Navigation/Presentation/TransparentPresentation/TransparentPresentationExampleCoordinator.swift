@@ -2,7 +2,7 @@
 final class TransparentPresentationExampleCoordinator {
     weak var router: PresentationRouter?
     
-    func dismiss() {
+    func close() {
         router?.dismiss(isAnimated: true, completion: nil)
     }
 }
