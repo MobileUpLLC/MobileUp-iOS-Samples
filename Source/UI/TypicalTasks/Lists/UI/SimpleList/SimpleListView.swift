@@ -19,7 +19,7 @@ struct SimpleListView: View {
                 case .loading:
                     LoadingView()
                 case .content:
-                    SimpleListContentView(viewItems: viewModel.viewItems, onRefresh: viewModel.requestData)
+                    SimpleListContentView(viewItems: viewModel.viewItems, onRefresh: viewModel.requestDataAsync)
                 case .error:
                     ListErrorView()
                 case .empty:
@@ -38,7 +38,7 @@ struct SimpleListView: View {
 
 private struct SimpleListContentView: View {
     let viewItems: [ListViewItem]
-    let onRefresh: (Bool) -> Void
+    let onRefresh: (Bool) async -> Void
     
     var body: some View {
         ScrollView {
@@ -50,7 +50,7 @@ private struct SimpleListContentView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding(.horizontal, 16)
         }
-        .refreshable { onRefresh(true) }
+        .refreshable { await onRefresh(true) }
     }
 }
 

@@ -6,11 +6,11 @@ final class PaginationListViewModel: ObservableObject {
         static let itemsPerPage: Int = .ten
     }
     
-    @Published var viewItems: [ListViewItem] = []
     @Published var selectedSort: ListSortType = .default
     @Published var selectedFilter: ListFilterType = .default
     @Published var searchText: String = .empty
     @Published var pagingState: PagingListState = .pagingLoading
+    @Published private(set) var viewItems: [ListViewItem] = []
     
     private let repository: ListRepository
     private var currentPage: Int = .zero
@@ -48,13 +48,13 @@ final class PaginationListViewModel: ObservableObject {
                     page: page,
                     perPage: Constants.itemsPerPage
                 )
-                Task { @MainActor in
+                await MainActor.run {
                     currentPage = page
                     pagingState = response.total > page * Constants.itemsPerPage ? .items : .disabled
                     handleResponse(response.data)
                 }
             } catch {
-                Task { @MainActor in
+                await MainActor.run {
                     if isFirst {
                         pagingState = .fullscreenError(error)
                     } else {
@@ -65,25 +65,25 @@ final class PaginationListViewModel: ObservableObject {
         }
     }
     
-    func refreshData() {
-        pagingState = .refresh
+    func refreshData() async {
+        await MainActor.run {
+            pagingState = .refresh
+        }
         
-        Task(priority: .background) {
-            do {
-                let response = try await repository.requestPaginationDataFromBackend(
-                    sort: selectedSort,
-                    filter: selectedFilter,
-                    page: .one,
-                    perPage: viewItems.count
-                )
-                Task { @MainActor in
-                    pagingState = response.total > viewItems.count ? .items : .disabled
-                    handleRefresh(response.data)
-                }
-            } catch {
-                Task { @MainActor in
-                    pagingState = .fullscreenError(error)
-                }
+        do {
+            let response = try await repository.requestPaginationDataFromBackend(
+                sort: selectedSort,
+                filter: selectedFilter,
+                page: .one,
+                perPage: viewItems.count
+            )
+            await MainActor.run {
+                pagingState = response.total > viewItems.count ? .items : .disabled
+                handleRefresh(response.data)
+            }
+        } catch {
+            await MainActor.run {
+                pagingState = .fullscreenError(error)
             }
         }
     }

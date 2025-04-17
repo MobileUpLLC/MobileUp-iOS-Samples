@@ -19,7 +19,10 @@ struct PinnedHeaderFooterListView: View {
                 case .loading:
                     LoadingView()
                 case .content:
-                    PinnedHeaderFooterListContentView(viewItems: viewModel.viewItems, onRefresh: viewModel.requestData)
+                    PinnedHeaderFooterListContentView(
+                        viewItems: viewModel.viewItems,
+                        onRefresh: viewModel.requestDataAsync
+                    )
                 case .error:
                     ListErrorView()
                 case .empty:
@@ -38,7 +41,7 @@ struct PinnedHeaderFooterListView: View {
 
 private struct PinnedHeaderFooterListContentView: View {
     let viewItems: [ListViewItem]
-    let onRefresh: (Bool) -> Void
+    let onRefresh: (Bool) async -> Void
     
     var body: some View {
         ScrollView {
@@ -60,7 +63,7 @@ private struct PinnedHeaderFooterListContentView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding(.horizontal, 16)
         }
-        .refreshable { onRefresh(true) }
+        .refreshable { await onRefresh(true) }
     }
 }
 
