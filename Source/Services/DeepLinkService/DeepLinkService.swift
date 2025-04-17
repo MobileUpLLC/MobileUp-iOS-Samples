@@ -16,7 +16,7 @@ protocol DeepLinkProvider: AnyObject {
 final class DeepLinkService {
     static let shared = DeepLinkService()
     
-    var onDeeplinkReceived: Closure.Generic<DeepLink>? { didSet { clearBufferOnDeeplinkClosure() } }
+    var onDeeplinkReceived: Closure.Generic<DeepLink>? { didSet { clearBufferOnSetDeeplinkClosure() } }
     
     private var buffer: DeepLink?
     private var providers: [DeepLinkProvider] = []
@@ -49,7 +49,7 @@ final class DeepLinkService {
         }
     }
     
-    private func clearBufferOnDeeplinkClosure() {
+    private func clearBufferOnSetDeeplinkClosure() {
         guard let buffer else {
             return
         }
