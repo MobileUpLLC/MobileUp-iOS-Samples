@@ -40,7 +40,7 @@ final class BottomSheetExampleViewModel: ObservableObject {
     func handleTapOnShowSkeletonButton() {
         isBottomSheetPresented = false
         
-        // Задержка нужна, чтобы успевать закрыть предыдущий боттом шит
+        // Задержка нужна, чтобы успевать закрыть предыдущий боттом шит, решение через onDismiss не подходит
         onMainAfter(deadline: .now() + .one) { [weak self] in
             self?.coordinator.showSkeletonModule()
         }

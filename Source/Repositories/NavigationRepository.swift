@@ -1,7 +1,5 @@
 final class NavigationRepository {
-    var onTextSubmit: Closure.String? {
-        didSet { textSubmitEventBus = EventBus(subscribe: onTextSubmit) }
-    }
+    var onTextSubmit: Closure.String? { didSet { textSubmitEventBus = EventBus(subscribe: onTextSubmit) } }
     
     private var textSubmitEventBus = EventBus<String>()
     
