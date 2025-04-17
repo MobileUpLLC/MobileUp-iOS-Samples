@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct ComplexUIComponentsView: View {
+    @ObservedObject var viewModel: ComplexUIComponentsViewModel
+    
     @Environment(\.dismiss) private var dismiss
     
     var body: some View {
@@ -9,6 +11,9 @@ struct ComplexUIComponentsView: View {
                 NavigationLink("ImageCarousel", destination: ImageCarouselView())
                 NavigationLink("Calendar", destination: CalendarView())
                 NavigationLink("Collapsing View", destination: CollapsingView(onlyFromTop: true))
+                Button("TabBar") {
+                    viewModel.showTypicalTabBar()
+                }
                 Button("Close") {
                     dismiss()
                 }
@@ -18,5 +23,5 @@ struct ComplexUIComponentsView: View {
 }
 
 #Preview {
-    ComplexUIComponentsView()
+    ComplexUIComponentsView(viewModel: ComplexUIComponentsViewModel(coordinator: ComplexUIComponentsCoordinator()))
 }
