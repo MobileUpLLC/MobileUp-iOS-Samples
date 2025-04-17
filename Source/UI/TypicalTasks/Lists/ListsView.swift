@@ -30,7 +30,6 @@ struct ListsView: View {
                         viewModel: PaginationListViewModel(repository: ListRepository())
                     )
                 )
-                
                 Button("Close") {
                     dismiss()
                 }

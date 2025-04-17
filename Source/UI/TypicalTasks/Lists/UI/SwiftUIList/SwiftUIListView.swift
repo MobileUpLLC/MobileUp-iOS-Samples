@@ -19,7 +19,7 @@ struct SwiftUIListView: View {
                 case .loading:
                     LoadingView()
                 case .content:
-                    SwiftUIListContentView(viewItems: viewModel.viewItems, onRefresh: viewModel.requestData)
+                    SwiftUIListContentView(viewItems: viewModel.viewItems, onRefresh: viewModel.requestDataAsync)
                 case .error:
                     ListErrorView()
                 case .empty:
@@ -38,13 +38,13 @@ struct SwiftUIListView: View {
 
 private struct SwiftUIListContentView: View {
     let viewItems: [ListViewItem]
-    let onRefresh: (Bool) -> Void
+    let onRefresh: (Bool) async -> Void
     
     var body: some View {
         List(viewItems) { item in
             Text(item.id)
         }
-        .refreshable { onRefresh(true) }
+        .refreshable { await onRefresh(true) }
     }
 }
 

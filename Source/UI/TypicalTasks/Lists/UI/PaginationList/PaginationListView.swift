@@ -32,7 +32,7 @@ struct PaginationListView: View {
                 } onPageRequest: { isFirst in
                     viewModel.requestData(isFirst: isFirst)
                 } onRefreshRequest: {
-                    viewModel.refreshData()
+                    await viewModel.refreshData()
             }
         }
         .onDebouncedTextChange(text: viewModel.$searchText, delay: 0.3) {

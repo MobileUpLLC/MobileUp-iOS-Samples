@@ -5,7 +5,7 @@ extension View {
     func onDebouncedTextChange(
         text: Published<String>.Publisher,
         delay: RunLoop.SchedulerTimeType.Stride = 0.5,
-        action: @escaping () -> Void
+        action: @escaping Closure.Void
     ) -> some View {
         modifier(TextDebounceModifier(text: text, delay: delay, onDebouncedTextChange: action))
     }
@@ -14,7 +14,7 @@ extension View {
 private struct TextDebounceModifier: ViewModifier {
     let text: Published<String>.Publisher
     let delay: RunLoop.SchedulerTimeType.Stride
-    let onDebouncedTextChange: () -> Void
+    let onDebouncedTextChange: Closure.Void
     
     @SwiftUI.State private var latestText: String = .empty
         
