@@ -7,6 +7,7 @@ struct ComplexUIComponentsView: View {
         NavigationStack {
             List {
                 NavigationLink("ImageCarousel", destination: ImageCarouselView())
+                NavigationLink("Collapsing View", destination: CollapsingView(onlyFromTop: true))
                 Button("Close") {
                     dismiss()
                 }
