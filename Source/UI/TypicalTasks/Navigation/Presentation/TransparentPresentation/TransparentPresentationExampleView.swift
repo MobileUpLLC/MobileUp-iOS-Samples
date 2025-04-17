@@ -11,7 +11,7 @@ struct TransparentPresentationExampleView: View {
                 .scaledToFit()
                 .foregroundStyle(.blue)
             Button(R.string.common.closeButtonTitle()) {
-                viewModel.onCloseButtonTapped()
+                viewModel.handleTapOnCloseButton()
             }
             .buttonStyle(.borderedProminent)
             .frame(maxWidth: .infinity)

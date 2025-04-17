@@ -36,7 +36,7 @@ struct NavigationExampleView: View {
             activities: viewModel.shareSheetActivities
         )
         .sheet(isPresented: $viewModel.isBottomSheetPresented) {
-            GreenBottomSheetView(showSkeletonButtonHandler: viewModel.onShowSkeletonButtonTapped)
+            GreenBottomSheetView(showSkeletonButtonHandler: viewModel.handleTapOnShowSkeletonButton)
                 .enablePresentationBackgroundInteraction(upThrough: .medium)
                 .presentationDetents([.fraction(0.5)])
         }
@@ -47,7 +47,7 @@ struct NavigationExampleView: View {
             R.string.navigation.alertTitle(),
             isPresented: $viewModel.isAlertPresented,
             actions: {
-                Button(R.string.common.okButtonTitle()) { viewModel.onAlertButtonTapped() }
+                Button(R.string.common.okButtonTitle()) { viewModel.handleTapOnAlertButton() }
             },
             message: { Text(R.string.navigation.alertMessage()) }
         )
@@ -81,9 +81,7 @@ private struct NavigationExampleCellView: View {
                 Text(text)
                     .font(UIFont.Heading.medium.asFont)
                     .foregroundStyle(.black)
-                
                 Spacer()
-                
                 Image(systemName: "chevron.right")
             }
             .padding(.bottom, 10)

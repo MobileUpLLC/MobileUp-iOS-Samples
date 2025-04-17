@@ -7,10 +7,10 @@ struct NetworkExampleView: View {
         VStack(spacing: 50) {
             Text("Result: \(viewModel.restultText)")
             Button("Request") {
-                viewModel.onRequestDataButtonTapped()
+                viewModel.handleTapOnRequestDataButton()
             }
             Button("Cancel request") {
-                viewModel.onCancelRequestButtonTapped()
+                viewModel.handleTapOnCancelRequestButton()
             }
         }
     }

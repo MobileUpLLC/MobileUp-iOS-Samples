@@ -5,17 +5,17 @@ struct PresentationExampleView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: .zero) {
-            Text(R.string.navigation.presentationTitle())
+            Text(R.string.navigation.presentationModuleDemoTitle())
                 .font(UIFont.Heading.primary.asFont)
                 .foregroundStyle(.black)
                 .padding(.vertical, 20)
                 .padding(.horizontal, 28)
             Group {
                 Button(R.string.navigation.presentationPresentFullScreenControllerButton()) {
-                    viewModel.onShowFullScreenControllerButtonTapped()
+                    viewModel.handleTapOnShowFullScreenControllerButton()
                 }
                 Button(R.string.navigation.presentationPresentTransparentFullScreenControllerButton()) {
-                    viewModel.onShowTransparentFullScreenControllerButtonTapped()
+                    viewModel.handleTapOnShowTransparentFullScreenControllerButton()
                 }
             }
             .buttonStyle(.borderedProminent)

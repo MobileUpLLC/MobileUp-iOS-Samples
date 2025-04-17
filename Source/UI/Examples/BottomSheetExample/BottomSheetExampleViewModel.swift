@@ -13,23 +13,23 @@ final class BottomSheetExampleViewModel: ObservableObject {
         self.authRepository = authRepository
     }
     
-    func onShowBottomSheetButtonTapped() {
+    func handleTapOnShowBottomSheetButton() {
         isBottomSheetPresented = true
     }
     
-    func onShowExamplesModuleButtonTapped() {
+    func handleTapOnShowExamplesModuleButton() {
         coordinator.showExampleModule()
     }
     
-    func onShowAlertButtonTapped() {
+    func handleTapOnShowAlertButton() {
         isLogoutAlertPresented = true
     }
     
-    func onAlertLogoutButtonTapped() {
+    func handleTapOnAlertLogoutButton() {
         isDeleteAlertPresented = true
     }
     
-    func onDeleteAlertLogoutButtonTapped() {
+    func handleTapOnDeleteAlertLogoutButton() {
         do {
             try authRepository.clearKeychainDataInStorage()
         } catch {
@@ -37,7 +37,7 @@ final class BottomSheetExampleViewModel: ObservableObject {
         }
     }
     
-    func onShowSkeletonButtonTapped() {
+    func handleTapOnShowSkeletonButton() {
         isBottomSheetPresented = false
         
         // Задержка нужна, чтобы успевать закрыть предыдущий боттом шит

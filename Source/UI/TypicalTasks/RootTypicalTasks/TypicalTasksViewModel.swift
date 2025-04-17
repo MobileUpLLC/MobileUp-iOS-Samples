@@ -27,7 +27,7 @@ final class TypicalTasksViewModel: ViewModel {
         isDeleteAlertPresented = true
     }
     
-    func onLimitedByAuthButtonTapped() {
+    func handleTapOnLimitedByAuthButton() {
         if authRepository.isUserAuthorized {
             isSuccessAuthAlertPresented = true
         } else {
@@ -35,7 +35,7 @@ final class TypicalTasksViewModel: ViewModel {
         }
     }
     
-    func onDeleteAlertLogoutButtonTapped() {
+    func handleTapOnDeleteAlertLogoutButton() {
         do {
             try authRepository.clearKeychainDataInStorage()
             coordinator.showEntrance()
@@ -95,7 +95,7 @@ final class TypicalTasksViewModel: ViewModel {
             .init(
                 title: R.string.typicalTasks.typicalTasksLimitedByAuthTitle(),
                 action: { [weak self] in
-                    self?.onLimitedByAuthButtonTapped()
+                    self?.handleTapOnLimitedByAuthButton()
                 }
             ),
             .init(

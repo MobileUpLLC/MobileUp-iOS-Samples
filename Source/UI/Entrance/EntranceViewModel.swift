@@ -7,15 +7,15 @@ final class EntranceViewModel: ViewModel {
         self.coordinator = coordinator
     }
     
-    func onAuthorizationButtonTapped() {
+    func handleTapOnAuthorizationButton() {
         coordinator.showAuthorizationModule()
     }
     
-    func onRegistrationButtonTapped() {
+    func handleTapOnRegistrationButton() {
         coordinator.showRegistrationModule()
     }
     
-    func onTabBarButtonTapped() {
+    func handleTapOnTabBarButton() {
         coordinator.showTabbarModule()
     }
 }

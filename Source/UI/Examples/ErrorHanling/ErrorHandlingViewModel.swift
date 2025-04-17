@@ -8,7 +8,7 @@ final class ErrorHandlingViewModel: ObservableObject {
         getMockData()
     }
     
-    func onRetryButtonTapped() {
+    func handleTapOnRetryButton() {
         getMockData()
     }
     

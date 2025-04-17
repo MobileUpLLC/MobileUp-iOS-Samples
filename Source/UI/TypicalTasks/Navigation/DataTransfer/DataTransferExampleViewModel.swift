@@ -17,7 +17,7 @@ final class DataTransferExampleViewModel: ObservableObject {
         self.onTextSubmit = onTextSubmit
     }
     
-    func onSubmitTextButtonTapped() {
+    func handleTapOnSubmitTextButton() {
         if let onTextSubmit {
             onTextSubmit(textToSend)
         } else {
@@ -27,11 +27,11 @@ final class DataTransferExampleViewModel: ObservableObject {
         textToSend = .empty
     }
     
-    func onPushControllerButtonTapped() {
+    func handleTapOnPushControllerButton() {
         coordinator.showDataTransferExampleModule()
     }
     
-    func onPopToNavigationControllerButtonTapped() {
+    func handleTapOnPopToNavigationControllerButton() {
         coordinator.popToNavigationExampleController()
     }
 }

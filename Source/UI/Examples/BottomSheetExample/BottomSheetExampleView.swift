@@ -8,13 +8,13 @@ struct BottomSheetExampleView: View {
             Color.white
             VStack(spacing: 20) {
                 Button(R.string.examples.showExamplesButtonTitle()) {
-                    viewModel.onShowExamplesModuleButtonTapped()
+                    viewModel.handleTapOnShowExamplesModuleButton()
                 }
                 Button(R.string.examples.showBottomSheetButtonTitle()) {
-                    viewModel.onShowBottomSheetButtonTapped()
+                    viewModel.handleTapOnShowBottomSheetButton()
                 }
                 Button(R.string.examples.showLogoutAlertButtonTitle()) {
-                    viewModel.onShowAlertButtonTapped()
+                    viewModel.handleTapOnShowAlertButton()
                 }
             }
         }
@@ -28,7 +28,7 @@ struct BottomSheetExampleView: View {
         }
         .ignoresSafeArea()
         .sheet(isPresented: $viewModel.isBottomSheetPresented) {
-            GreenBottomSheetView(showSkeletonButtonHandler: viewModel.onShowSkeletonButtonTapped)
+            GreenBottomSheetView(showSkeletonButtonHandler: viewModel.handleTapOnShowSkeletonButton)
                 .enablePresentationBackgroundInteraction(upThrough: .medium)
         }
         .alert(
@@ -36,10 +36,10 @@ struct BottomSheetExampleView: View {
             isPresented: $viewModel.isLogoutAlertPresented,
             actions: {
                 Button(R.string.examples.alertCancelButtonTitle()) {
-                    viewModel.onShowBottomSheetButtonTapped()
+                    viewModel.handleTapOnShowBottomSheetButton()
                 }
                 Button(R.string.examples.alertLogoutButtonTitle()) {
-                    viewModel.onAlertLogoutButtonTapped()
+                    viewModel.handleTapOnAlertLogoutButton()
                 }
             },
             message: { Text(R.string.examples.logoutAlertMessage()) }
@@ -50,7 +50,7 @@ struct BottomSheetExampleView: View {
             actions: {
                 Button(R.string.examples.alertCancelButtonTitle(), role: .cancel) { }
                 Button(R.string.examples.alertLogoutButtonTitle(), role: .destructive) {
-                    viewModel.onDeleteAlertLogoutButtonTapped()
+                    viewModel.handleTapOnDeleteAlertLogoutButton()
                 }
             },
             message: { Text(R.string.examples.secondAlertMessage()) }

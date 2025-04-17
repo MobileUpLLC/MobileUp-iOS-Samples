@@ -15,13 +15,13 @@ struct EntranceView: View {
                 if isAnimating {
                     VStack(spacing: 12) {
                         Button(R.string.entrance.entranceRegistrationButtonTitle()) {
-                            viewModel.onRegistrationButtonTapped()
+                            viewModel.handleTapOnRegistrationButton()
                         }
                         Button(R.string.entrance.entranceAuthorizationButtonTitle()) {
-                            viewModel.onAuthorizationButtonTapped()
+                            viewModel.handleTapOnAuthorizationButton()
                         }
                         Button(R.string.entrance.entranceTabBarButtonTitle()) {
-                            viewModel.onTabBarButtonTapped()
+                            viewModel.handleTapOnTabBarButton()
                         }
                     }
                 }

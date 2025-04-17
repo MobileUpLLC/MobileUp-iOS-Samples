@@ -5,23 +5,23 @@ struct NavigationStackExampleView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: .zero) {
-            Text(R.string.navigation.navigationStackTitle())
+            Text(R.string.navigation.navigationStackModuleDemoTitle())
                 .font(UIFont.Heading.primary.asFont)
                 .foregroundStyle(.black)
                 .padding(.vertical, 20)
                 .padding(.horizontal, 28)
             Group {
                 Button(R.string.navigation.navigationPushControllerButton()) {
-                    viewModel.onPushControllerButtonTapped()
+                    viewModel.handleTapOnPushControllerButton()
                 }
                 Button(R.string.navigation.navigationPopControllerButton()) {
-                    viewModel.onPopControllerButtonTapped()
+                    viewModel.handleTapOnPopControllerButton()
                 }
                 Button(R.string.navigation.navigationPopToRootButton()) {
-                    viewModel.onPopToRootControllerButtonTapped()
+                    viewModel.handleTapOnPopToRootControllerButton()
                 }
                 Button(R.string.navigation.navigationPopToNavigationControllerButton()) {
-                    viewModel.onPopToNavigationControllerButtonTapped()
+                    viewModel.handleTapOnPopToNavigationControllerButton()
                 }
             }
             .buttonStyle(.borderedProminent)

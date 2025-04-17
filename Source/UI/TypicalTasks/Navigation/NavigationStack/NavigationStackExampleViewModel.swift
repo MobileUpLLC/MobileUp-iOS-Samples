@@ -7,19 +7,19 @@ final class NavigationStackExampleViewModel: ObservableObject {
         self.coordinator = coordinator
     }
     
-    func onPushControllerButtonTapped() {
+    func handleTapOnPushControllerButton() {
         coordinator.showNavigationStackExampleController()
     }
     
-    func onPopControllerButtonTapped() {
+    func handleTapOnPopControllerButton() {
         coordinator.popToPreviousController()
     }
     
-    func onPopToRootControllerButtonTapped() {
+    func handleTapOnPopToRootControllerButton() {
         coordinator.popToTypicalTasksController()
     }
     
-    func onPopToNavigationControllerButtonTapped() {
+    func handleTapOnPopToNavigationControllerButton() {
         coordinator.popToNavigationExampleController()
     }
 }

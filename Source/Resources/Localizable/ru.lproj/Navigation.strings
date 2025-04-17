@@ -1,12 +1,17 @@
-"navigation-stack-title" = "Навигационный стек";
-"presentation-title" = "Модальная презентация";
-"data-transfer-title" = "Передача данных между модулями";
-"share-sheet-title" = "Показать Share Sheet";
-"bottom-sheet-title" = "Показать Bottom Sheet";
-"multiple-bottom-sheet-title" = "Использование нескольких Bottom Sheet";
-"bottom-sheet-with-scroll-title" = "Показать Bottom Sheet со скроллом";
-"toast-title" = "Тосты";
-"show-alert-title" = "Показать Алерт";
+"navigation-stack-button-title" = "Навигационный стек";
+"presentation-button-title" = "Модальная презентация";
+"data-transfer-button-title" = "Передача данных между модулями";
+"show-share-sheet-button-title" = "Показать Share Sheet";
+"show-bottom-sheet-button-title" = "Показать Bottom Sheet";
+"multiple-bottom-sheet-button-title" = "Использование нескольких Bottom Sheet";
+"show-bottom-sheet-with-scroll-button-title" = "Показать Bottom Sheet со скроллом";
+"toast-button-title" = "Тосты";
+"show-alert-button-title" = "Показать Алерт";
+
+
+"navigation-stack-module-demo-title" = "Навигационный стек";
+"presentation-module-demo-title" = "Модальная презентация";
+"data-transfer-module-demo-title" = "Передача данных между модулями";
 
 "navigation-push-controller-button" = "Добавить контроллер в стек";
 "navigation-pop-controller-button" = "Убрать контроллер из стека";

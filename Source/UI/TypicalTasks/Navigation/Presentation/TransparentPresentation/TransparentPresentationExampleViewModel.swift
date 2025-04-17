@@ -7,7 +7,7 @@ final class TransparentPresentationExampleViewModel: ObservableObject {
         self.coordinator = coordinator
     }
     
-    func onCloseButtonTapped() {
+    func handleTapOnCloseButton() {
         coordinator.close()
     }
 }

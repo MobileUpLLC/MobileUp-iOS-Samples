@@ -26,7 +26,7 @@ struct TypicalTasksView: View {
             actions: {
                 Button(R.string.examples.alertCancelButtonTitle(), role: .cancel) { }
                 Button(R.string.examples.alertLogoutButtonTitle(), role: .destructive) {
-                    viewModel.onDeleteAlertLogoutButtonTapped()
+                    viewModel.handleTapOnDeleteAlertLogoutButton()
                 }
             },
             message: { Text(R.string.examples.secondAlertMessage()) }

@@ -7,7 +7,7 @@ final class LaunchViewModel: ObservableObject {
         self.coordinator = coordinator
     }
     
-    func onGoToTabbarButtonTapped() {
+    func handleTapOnGoToTabbarButton() {
         coordinator.showTabbarModule()
     }
 }

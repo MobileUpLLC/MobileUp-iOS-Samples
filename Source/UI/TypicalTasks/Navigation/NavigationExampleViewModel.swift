@@ -7,9 +7,9 @@ final class NavigationExampleViewModel: ObservableObject {
     @Published var isScrollableBottomSheetPresented = false
     @Published var isAlertPresented = false
     
-    var navigationItems: [NavigationExampleViewItem] = []
-    var shareSheetItems: [Any] = []
-    var shareSheetActivities: [UIActivity] = [CustomActivity()]
+    private(set) var navigationItems: [NavigationExampleViewItem] = []
+    private(set) var shareSheetItems: [Any] = []
+    private(set) var shareSheetActivities: [UIActivity] = [CustomActivity()]
     
     private let coordinator: NavigationExampleCoordinator
     private let navigationRepository: NavigationRepository
@@ -20,12 +20,12 @@ final class NavigationExampleViewModel: ObservableObject {
         
         navigationItems = getNavigationItems()
         
-        self.navigationRepository.onTextSubmit = { [weak self] text in
+        navigationRepository.onTextSubmit = { [weak self] text in
             self?.textFromNextModule = text
         }
     }
     
-    func onShowSkeletonButtonTapped() {
+    func handleTapOnShowSkeletonButton() {
         isBottomSheetPresented = false
         
         // Задержка нужна, чтобы успевать закрыть предыдущий боттом шит
@@ -34,7 +34,7 @@ final class NavigationExampleViewModel: ObservableObject {
         }
     }
     
-    func onAlertButtonTapped() {
+    func handleTapOnAlertButton() {
         isAlertPresented = false
     }
     
@@ -83,55 +83,55 @@ final class NavigationExampleViewModel: ObservableObject {
     private func getNavigationItems() -> [NavigationExampleViewItem] {
         return [
             .init(
-                title: R.string.navigation.navigationStackTitle(),
+                title: R.string.navigation.navigationStackButtonTitle(),
                 action: { [weak self] in
                     self?.showNavigationStackExampleModule()
                 }
             ),
             .init(
-                title: R.string.navigation.presentationTitle(),
+                title: R.string.navigation.presentationButtonTitle(),
                 action: { [weak self] in
                     self?.showPresentationExampleModule()
                 }
             ),
             .init(
-                title: R.string.navigation.dataTransferTitle(),
+                title: R.string.navigation.dataTransferButtonTitle(),
                 action: { [weak self] in
                     self?.showDataTransferExampleModule()
                 }
             ),
             .init(
-                title: R.string.navigation.shareSheetTitle(),
+                title: R.string.navigation.showShareSheetButtonTitle(),
                 action: { [weak self] in
                     self?.showShareSheet()
                 }
             ),
             .init(
-                title: R.string.navigation.bottomSheetTitle(),
+                title: R.string.navigation.showBottomSheetButtonTitle(),
                 action: { [weak self] in
                     self?.showBottomSheet()
                 }
             ),
             .init(
-                title: R.string.navigation.multipleBottomSheetTitle(),
+                title: R.string.navigation.multipleBottomSheetButtonTitle(),
                 action: { [weak self] in
                     self?.showMultipleBottomSheetModule()
                 }
             ),
             .init(
-                title: R.string.navigation.bottomSheetWithScrollTitle(),
+                title: R.string.navigation.showBottomSheetWithScrollButtonTitle(),
                 action: { [weak self] in
                     self?.showScrollableBottomSheet()
                 }
             ),
             .init(
-                title: R.string.navigation.toastTitle(),
+                title: R.string.navigation.toastButtonTitle(),
                 action: { [weak self] in
                     self?.showToastExample()
                 }
             ),
             .init(
-                title: R.string.navigation.showAlertTitle(),
+                title: R.string.navigation.showAlertButtonTitle(),
                 action: { [weak self] in
                     self?.showAlert()
                 }

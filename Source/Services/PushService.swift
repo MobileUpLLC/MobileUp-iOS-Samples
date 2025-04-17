@@ -4,9 +4,7 @@ import UIKit
 class PushService: NSObject {
     static let shared = PushService()
     
-    var onPushReceive: Closure.Generic<PushPayloadModel>? {
-        didSet { handleOnPushReceive() }
-    }
+    var onPushReceive: Closure.Generic<PushPayloadModel>? { didSet { handleOnPushReceive() } }
     
     private var buffer: PushPayloadModel?
     

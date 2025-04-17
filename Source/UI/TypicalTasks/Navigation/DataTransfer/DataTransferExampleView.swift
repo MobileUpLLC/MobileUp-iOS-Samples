@@ -6,7 +6,7 @@ struct DataTransferExampleView: View {
     var body: some View {
         VStack {
             Spacer()
-            Text(R.string.navigation.dataTransferTitle())
+            Text(R.string.navigation.dataTransferModuleDemoTitle())
                 .font(UIFont.Heading.primary.asFont)
                 .foregroundStyle(.black)
                 .padding(.vertical, 20)
@@ -16,13 +16,13 @@ struct DataTransferExampleView: View {
                 .padding()
             Group {
                 Button(R.string.common.okButtonTitle()) {
-                    viewModel.onSubmitTextButtonTapped()
+                    viewModel.handleTapOnSubmitTextButton()
                 }
                 Button(R.string.navigation.navigationPushControllerButton()) {
-                    viewModel.onPushControllerButtonTapped()
+                    viewModel.handleTapOnPushControllerButton()
                 }
                 Button(R.string.navigation.navigationPopToNavigationControllerButton()) {
-                    viewModel.onPopToNavigationControllerButtonTapped()
+                    viewModel.handleTapOnPopToNavigationControllerButton()
                 }
             }
             .buttonStyle(.borderedProminent)
