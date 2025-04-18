@@ -1,7 +1,9 @@
 import UIKit
 
 enum SplashFactory {
-    static func createSplashController(completion: @escaping Closure.Generic<InitialNavigationFlow>) -> SplashController {
+    static func createSplashController(
+        completion: @escaping Closure.Generic<InitialNavigationFlow>
+    ) -> SplashController {
         let coordinator = SplashCoordinator()
         let authRepository = AuthRepository()
         let viewModel = SplashViewModel(

@@ -28,6 +28,10 @@ final class TypicalTasksViewModel: ViewModel {
                 action: { [weak self] in
                     self?.showAuthorizationModule()
                 }
+            ),
+            .init(
+                title: R.string.typicalTasks.typicalTasksLists(),
+                action: { [weak self] in self?.coordinator.showLists() }
             )
         ]
     }

@@ -143,6 +143,7 @@ targets:
       - package: Moya
       - package: Pulse
         product: PulseUI
+      - package: PagingList
       
 packages:
   SnapKit:
@@ -175,3 +176,6 @@ packages:
   Pulse:
     url: https://github.com/kean/Pulse
     exactVersion: 5.1.2
+  PagingList:
+    url: https://github.com/MobileUpLLC/PagingList.git
+    exactVersion: 2.1.1
