@@ -1,7 +1,10 @@
+import Foundation
+
 enum FileUploadFactory {
     static func createFileUploadController() -> FileUploadController {
         let coordinator = FileUploadCoordinator()
-        let viewModel = FileUploadViewModel(coordinator: coordinator)
+        let storageService = DataStorageService<Data>()
+        let viewModel = FileUploadViewModel(coordinator: coordinator, storageService: storageService)
         let controller = FileUploadController(viewModel: viewModel)
         coordinator.router = controller
         
