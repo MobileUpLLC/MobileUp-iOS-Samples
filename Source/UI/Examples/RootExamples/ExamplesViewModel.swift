@@ -70,6 +70,10 @@ final class ExamplesViewModel: ObservableObject {
         coordinator.showNetworkExampleModule()
     }
     
+    private func showOnboardingExample() {
+        coordinator.showOnboardingExampleModule()
+    }
+    
     private func getExamples() -> [ExamplesViewItem] {
         return [
             .init(title: R.string.examples.examplesWebPage()) { [weak self] in
@@ -95,6 +99,9 @@ final class ExamplesViewModel: ObservableObject {
             },
             .init(title: R.string.examples.examplesNetwork()) { [weak self] in
                 self?.showNetworkExample()
+            },
+            .init(title: R.string.examples.examplesOnboardingCellTitle()) { [weak self] in
+                self?.showOnboardingExample()
             }
         ]
     }

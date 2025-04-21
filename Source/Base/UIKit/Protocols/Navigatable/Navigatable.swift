@@ -21,7 +21,7 @@ extension Navigatable where Self: UIViewController {
     }
 
     private func configureNavigationBarCentralItem() {
-        navigationController?.navigationBar.tintColor = R.color.icon.iconPrimary.asUIColor
+        navigationController?.navigationBar.tintColor = navigationBarItem.foregroundColor
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = navigationBarItem.isLargeTitle ? .always : .never
         configureToolbarItem()
@@ -48,7 +48,7 @@ extension Navigatable where Self: UIViewController {
             )
         case .back:
             navigationItem.leftBarButtonItem = UIBarButtonItem(
-                image: R.image.arrow24.asUIImage,
+                image: R.image.ic24.arrow.asUIImage,
                 style: .plain,
                 target: self,
                 action: #selector(handleTapOnNavigationBarLeftItem)
