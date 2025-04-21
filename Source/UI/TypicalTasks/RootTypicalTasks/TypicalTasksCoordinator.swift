@@ -8,6 +8,12 @@ final class TypicalTasksCoordinator {
     func showLists() {
         let controller = ListsFactory.createListsController()
         controller.modalPresentationStyle = .fullScreen
-        router?.present(controller: controller, isAnimated: true, completion: {})
+        router?.present(controller: controller, isAnimated: true, completion: nil)
+    }
+    
+    func showComplexUIComponents() {
+        let controller = ComplexUIComponentsFactory.createComplexUIComponentsController()
+        controller.modalPresentationStyle = .fullScreen
+        router?.present(controller: controller, isAnimated: true, completion: nil)
     }
 }
