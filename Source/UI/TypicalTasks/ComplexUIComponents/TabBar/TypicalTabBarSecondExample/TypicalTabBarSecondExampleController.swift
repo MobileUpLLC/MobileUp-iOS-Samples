@@ -2,8 +2,7 @@ import UIKit
 
 final class TypicalTabBarSecondExampleController:
     HostingController<TypicalTabBarSecondExampleView>,
-    TypicalCustomTabBarItemProvider
-{
+    TypicalCustomTabBarItemProvider {
     var tabBarItemIcon: UIImage
     
     init() {

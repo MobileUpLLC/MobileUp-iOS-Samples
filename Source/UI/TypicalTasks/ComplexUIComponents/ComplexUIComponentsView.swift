@@ -8,13 +8,16 @@ struct ComplexUIComponentsView: View {
     var body: some View {
         NavigationStack {
             List {
-                NavigationLink("ImageCarousel", destination: ImageCarouselView())
-                NavigationLink("Calendar", destination: CalendarView())
-                NavigationLink("Collapsing View", destination: CollapsingView(onlyFromTop: true))
-                Button("TabBar") {
+                NavigationLink(R.string.typicalTasks.imageCarouselTitle(), destination: ImageCarouselView())
+                NavigationLink(R.string.typicalTasks.calendarTitle(), destination: CalendarView())
+                NavigationLink(
+                    R.string.typicalTasks.collapsingViewTitle(),
+                    destination: CollapsingView(onlyFromTop: true)
+                )
+                Button(R.string.typicalTasks.tabbarButtonTitle()) {
                     viewModel.showTypicalTabBar()
                 }
-                Button("Close") {
+                Button(R.string.typicalTasks.closeButtonTitle()) {
                     dismiss()
                 }
             }

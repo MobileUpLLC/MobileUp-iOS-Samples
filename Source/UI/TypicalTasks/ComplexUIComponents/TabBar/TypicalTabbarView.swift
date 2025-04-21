@@ -3,9 +3,7 @@ import UIKit
 class TypicalTabBarView: ItemsStackView<UIImage, UIImageView> {
     var onItemSelect: Closure.Int?
     
-    var selectedIndex: Int = 0 {
-        didSet { indexDidChange() }
-    }
+    var selectedIndex: Int = 0 { didSet { indexDidChange() } }
     
     private lazy var blurEffectView: UIVisualEffectView = {
         let blurEffect = UIBlurEffect(style: .dark)
@@ -63,16 +61,12 @@ class TypicalTabBarView: ItemsStackView<UIImage, UIImageView> {
         insertSubview(blurEffectView, at: .zero)
         
         innerStack.arrangedSubviews.enumerated().forEach { index, view in
-            view.tintColor = (index == selectedIndex) ? .white : .gray
+            view.tintColor = index == selectedIndex ? .white : .gray
         }
     }
     
     @objc private func itemTapped(sender: UITapGestureRecognizer) {
-        let index = innerStack.arrangedSubviews.firstIndex { view in
-            view === sender.view
-        }
-        
-        guard let index else {
+        guard let index = innerStack.arrangedSubviews.firstIndex(where: { $0 === sender.view }) else {
             return
         }
         

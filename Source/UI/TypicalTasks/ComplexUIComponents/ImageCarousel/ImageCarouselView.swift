@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct ImageCarouselView: View {
-    let images: [String] = [
+    let imageNames: [String] = [
         "paperplane",
         "paperplane.fill",
         "exclamationmark.triangle",
@@ -16,8 +16,8 @@ struct ImageCarouselView: View {
         VStack {
             Spacer()
             TabView(selection: $currentIndex) {
-                ForEach(images.indices, id: \.self) { index in
-                    Image(systemName: images[index])
+                ForEach(imageNames.indices, id: \.self) { index in
+                    Image(systemName: imageNames[index])
                         .resizable()
                         .scaledToFit()
                         .tag(index)
@@ -29,7 +29,7 @@ struct ImageCarouselView: View {
             .tabViewStyle(.page(indexDisplayMode: .never))
             Spacer()
             HStack(spacing: 8) {
-                ForEach(images.indices, id: \.self) { index in
+                ForEach(imageNames.indices, id: \.self) { index in
                     Circle()
                         .fill(index == currentIndex ? Color.black : Color.gray.opacity(0.5))
                         .frame(width: 8, height: 8)
@@ -40,7 +40,7 @@ struct ImageCarouselView: View {
         }
         .background(Color.blue.opacity(0.3))
         .fullScreenCover(isPresented: $isFullscreen) {
-            FullscreenView(imageName: images[currentIndex])
+            FullscreenView(imageName: imageNames[currentIndex])
                 .background(Color.green.opacity(0.3))
         }
     }
