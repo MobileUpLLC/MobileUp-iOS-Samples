@@ -34,4 +34,10 @@ final class TypicalTasksCoordinator {
         
         router?.push(controller: controller, isAnimated: true)
     }
+    
+    func showFileUploadModule() {
+        let controller = FileUploadFactory.createFileUploadController()
+        
+        router?.push(controller: controller, isAnimated: true)
+    }
 }

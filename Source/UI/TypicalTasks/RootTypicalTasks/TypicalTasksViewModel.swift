@@ -72,6 +72,10 @@ final class TypicalTasksViewModel: ViewModel {
         coordinator.showNavigationExampleModule()
     }
     
+    private func showFileUploadModule() {
+        coordinator.showFileUploadModule()
+    }
+    
     private func getTypicalTasks() -> [TypicalTasksViewItem] {
         return [
             .init(
@@ -108,6 +112,12 @@ final class TypicalTasksViewModel: ViewModel {
                 title: R.string.typicalTasks.typicalTasksNavigation(),
                 action: { [weak self] in
                     self?.showNavigationExampleModule()
+                }
+            ),
+            .init(
+                title: R.string.typicalTasks.typicalTasksWorkingWithFiles(),
+                action: { [weak self] in
+                    self?.showFileUploadModule()
                 }
             )
         ]
