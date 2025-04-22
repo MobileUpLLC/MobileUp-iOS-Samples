@@ -1,5 +1,4 @@
 import SwiftUI
-import UniformTypeIdentifiers
 
 struct DocumentBrowser: UIViewControllerRepresentable {
     let onSelect: Closure.Generic<URL>
@@ -37,16 +36,6 @@ struct DocumentBrowser: UIViewControllerRepresentable {
             to destinationURL: URL
         ) {
             onSelect(destinationURL)
-        }
-        
-        func documentBrowser(
-            _ controller: UIDocumentBrowserViewController,
-            didRequestDocumentCreationWithHandler importHandler: @escaping (
-                URL?,
-                UIDocumentBrowserViewController.ImportMode
-            ) -> Void
-        ) {
-            importHandler(nil, .none)
         }
     }
 }

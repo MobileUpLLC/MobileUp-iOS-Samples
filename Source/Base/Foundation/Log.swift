@@ -27,6 +27,8 @@ extension Log {
     
     static let authRepository = Log(subsystem: subsystem, category: "AuthRepository")
     
+    static let localSourcesService = Log(subsystem: subsystem, category: "LocalSourcesService")
+    
     private static let subsystem = Bundle.main.bundleIdentifier ?? .empty
 }
 
