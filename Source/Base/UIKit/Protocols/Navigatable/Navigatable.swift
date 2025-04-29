@@ -53,7 +53,7 @@ extension Navigatable where Self: UIViewController {
                 target: self,
                 action: #selector(handleTapOnNavigationBarLeftItem)
             )
-        case .empty:
+        case .empty, .button:
             navigationItem.leftBarButtonItem = .none
             navigationItem.hidesBackButton = true
         case let .customView(view):
@@ -86,6 +86,10 @@ extension Navigatable where Self: UIViewController {
                 let newBarButtonItem = UIBarButtonItem(customView: view)
                 newBarButtonItem.isEnabled = item.isEnabled
                 rightBarButtonItems.append(newBarButtonItem)
+            case .button(let button):
+                button.isEnabled = item.isEnabled
+                button.tag = index
+                rightBarButtonItems.append(button)
             }
         }
 
@@ -108,7 +112,7 @@ fileprivate extension UIViewController {
         }
 
         switch self.navigationBarItem.leftItem.type {
-        case .icon, .empty, .customView:
+        case .icon, .empty, .customView, .button:
             break
         case .back:
             navigationController?.popViewController(animated: true)

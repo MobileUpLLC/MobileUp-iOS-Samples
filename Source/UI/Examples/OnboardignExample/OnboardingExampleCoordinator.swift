@@ -12,8 +12,11 @@ final class OnboardingExampleCoordinator {
     }
     
     func showOnboardingWithElementFocus() {
-        let controller = OnboardingWithElementFocusFactory.createOnboardingWithElementFocusController()
-        
-        router?.push(controller: controller, isAnimated: true)
+        if #available(iOS 17.0, *) {
+            let controller = OnboardingWithElementFocusFactory.createOnboardingWithElementFocusController()
+            router?.push(controller: controller, isAnimated: true)
+        } else {
+            print("Fallback on earlier versions")
+        }
     }
 }

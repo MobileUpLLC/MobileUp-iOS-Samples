@@ -1,4 +1,4 @@
-final class CommonOnboardingCoordinator {
+final class CommonOnboardingCoordinator: OnboardingCoordinator {
     weak var router: PresentationRouter?
     
     func dismiss() {

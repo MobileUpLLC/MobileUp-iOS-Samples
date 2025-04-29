@@ -11,9 +11,9 @@ final class CommonOnboardingViewModel: ViewModel {
     
     private(set) var currentProgress: Int = .zero
     private var viewItems: [CommonOnboardingViewItem] = []
-    private let coordinator: CommonOnboardingCoordinator
+    private let coordinator: OnboardingCoordinator
     
-    init(coordinator: CommonOnboardingCoordinator, onboardingType: CommonOnboardingType) {
+    init(coordinator: OnboardingCoordinator, onboardingType: CommonOnboardingType) {
         self.coordinator = coordinator
         viewItems = onboardingType.items
         finishButtonTitle = onboardingType.finishButtonTitle
