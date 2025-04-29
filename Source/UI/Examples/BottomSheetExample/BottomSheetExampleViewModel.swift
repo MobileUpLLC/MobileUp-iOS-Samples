@@ -6,11 +6,9 @@ final class BottomSheetExampleViewModel: ObservableObject {
     @Published var isDeleteAlertPresented = false
     
     private let coordinator: BottomSheetExampleCoordinator
-    private let authRepository: AuthRepository
 
-    init(coordinator: BottomSheetExampleCoordinator, authRepository: AuthRepository) {
+    init(coordinator: BottomSheetExampleCoordinator) {
         self.coordinator = coordinator
-        self.authRepository = authRepository
     }
     
     func onShowBottomSheetButtonTapped() {

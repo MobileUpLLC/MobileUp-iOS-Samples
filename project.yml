@@ -145,7 +145,8 @@ targets:
       - package: Pulse
         product: PulseUI
       - package: PagingList
-      
+      - package: munkit
+
 packages:
   SnapKit:
     url: https://github.com/SnapKit/SnapKit.git
@@ -180,3 +181,6 @@ packages:
   PagingList:
     url: https://github.com/MobileUpLLC/PagingList.git
     exactVersion: 2.1.1
+  munkit:
+    url: https://github.com/MobileUpLLC/munkit
+    exactVersion: 1.0.5

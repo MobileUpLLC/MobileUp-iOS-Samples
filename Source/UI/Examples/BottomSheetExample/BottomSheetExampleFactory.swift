@@ -1,8 +1,9 @@
 enum BottomSheetExampleFactory {
-    static func createBottomSheetExampleController() -> BottomSheetExampleController {
-        let coordinator = BottomSheetExampleCoordinator()
-        let authRepository = AuthRepository()
-        let viewModel = BottomSheetExampleViewModel(coordinator: coordinator, authRepository: authRepository)
+    static func createBottomSheetExampleController(
+        networkService: NetworkService
+    ) -> BottomSheetExampleController {
+        let coordinator = BottomSheetExampleCoordinator(networkService: networkService)
+        let viewModel = BottomSheetExampleViewModel(coordinator: coordinator)
         let controller = BottomSheetExampleController(viewModel: viewModel)
         coordinator.router = controller
 

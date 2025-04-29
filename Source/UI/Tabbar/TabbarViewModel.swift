@@ -3,26 +3,19 @@ import SwiftUI
 final class TabbarViewModel: ObservableObject {
     private let coordinator: TabBarCoordinator
     private let pushService: PushService
-    private let mobileService: MobileService
-    
+    private let networkService: NetworkService
+
     init(
         coordinator: TabBarCoordinator,
         pushService: PushService,
-        mobileService: MobileService
+        networkService: NetworkService
     ) {
         self.coordinator = coordinator
         self.pushService = pushService
-        self.mobileService = mobileService
-        
+        self.networkService = networkService
+
         pushService.onPushReceive = { [weak self] model in
             self?.onPushTapped(model: model)
-        }
-        
-        mobileService.onTokenRefreshFailed = { [weak self] in
-            onMain { [weak self] in
-                // TODO: Handle logout
-                self?.coordinator.openLaunch()
-            }
         }
     }
     

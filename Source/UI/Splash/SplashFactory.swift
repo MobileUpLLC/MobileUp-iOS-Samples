@@ -1,18 +1,27 @@
 import UIKit
+import munkit
 
 enum SplashFactory {
     static func createSplashController(
+        networkService: NetworkService,
         completion: @escaping Closure.Generic<InitialNavigationFlow>
-    ) -> SplashController {
+    ) async -> SplashController {
+        let authRepository = AuthRepository(networkService: networkService)
+
+        await networkService.setAuthorizationObjects(
+            provider: authRepository,
+            refresher: authRepository,
+            tokenRefreshFailureHandler: { completion(.entrance) }
+        )
+
         let coordinator = SplashCoordinator()
-        let authRepository = AuthRepository()
         let viewModel = SplashViewModel(
             coordinator: coordinator,
-            mobileService: .shared,
+            networkService: networkService,
             authRepository: authRepository,
             completion: completion
         )
-        let controller = SplashController(viewModel: viewModel)
+        let controller = await SplashController(viewModel: viewModel)
         coordinator.router = controller
         
         return controller

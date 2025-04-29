@@ -9,13 +9,13 @@ final class NetworkExampleViewModel: ObservableObject {
     @Published var restultText: String = .empty
     
     private let coordinator: NetworkExampleCoordinator
-    private let mobileService: MobileService
+    private let networkService: NetworkService
 
     private var task: Task<(), any Error>?
     
-    init(coordinator: NetworkExampleCoordinator, mobileService: MobileService) {
+    init(coordinator: NetworkExampleCoordinator, networkService: NetworkService) {
         self.coordinator = coordinator
-        self.mobileService = mobileService
+        self.networkService = networkService
     }
         
     func onRequestDataButtonTapped() {
@@ -25,8 +25,8 @@ final class NetworkExampleViewModel: ObservableObject {
         
         task = Task {
             do {
-                let _: [ExampleModel] = try await self.mobileService.request(target: .example(.testItems))
-                
+                let _: [ExampleModel] = try await self.networkService.executeRequest(target: .example(.testItems))
+
                 Log.refreshTokenFlow.debug(logEntry: .text("NetworkExampleViewModel. Data received successfully"))
 
                 onMain { [weak self] in
