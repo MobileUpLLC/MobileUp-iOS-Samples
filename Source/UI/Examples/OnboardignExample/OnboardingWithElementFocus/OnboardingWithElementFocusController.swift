@@ -4,84 +4,62 @@ import SnapKit
 
 @available(iOS 17.0, *)
 final class OnboardingWithElementFocusController: HostingController<OnboardingWithElementFocusView> {
-    let profileTip = ProfileTip.shared
-    lazy var tipView = TipUIView(self.profileTip)
-    
-    init(viewModel: OnboardingWithElementFocusViewModel) {
-        super.init(rootView: OnboardingWithElementFocusView(viewModel: viewModel))
+    let profileTip = FavoritesTip()
+
+    lazy var favoritesBarButtonItem: UIBarButtonItem = {
         let newBarButtonItem = UIBarButtonItem(
-            image: R.image.ic24.cancel.asUIImage,
+            image: UIImage(systemName: "star"),
             style: .plain,
             target: self,
             action: #selector(handleTapOnNavigationRightItem)
         )
+        return newBarButtonItem
+    }()
+
+    init(viewModel: OnboardingWithElementFocusViewModel) {
+        super.init(rootView: OnboardingWithElementFocusView(viewModel: viewModel))
         
         navigationBarItem = .init(
             rightItems: [
-                .init(type: .button(newBarButtonItem))
+                .init(type: .button(favoritesBarButtonItem))
             ]
         )
-//        пробовал с помощью profileTip.shouldDisplayUpdates проверить изменения статуса показа подсказки
-//        что бы ее скрыть вовремя самому
-//        Task { @MainActor in
-//            try? await Task.sleep(nanoseconds: 1_000_000_000)
-//            for await shouldDisplay in profileTip.shouldDisplayUpdates {
-//                if shouldDisplay {
-//                    tipView.removeFromSuperview()
-//                } else {
-//                    self.view.addSubview(self.tipView)
-//                    
-//                    // Позиционируем подсказку рядом с кнопкой navigation bar
-//                    
-//                }
-//            }
-//        }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
-            // Добавляем tipView к view контроллера
-            guard let self else {
-                return
-            }
-            self.view.addSubview(self.tipView)
-            
-            if let barButtonView = newBarButtonItem.value(forKey: "view") as? UIView {
-                self.tipView.snp.makeConstraints { make in
-                    make.top.equalTo(barButtonView.snp.bottom).offset(20)
-                    make.trailing.equalTo(barButtonView.snp.leading)
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        handleTipDisplayUpdates()
+    }
+
+    private func handleTipDisplayUpdates() {
+        Task { @MainActor in
+            for await shouldDisplay in profileTip.shouldDisplayUpdates {
+                if shouldDisplay {
+                    let controller = TipUIPopoverViewController(
+                        profileTip,
+                        sourceItem: favoritesBarButtonItem
+                    ) { action in
+                        if action.id == "add-to-favorites" {
+                            print("Добавить в избранное")
+                        }
+
+                        if action.id == "learn-more" {
+                            print("Узнать больше")
+                        }
+                    }
+                    controller.view.backgroundColor = .clear
+                    controller.viewStyle = CustomTipViewStyle()
+
+                    self.present(controller, animated: true)
+                } else if presentedViewController is TipUIPopoverViewController {
+                    dismiss(animated: true)
                 }
             }
         }
     }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
+
     @objc func handleTapOnNavigationRightItem() {
-        ProfileTip.profileButtonTapped.sendDonation()
-        // скрывыем подсказку руками
-//        tipView.removeFromSuperview()
-    }
-}
-
-
-@available(iOS 17.0, *)
-struct ProfileTip: Tip {
-    static let profileButtonTapped = Tip.Event(id: "profileButtonTapped")
-    
-    static let shared = ProfileTip()
-    
-    var title: Text {
-        Text("Профиль")
-    }
-    
-    var message: Text? {
-        Text("Нажмите здесь, чтобы просмотреть.")
-    }
-    
-    var rules: [Rule] {
-        [
-            #Rule(Self.profileButtonTapped) { $0.donations.count > 2 }
-        ]
+        FavoritesTip.profileButtonTapped.sendDonation()
     }
 }
