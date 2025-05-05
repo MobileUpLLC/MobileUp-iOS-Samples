@@ -48,7 +48,7 @@ final class FavouritesListViewModel: ObservableObject, ImageLikeMakableViewModel
             isLike: !item.isLiked,
             currentLikeCount: item.likeCount,
             errorHandler: { [weak self] error in
-                self?.state = .error
+                self?.coordinator.showErrorToast(message: "Не получилось обновить лайк")
             }
         )
     }

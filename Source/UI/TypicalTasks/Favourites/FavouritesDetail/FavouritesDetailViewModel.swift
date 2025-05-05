@@ -46,7 +46,7 @@ final class FavouritesDetailViewModel: ObservableObject, ImageLikeMakableViewMod
             isLike: !item.isLiked,
             currentLikeCount: item.likeCount,
             errorHandler: { [weak self] error in
-                self?.state = .error
+                self?.coordinator.showErrorToast(message: "Не получилось обновить лайк")
             }
         )
     }
@@ -70,7 +70,7 @@ final class FavouritesDetailViewModel: ObservableObject, ImageLikeMakableViewMod
         Perform { [weak self] in
             guard let self else { return }
             // Имитация загрузки данных
-            guard let model = publicationRepository.getPostDetail(id: imageId) else {
+            guard let model = await publicationRepository.getPostDetail(id: imageId) else {
                 return
             }
             

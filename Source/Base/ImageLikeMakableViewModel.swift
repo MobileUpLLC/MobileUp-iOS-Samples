@@ -31,6 +31,9 @@ extension ImageLikeMakableViewModel {
         // Сетевой запрос
         Perform { [weak self] in
             try await self?.publicationRepository.postLike(imageId: imageId, isLike: isLike)
+            
+            // Закомментировано из-за отсутствия реального бека для имитации успешного поста лайка/анлайка
+//            LikeService.removeLikeState(imageId: imageId)
         } onError: { [weak self] error in
             LikeService.removeLikeState(imageId: imageId)
             

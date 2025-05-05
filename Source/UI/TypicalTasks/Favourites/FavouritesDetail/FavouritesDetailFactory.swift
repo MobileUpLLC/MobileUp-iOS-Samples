@@ -5,7 +5,6 @@ enum FavouritesDetailFactory {
         let viewModel = FavouritesDetailViewModel(
             coordinator: coordinator,
             publicationRepository: publicationRepository,
-            
             imageId: imageId
         )
         let controller = FavouritesDetailController(viewModel: viewModel)

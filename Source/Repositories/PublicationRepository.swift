@@ -40,24 +40,27 @@ final class PublicationRepository {
     
     func getPosts() async -> [ImageModel] {
         // Имитация сетевого запроса
-        try? await Task.sleep(nanoseconds: 1_500_000_000) // 1 секунда задержки
+        try? await Task.sleep(nanoseconds: 1_500_000_000) // 1,5 секунды задержки
         
         return models
     }
     
-    func getPostDetail(id: String) -> ImageModel? {
+    func getPostDetail(id: String) async -> ImageModel? {
+        // Имитация сетевого запроса
+        try? await Task.sleep(nanoseconds: 1_500_000_000) // 1,5 секунды задержки
+        
         return models[(Int(id) ?? 1) - 1]
     }
     
     func postLike(imageId: String, isLike: Bool) async throws {
         // Имитация сетевого запроса
-        try await Task.sleep(nanoseconds: 1_500_000_000) // 1 секунда задержки
+        try await Task.sleep(nanoseconds: 1_500_000_000) // 1,5 секунды задержки
         
-//        let isSuccess = Bool.random() // Имитация успеха/ошибки
+        let isSuccess = Bool.random() // Имитация успеха/ошибки
         
-//        if isSuccess == false {
-//            throw ServerError.unknown(ErrorDetails(message: "Failed to update like"))
-//        }
+        if isSuccess == false {
+            throw URLError(.unknown)
+        }
     }
     
     func sendLikePostEvent(data: LikeModel) {
