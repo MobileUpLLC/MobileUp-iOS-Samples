@@ -8,7 +8,7 @@ final class RootCoordinator {
     }
     
     func showEntrance() {
-        let controller = EntranceFactory.createEntranceController()
+        let controller = EntranceFactory.createEntranceController(networkService: networkService)
         
         router?.showApplicationRoot(controller: controller, animated: true)
     }

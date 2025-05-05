@@ -21,4 +21,10 @@ final class TypicalTasksCoordinator {
         controller.modalPresentationStyle = .fullScreen
         router?.present(controller: controller, isAnimated: true, completion: nil)
     }
+    
+    func showFavouritesModule() {
+        let controller = FavouritesListFactory.createFavouritesListController()
+        
+        router?.push(controller: controller, isAnimated: true)
+    }
 }
