@@ -9,32 +9,30 @@ import TipKit
 
 struct NotificationTipViewStyle: TipViewStyle {
     func makeBody(configuration: Configuration) -> some View {
-        HStack(alignment: .top, spacing: 8) {
+        VStack(alignment: .center, spacing: 8) {
+            HStack {
+                Spacer()
+                Button(action: {
+                    configuration.tip.invalidate(reason: .tipClosed)
+                }, label: {
+                    Image(systemName: "xmark")
+                        .foregroundStyle(.gray)
+                })
+            }
             configuration.image?
                 .resizable()
                 .frame(width: 32, height: 32)
                 .foregroundStyle(.orange)
-            VStack(alignment: .leading, spacing: 8) {
-                HStack {
-                    configuration.title
-                        .font(.headline)
-                    Spacer()
-                    Button(action: {
-                        configuration.tip.invalidate(reason: .tipClosed)
-                    }, label: {
-                        Image(systemName: "xmark")
-                            .foregroundStyle(.gray)
-                    })
-                }
-                configuration.message?
-                    .font(.body)
-                    .fontWeight(.regular)
-                    .foregroundStyle(.secondary)
-                Rectangle()
-                    .frame(height: 1)
-                    .foregroundStyle(.gray.opacity(0.5))
-                actionButton(actions: configuration.actions)
-            }
+            configuration.title
+                .font(.headline)
+            configuration.message?
+                .font(.body)
+                .fontWeight(.regular)
+                .foregroundStyle(.secondary)
+            Rectangle()
+                .frame(height: 1)
+                .foregroundStyle(.gray.opacity(0.5))
+            actionButton(actions: configuration.actions)
         }
         .padding()
         .background(.gray.opacity(0.2))

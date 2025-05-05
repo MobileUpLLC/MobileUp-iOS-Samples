@@ -12,13 +12,16 @@ struct OnboardingTipViewStyle: TipViewStyle {
         VStack(alignment: .center, spacing: 16) {
             configuration.message?
                 .font(.body)
+                .bold()
                 .fontWeight(.regular)
                 .foregroundStyle(.secondary)
             HStack {
-                Button(action: configuration.actions.first!.handler, label: {
-                    configuration.actions.first!.label()
-                })
-                .buttonStyle(.borderedProminent)
+                if let action = configuration.actions.first {
+                    Button(action: action.handler, label: {
+                        action.label()
+                    })
+                    .buttonStyle(.borderedProminent)
+                }
                 Button(action: {
                     configuration.tip.invalidate(reason: .tipClosed)
                 }, label: {
@@ -28,6 +31,8 @@ struct OnboardingTipViewStyle: TipViewStyle {
             }
             
         }
+        .fontDesign(.serif)
+        .tint(.purple)
         .padding(20)
     }
 }
