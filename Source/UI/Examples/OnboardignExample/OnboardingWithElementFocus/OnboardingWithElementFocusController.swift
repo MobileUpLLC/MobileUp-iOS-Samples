@@ -4,14 +4,25 @@ import SnapKit
 
 @available(iOS 17.0, *)
 final class OnboardingWithElementFocusController: HostingController<OnboardingWithElementFocusView> {
-    let profileTip = FavoritesTip()
+    let favoritesTip = FavoritesTip()
+    let notificationTip = NotificationTip()
 
     lazy var favoritesBarButtonItem: UIBarButtonItem = {
         let newBarButtonItem = UIBarButtonItem(
             image: UIImage(systemName: "star"),
             style: .plain,
             target: self,
-            action: #selector(handleTapOnNavigationRightItem)
+            action: #selector(handleTapOnFavoritesRightItem)
+        )
+        return newBarButtonItem
+    }()
+
+    lazy var notificationBarButtonItem: UIBarButtonItem = {
+        let newBarButtonItem = UIBarButtonItem(
+            image: UIImage(systemName: "bell"),
+            style: .plain,
+            target: self,
+            action: #selector(handleTapOnNotificationRightItem)
         )
         return newBarButtonItem
     }()
@@ -21,7 +32,8 @@ final class OnboardingWithElementFocusController: HostingController<OnboardingWi
         
         navigationBarItem = .init(
             rightItems: [
-                .init(type: .button(favoritesBarButtonItem))
+                .init(type: .button(favoritesBarButtonItem)),
+                .init(type: .button(notificationBarButtonItem))
             ]
         )
     }
@@ -29,29 +41,41 @@ final class OnboardingWithElementFocusController: HostingController<OnboardingWi
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        handleTipDisplayUpdates()
+        handleNotificationTipDisplayUpdates()
     }
 
-    private func handleTipDisplayUpdates() {
+    private func handleFavoritesTipDisplayUpdates() {
         Task { @MainActor in
-            for await shouldDisplay in profileTip.shouldDisplayUpdates {
+            for await shouldDisplay in favoritesTip.shouldDisplayUpdates {
                 if shouldDisplay {
                     let controller = TipUIPopoverViewController(
-                        profileTip,
+                        favoritesTip,
                         sourceItem: favoritesBarButtonItem
-                    ) { action in
-                        if action.id == "add-to-favorites" {
-                            print("Добавить в избранное")
-                        }
-
-                        if action.id == "learn-more" {
-                            print("Узнать больше")
-                        }
-                    }
+                    )
                     controller.view.backgroundColor = .clear
                     controller.viewStyle = CustomTipViewStyle()
 
-                    self.present(controller, animated: true)
+                    present(controller, animated: true)
+                } else if presentedViewController is TipUIPopoverViewController {
+                    NotificationTip.hasViewedFavoritesTip = true
+                    dismiss(animated: true)
+                }
+            }
+        }
+    }
+
+    private func handleNotificationTipDisplayUpdates() {
+        Task { @MainActor in
+            for await shouldDisplay in notificationTip.shouldDisplayUpdates {
+                if shouldDisplay {
+                    let controller = TipUIPopoverViewController(
+                        notificationTip,
+                        sourceItem: notificationBarButtonItem
+                    )
+                    controller.view.backgroundColor = .clear
+                    controller.viewStyle = CustomTipViewStyle()
+
+                    present(controller, animated: true)
                 } else if presentedViewController is TipUIPopoverViewController {
                     dismiss(animated: true)
                 }
@@ -59,7 +83,10 @@ final class OnboardingWithElementFocusController: HostingController<OnboardingWi
         }
     }
 
-    @objc func handleTapOnNavigationRightItem() {
-        FavoritesTip.profileButtonTapped.sendDonation()
+    @objc private func handleTapOnFavoritesRightItem() {
+        FavoritesTip.favoritesButtonTapped.sendDonation()
+        handleFavoritesTipDisplayUpdates()
     }
+
+    @objc private func handleTapOnNotificationRightItem() {}
 }
