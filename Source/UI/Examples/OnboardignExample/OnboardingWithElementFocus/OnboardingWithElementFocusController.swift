@@ -2,10 +2,14 @@ import UIKit
 import TipKit
 import SnapKit
 
-@available(iOS 17.0, *)
 final class OnboardingWithElementFocusController: HostingController<OnboardingWithElementFocusView> {
-    let favoritesTip = FavoritesTip()
-    let notificationTip = NotificationTip()
+    private let favoritesTip = FavoritesTip()
+    private lazy var tipView = TipUIView(favoritesTip, arrowEdge: .trailing)
+
+    private let notificationTip = NotificationTip()
+
+    private var favoriteTipObservationTask: Task<Void, Never>?
+    private var notificationTipObservationTask: Task<Void, Never>?
 
     lazy var favoritesBarButtonItem: UIBarButtonItem = {
         let newBarButtonItem = UIBarButtonItem(
@@ -44,28 +48,36 @@ final class OnboardingWithElementFocusController: HostingController<OnboardingWi
         handleNotificationTipDisplayUpdates()
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        favoriteTipObservationTask?.cancel()
+        favoriteTipObservationTask = nil
+
+        notificationTipObservationTask?.cancel()
+        notificationTipObservationTask = nil
+    }
+
     private func handleFavoritesTipDisplayUpdates() {
-        Task { @MainActor in
+        favoriteTipObservationTask = Task { @MainActor in
             for await shouldDisplay in favoritesTip.shouldDisplayUpdates {
                 if shouldDisplay {
-                    let controller = TipUIPopoverViewController(
-                        favoritesTip,
-                        sourceItem: favoritesBarButtonItem
-                    )
-                    controller.view.backgroundColor = .clear
-                    controller.viewStyle = CustomTipViewStyle()
+                    view.addSubview(tipView)
 
-                    present(controller, animated: true)
-                } else if presentedViewController is TipUIPopoverViewController {
+                    tipView.snp.makeConstraints {
+                        $0.top.equalToSuperview().inset(150)
+                        $0.horizontalEdges.equalToSuperview().inset(16)
+                    }
+                } else if view.subviews.contains(tipView) {
                     NotificationTip.hasViewedFavoritesTip = true
-                    dismiss(animated: true)
+                    tipView.removeFromSuperview()
                 }
             }
         }
     }
 
     private func handleNotificationTipDisplayUpdates() {
-        Task { @MainActor in
+        notificationTipObservationTask = Task { @MainActor in
             for await shouldDisplay in notificationTip.shouldDisplayUpdates {
                 if shouldDisplay {
                     let controller = TipUIPopoverViewController(
@@ -73,7 +85,7 @@ final class OnboardingWithElementFocusController: HostingController<OnboardingWi
                         sourceItem: notificationBarButtonItem
                     )
                     controller.view.backgroundColor = .clear
-                    controller.viewStyle = CustomTipViewStyle()
+                    controller.viewStyle = NotificationTipViewStyle()
 
                     present(controller, animated: true)
                 } else if presentedViewController is TipUIPopoverViewController {

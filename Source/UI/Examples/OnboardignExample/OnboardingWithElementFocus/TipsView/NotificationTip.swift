@@ -7,7 +7,6 @@
 
 import TipKit
 
-@available(iOS 17.0, *)
 struct NotificationTip: Tip {
     @Parameter static var hasViewedFavoritesTip: Bool = false
 

@@ -1,10 +1,19 @@
 import SwiftUI
+import TipKit
 
 struct OnboardingWithElementFocusView: View {
     @ObservedObject var viewModel: OnboardingWithElementFocusViewModel
 
     var body: some View {
-        Text("OnboardingWithElementFocus module created!")
+        VStack {
+            Text("OnboardingWithElementFocus module created!")
+            TipView(OnboardingTip())
+                .tipViewStyle(OnboardingTipViewStyle())
+                .frame(width: 300)
+                .symbolRenderingMode(.multicolor)
+                .tipCornerRadius(30)
+                .padding(20)
+        }
     }
 }
 

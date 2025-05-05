@@ -1,5 +1,5 @@
 //
-//  CustomTipViewStyle.swift
+//  NotificationTipViewStyle.swift
 //  com.samples.app
 //
 //  Created by Natalia Luzyanina on 29.04.2025.
@@ -7,7 +7,7 @@
 
 import TipKit
 
-struct CustomTipViewStyle: TipViewStyle {
+struct NotificationTipViewStyle: TipViewStyle {
     func makeBody(configuration: Configuration) -> some View {
         HStack(alignment: .top, spacing: 8) {
             configuration.image?
