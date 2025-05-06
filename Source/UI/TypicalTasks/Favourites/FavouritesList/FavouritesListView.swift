@@ -1,5 +1,4 @@
 import SwiftUI
-import Kingfisher
 
 struct FavouritesListViewItem: Identifiable {
     let id: String
@@ -42,9 +41,7 @@ struct FavouritesListCellView: View {
     
     var body: some View {
         HStack {
-            KFImage(URL(string: viewItem.imageUrl))
-                .placeholder { ProgressView() }
-                .resizable()
+            ImageView(imageLink: viewItem.imageUrl)
                 .frame(width: 50, height: 50)
                 .clipShape(Circle())
             VStack(alignment: .leading) {

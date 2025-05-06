@@ -9,7 +9,7 @@ final class FavouritesDetailViewModel: ObservableObject, ImageLikeMakableViewMod
     }
     
     @Published private(set) var state: ViewState = .initial
-    @Published var viewItem: FavouritesDetailViewItem?
+    @Published private(set) var viewItem: FavouritesDetailViewItem?
     
     let publicationRepository: PublicationRepository
     private let coordinator: FavouritesDetailCoordinator
@@ -23,6 +23,7 @@ final class FavouritesDetailViewModel: ObservableObject, ImageLikeMakableViewMod
         self.coordinator = coordinator
         self.publicationRepository = publicationRepository
         self.imageId = imageId
+        
         loadImage()
         
         publicationRepository.onLikePostUpdate = { [weak self] likeModel in
@@ -39,7 +40,9 @@ final class FavouritesDetailViewModel: ObservableObject, ImageLikeMakableViewMod
     }
     
     func handleLikeTap() {
-        guard let item = viewItem else { return }
+        guard let item = viewItem else {
+            return
+        }
         
         performLikeAction(
             imageId: imageId,
@@ -51,7 +54,7 @@ final class FavouritesDetailViewModel: ObservableObject, ImageLikeMakableViewMod
         )
     }
     
-    func updateViewItem(isLiked: Bool, likeCount: Int) {
+    private func updateViewItem(isLiked: Bool, likeCount: Int) {
         guard let currentItem = viewItem else {
             return
         }
@@ -67,9 +70,12 @@ final class FavouritesDetailViewModel: ObservableObject, ImageLikeMakableViewMod
     
     private func loadImage() {
         state = .loading
+        
         Perform { [weak self] in
-            guard let self else { return }
-            // Имитация загрузки данных
+            guard let self else {
+                return
+            }
+            
             guard let model = await publicationRepository.getPostDetail(id: imageId) else {
                 return
             }
@@ -81,6 +87,7 @@ final class FavouritesDetailViewModel: ObservableObject, ImageLikeMakableViewMod
                 isLiked: LikeService.getLikeState(imageId: model.id)?.isLiked ?? model.isLiked,
                 likeCount: LikeService.getLikeState(imageId: model.id)?.likeCount ?? model.likeCount
             )
+            
             onMain {
                 self.viewItem = viewItem
                 self.state = .content

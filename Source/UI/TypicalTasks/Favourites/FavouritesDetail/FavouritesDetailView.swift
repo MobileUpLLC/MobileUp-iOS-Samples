@@ -1,5 +1,4 @@
 import SwiftUI
-import Kingfisher
 
 struct FavouritesDetailViewItem: Identifiable {
     let id: String
@@ -19,9 +18,7 @@ struct FavouritesDetailView: View {
         case .content:
             if let viewItem = viewModel.viewItem {
                 VStack {
-                    KFImage(URL(string: viewItem.imageUrl))
-                        .placeholder { ProgressView() }
-                        .resizable()
+                    ImageView(imageLink: viewItem.imageUrl)
                         .scaledToFit()
                         .frame(maxHeight: 300)
                     Text(viewItem.title)
@@ -40,8 +37,6 @@ struct FavouritesDetailView: View {
                 .frame(maxWidth: .infinity)
                 .background(.white)
                 .navigationTitle("Image Detail")
-            } else {
-                EmptyView()
             }
         case .error:
             Text("Error loading image")

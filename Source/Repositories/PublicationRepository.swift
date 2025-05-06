@@ -7,7 +7,7 @@ final class PublicationRepository {
     
     private var likeEventBus = EventBus<LikeModel>()
     
-    let models = [
+    private let models = [
         ImageModel(
             id: "1",
             title: "Image 1",
@@ -39,26 +39,21 @@ final class PublicationRepository {
     ]
     
     func getPosts() async -> [ImageModel] {
-        // Имитация сетевого запроса
-        try? await Task.sleep(nanoseconds: 1_500_000_000) // 1,5 секунды задержки
+        try? await Task.sleep(nanoseconds: 1_500_000_000)
         
         return models
     }
     
     func getPostDetail(id: String) async -> ImageModel? {
-        // Имитация сетевого запроса
-        try? await Task.sleep(nanoseconds: 1_500_000_000) // 1,5 секунды задержки
+        try? await Task.sleep(nanoseconds: 1_500_000_000)
         
         return models[(Int(id) ?? 1) - 1]
     }
     
     func postLike(imageId: String, isLike: Bool) async throws {
-        // Имитация сетевого запроса
-        try await Task.sleep(nanoseconds: 1_500_000_000) // 1,5 секунды задержки
+        try await Task.sleep(nanoseconds: 1_500_000_000)
         
-        let isSuccess = Bool.random() // Имитация успеха/ошибки
-        
-        if isSuccess == false {
+        if Bool.random() {
             throw URLError(.unknown)
         }
     }
