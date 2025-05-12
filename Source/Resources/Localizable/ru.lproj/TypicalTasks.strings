@@ -1,3 +1,11 @@
 "typical-tasks-title" = "Библиотека решенных типовых задач";
 "typical-tasks-authorization" = "Авторизация";
 "typical-tasks-lists" = "Списки";
+"complex-ui-elements" = "Сложные UI-элементы";
+
+// ComplexUIComponents
+"image-carousel-title" = "Image Carousel";
+"calendar-title" = "Calendar";
+"collapsing-view-title" = "Collapsing View";
+"tabbar-button-title" = "TabBar";
+"close-button-title" = "Close";

@@ -32,6 +32,10 @@ final class TypicalTasksViewModel: ViewModel {
             .init(
                 title: R.string.typicalTasks.typicalTasksLists(),
                 action: { [weak self] in self?.coordinator.showLists() }
+            ),
+            .init(
+                title: R.string.typicalTasks.complexUiElements(),
+                action: { [weak self] in self?.coordinator.showComplexUIComponents() }
             )
         ]
     }
