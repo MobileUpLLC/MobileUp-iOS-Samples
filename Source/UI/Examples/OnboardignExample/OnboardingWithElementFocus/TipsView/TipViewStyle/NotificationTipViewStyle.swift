@@ -7,6 +7,7 @@
 
 import TipKit
 
+@available(iOS 17.0, *)
 struct NotificationTipViewStyle: TipViewStyle {
     func makeBody(configuration: Configuration) -> some View {
         VStack(alignment: .center, spacing: 8) {

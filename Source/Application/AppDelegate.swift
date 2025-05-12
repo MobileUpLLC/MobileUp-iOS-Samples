@@ -1,6 +1,5 @@
 import UIKit
 import AppTrackingTransparency
-import TipKit
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,16 +14,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         onMainAfter(deadline: .now() + .one) {
             ATTrackingManager.requestTrackingAuthorization { _ in }
         }
-        
-        if #available(iOS 17.0, *) {
-            try? Tips.configure([
-                .displayFrequency(.immediate),
-                .datastoreLocation(.applicationDefault)
-            ])
-        } else {
-            // Fallback on earlier versions
-        }
-        
+
+        TipsService.shared.configureTip()
+
         return true
     }
 }

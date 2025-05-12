@@ -7,12 +7,14 @@ struct OnboardingWithElementFocusView: View {
     var body: some View {
         VStack {
             Text("OnboardingWithElementFocus module created!")
-            TipView(OnboardingTip())
-                .tipViewStyle(OnboardingTipViewStyle())
-                .frame(width: 300)
-                .symbolRenderingMode(.multicolor)
-                .tipCornerRadius(30)
-                .padding(20)
+            if #available(iOS 17.0, *) {
+                TipView(OnboardingTip())
+                    .tipViewStyle(OnboardingTipViewStyle())
+                    .frame(width: 300)
+                    .symbolRenderingMode(.multicolor)
+                    .tipCornerRadius(30)
+                    .padding(20)
+            }
         }
     }
 }

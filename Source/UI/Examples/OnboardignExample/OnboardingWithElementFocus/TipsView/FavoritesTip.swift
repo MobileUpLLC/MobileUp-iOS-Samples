@@ -7,6 +7,7 @@
 
 import TipKit
 
+@available(iOS 17.0, *)
 struct FavoritesTip: Tip {
     static let favoritesButtonTapped = Tip.Event(id: "profileButtonTapped")
 
@@ -24,17 +25,20 @@ struct FavoritesTip: Tip {
 
     var rules: [Rule] {
         [
+            // swiftlint:disable empty_count
             #Rule(Self.favoritesButtonTapped) { $0.donations.count > 0 }
+            // swiftlint:enable empty_count
         ]
     }
 
     var actions: [Action] {
-        Action(id: "add-to-favorites", title: "Добавить в избранное", perform: {
-            print("Добавить в избранное")
-        })
-
-        Action(id: "learn-more", title: "Узнать больше", perform: {
-            print("Узнать больше")
-        })
+        [
+            Action(id: "add-to-favorites", title: "Добавить в избранное", perform: {
+                print("Добавить в избранное")
+            }),
+            Action(id: "learn-more", title: "Узнать больше", perform: {
+                print("Узнать больше")
+            })
+        ]
     }
 }

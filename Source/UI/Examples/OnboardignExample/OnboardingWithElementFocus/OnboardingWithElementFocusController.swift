@@ -2,6 +2,7 @@ import UIKit
 import TipKit
 import SnapKit
 
+@available(iOS 17.0, *)
 final class OnboardingWithElementFocusController: HostingController<OnboardingWithElementFocusView> {
     private let favoritesTip = FavoritesTip()
     private lazy var tipView = TipUIView(favoritesTip, arrowEdge: .trailing)
@@ -11,7 +12,7 @@ final class OnboardingWithElementFocusController: HostingController<OnboardingWi
     private var favoriteTipObservationTask: Task<Void, Never>?
     private var notificationTipObservationTask: Task<Void, Never>?
 
-    lazy var favoritesBarButtonItem: UIBarButtonItem = {
+    private lazy var favoritesBarButtonItem: UIBarButtonItem = {
         let newBarButtonItem = UIBarButtonItem(
             image: UIImage(systemName: "star"),
             style: .plain,
@@ -21,7 +22,7 @@ final class OnboardingWithElementFocusController: HostingController<OnboardingWi
         return newBarButtonItem
     }()
 
-    lazy var notificationBarButtonItem: UIBarButtonItem = {
+    private lazy var notificationBarButtonItem: UIBarButtonItem = {
         let newBarButtonItem = UIBarButtonItem(
             image: UIImage(systemName: "bell"),
             style: .plain,

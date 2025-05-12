@@ -7,6 +7,7 @@
 
 import TipKit
 
+@available(iOS 17.0, *)
 struct OnboardingTipViewStyle: TipViewStyle {
     func makeBody(configuration: Configuration) -> some View {
         VStack(alignment: .center, spacing: 16) {
@@ -29,7 +30,6 @@ struct OnboardingTipViewStyle: TipViewStyle {
                 })
                 .buttonStyle(.bordered)
             }
-            
         }
         .fontDesign(.serif)
         .tint(.purple)

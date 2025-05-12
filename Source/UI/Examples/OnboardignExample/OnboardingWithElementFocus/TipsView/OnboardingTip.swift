@@ -7,6 +7,7 @@
 
 import TipKit
 
+@available(iOS 17.0, *)
 struct OnboardingTip: Tip {
     static let favoritesButtonTapped = Tip.Event(id: "profileButtonTapped")
 
