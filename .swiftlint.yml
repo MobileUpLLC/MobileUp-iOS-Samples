@@ -3,6 +3,7 @@ disabled_rules:
   - colon
   - type_body_length
   - notification_center_detachment
+  - opening_brace
   - todo
   
 opt_in_rules:

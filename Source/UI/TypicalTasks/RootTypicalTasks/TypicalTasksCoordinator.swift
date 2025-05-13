@@ -16,4 +16,10 @@ final class TypicalTasksCoordinator {
         controller.modalPresentationStyle = .fullScreen
         router?.present(controller: controller, isAnimated: true, completion: nil)
     }
+    
+    func showInputFormsModule() {
+        let controller = InputFormsFactory.createInputFormsController()
+        
+        router?.push(controller: controller, isAnimated: true)
+    }
 }

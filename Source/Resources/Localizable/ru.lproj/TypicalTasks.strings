@@ -2,6 +2,7 @@
 "typical-tasks-authorization" = "Авторизация";
 "typical-tasks-lists" = "Списки";
 "complex-ui-elements" = "Сложные UI-элементы";
+"typical-tasks-input-forms" = "Формы ввода";
 
 // ComplexUIComponents
 "image-carousel-title" = "Image Carousel";
