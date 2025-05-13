@@ -7,6 +7,11 @@ struct InputFormsView: View {
         VStack {
             Spacer()
             Text("InputForms module created!")
+            Checkbox(
+                isSelected: $viewModel.isCheckboxSelected,
+                label: "Test checkbox",
+                onTapAction: viewModel.handleCheckboxSelection
+            )
             Spacer()
         }
         .frame(maxWidth: .infinity)
