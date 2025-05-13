@@ -1,7 +1,8 @@
 import Foundation
 
 final class InputFormsViewModel: ObservableObject {
-    @Published var isCheckboxSelected: Bool = false
+    @Published var isCheckboxSelected = false
+    @Published var isToggleSelected = false
     
     private let coordinator: InputFormsCoordinator
     
@@ -9,7 +10,11 @@ final class InputFormsViewModel: ObservableObject {
         self.coordinator = coordinator
     }
     
-    func handleCheckboxSelection() {
+    func handleCheckboxAction() {
         print(isCheckboxSelected ? "Did select checkbox" : "Did deselect checkbox")
+    }
+    
+    func handleToggleAction() {
+        print(isToggleSelected ? "Did activate toggle" : "Did deactivate toggle")
     }
 }
