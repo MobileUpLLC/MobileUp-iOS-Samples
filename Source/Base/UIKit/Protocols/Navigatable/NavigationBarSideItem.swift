@@ -6,7 +6,6 @@ struct NavigationBarSideItem {
         case back
         case empty
         case customView(UIView)
-        case button(UIBarButtonItem)
     }
 
     let type: ItemType

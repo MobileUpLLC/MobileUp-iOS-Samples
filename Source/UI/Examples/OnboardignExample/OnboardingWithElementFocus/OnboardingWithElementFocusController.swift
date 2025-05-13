@@ -12,33 +12,35 @@ final class OnboardingWithElementFocusController: HostingController<OnboardingWi
     private var favoriteTipObservationTask: Task<Void, Never>?
     private var notificationTipObservationTask: Task<Void, Never>?
 
-    private lazy var favoritesBarButtonItem: UIBarButtonItem = {
-        let newBarButtonItem = UIBarButtonItem(
-            image: UIImage(systemName: "star"),
-            style: .plain,
-            target: self,
-            action: #selector(handleTapOnFavoritesRightItem)
-        )
-        return newBarButtonItem
+    private lazy var favoritesBarButtonItem: UIButton = {
+        let button = UIButton()
+        let image = UIImage(systemName: "star")
+        button.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
+        button.setImage(image, for: .normal)
+        button.contentVerticalAlignment = .fill
+        button.contentHorizontalAlignment = .fill
+        button.addTarget(self, action: #selector(handleTapOnFavoritesRightItem), for: .touchUpInside)
+        return button
     }()
 
-    private lazy var notificationBarButtonItem: UIBarButtonItem = {
-        let newBarButtonItem = UIBarButtonItem(
-            image: UIImage(systemName: "bell"),
-            style: .plain,
-            target: self,
-            action: #selector(handleTapOnNotificationRightItem)
-        )
-        return newBarButtonItem
+    private lazy var notificationRightItemView: UIButton = {
+        let button = UIButton()
+        let image = UIImage(systemName: "bell")
+        button.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
+        button.setImage(image, for: .normal)
+        button.contentVerticalAlignment = .fill
+        button.contentHorizontalAlignment = .fill
+        button.addTarget(self, action: #selector(handleTapOnNotificationRightItem), for: .touchUpInside)
+        return button
     }()
 
     init(viewModel: OnboardingWithElementFocusViewModel) {
         super.init(rootView: OnboardingWithElementFocusView(viewModel: viewModel))
-        
-        navigationBarItem = .init(
+
+        navigationBarItem = NavigationBarItem(
             rightItems: [
-                .init(type: .button(favoritesBarButtonItem)),
-                .init(type: .button(notificationBarButtonItem))
+                NavigationBarSideItem(type: .customView(favoritesBarButtonItem)),
+                NavigationBarSideItem(type: .customView(notificationRightItemView))
             ]
         )
     }
@@ -62,6 +64,8 @@ final class OnboardingWithElementFocusController: HostingController<OnboardingWi
     private func handleFavoritesTipDisplayUpdates() {
         favoriteTipObservationTask = Task { @MainActor in
             for await shouldDisplay in favoritesTip.shouldDisplayUpdates {
+                try? Task.checkCancellation()
+
                 if shouldDisplay {
                     view.addSubview(tipView)
 
@@ -80,10 +84,12 @@ final class OnboardingWithElementFocusController: HostingController<OnboardingWi
     private func handleNotificationTipDisplayUpdates() {
         notificationTipObservationTask = Task { @MainActor in
             for await shouldDisplay in notificationTip.shouldDisplayUpdates {
+                try? Task.checkCancellation()
+
                 if shouldDisplay {
                     let controller = TipUIPopoverViewController(
                         notificationTip,
-                        sourceItem: notificationBarButtonItem
+                        sourceItem: notificationRightItemView
                     )
                     controller.view.backgroundColor = .clear
                     controller.viewStyle = NotificationTipViewStyle()
@@ -97,9 +103,21 @@ final class OnboardingWithElementFocusController: HostingController<OnboardingWi
     }
 
     @objc private func handleTapOnFavoritesRightItem() {
+        UIView.animate(withDuration:  0.1) {
+            self.favoritesBarButtonItem.tintColor = .gray
+        } completion: { _ in
+            self.favoritesBarButtonItem.tintColor = nil
+        }
+
         FavoritesTip.favoritesButtonTapped.sendDonation()
         handleFavoritesTipDisplayUpdates()
     }
 
-    @objc private func handleTapOnNotificationRightItem() {}
+    @objc private func handleTapOnNotificationRightItem() {
+        UIView.animate(withDuration:  0.1) {
+            self.notificationRightItemView.tintColor = .gray
+        } completion: { _ in
+            self.notificationRightItemView.tintColor = nil
+        }
+    }
 }
