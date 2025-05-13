@@ -17,6 +17,13 @@ struct InputFormsView: View {
                 label: "Test toggle",
                 onTapAction: viewModel.handleToggleAction
             )
+            DropdownMenuView(
+                isFocused: $viewModel.isDropDownMenuFocused,
+                selectedItem: $viewModel.selectedDropDownMenuItem,
+                title: "Test dropdown menu",
+                items: viewModel.dropDownMenuItems,
+                onSelection: viewModel.handleDropDownMenuSelectAction(item:)
+            )
             Spacer()
         }
         .padding(.horizontal, 20)
