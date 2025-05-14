@@ -145,6 +145,7 @@ targets:
       - package: Pulse
         product: PulseUI
       - package: PagingList
+      - package: FormView
       
 packages:
   SnapKit:
@@ -180,3 +181,6 @@ packages:
   PagingList:
     url: https://github.com/MobileUpLLC/PagingList.git
     exactVersion: 2.1.1
+  FormView:
+    url: https://github.com/MobileUpLLC/FormView
+    exactVersion: 1.1.2
