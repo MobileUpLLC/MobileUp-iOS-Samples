@@ -1,6 +1,6 @@
 import Foundation
 
-class WebSocketNativeService {
+class NativeWebSocketService {
     // swiftlint:disable:next force_unwrapping
     private let url = URL(string: "wss://echo.websocket.org")!
     private var webSocketTask: URLSessionWebSocketTask?

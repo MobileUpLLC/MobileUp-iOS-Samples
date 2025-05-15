@@ -3,21 +3,22 @@ import Foundation
 final class NativeChatViewModel: ObservableObject {
     @Published var messages: [Message] = []
     @Published var messageText: String = ""
+    @Published var isLoading: Bool = true
     
     private let coordinator: NativeChatCoordinator
     private let chatRepository: ChatRepository
-    private let webSocketNativeService: WebSocketNativeService
+    private let nativeWebSocketService: NativeWebSocketService
     
     private let chatId = "1"
     
     init(
         coordinator: NativeChatCoordinator,
         chatRepository: ChatRepository,
-        webSocketNativeService: WebSocketNativeService
+        nativeWebSocketService: NativeWebSocketService
     ) {
         self.coordinator = coordinator
         self.chatRepository = chatRepository
-        self.webSocketNativeService = webSocketNativeService
+        self.nativeWebSocketService = nativeWebSocketService
     }
     
     deinit { disconnect() }
@@ -32,7 +33,7 @@ final class NativeChatViewModel: ObservableObject {
     }
     
     private func connect() {
-        webSocketNativeService.onMessageReceived = { [weak self] text in
+        nativeWebSocketService.onMessageReceived = { [weak self] text in
             Task { @MainActor in
                 let message = Message(
                     id: UUID().uuidString,
@@ -45,7 +46,7 @@ final class NativeChatViewModel: ObservableObject {
         }
         
         Task {
-            try await webSocketNativeService.connect()
+            try await nativeWebSocketService.connect()
         }
     }
     
@@ -62,7 +63,7 @@ final class NativeChatViewModel: ObservableObject {
         )
         
         Task {
-            try await webSocketNativeService.sendMessage(message.text)
+            try await nativeWebSocketService.sendMessage(message.text)
         }
         
         messages.append(message)
@@ -70,7 +71,7 @@ final class NativeChatViewModel: ObservableObject {
     }
     
     private func disconnect() {
-        webSocketNativeService.disconnect()
+        nativeWebSocketService.disconnect()
     }
     
     private func getMessages() {
@@ -80,6 +81,7 @@ final class NativeChatViewModel: ObservableObject {
                 
                 await MainActor.run {
                     messages.append(contentsOf: fetchedMessages)
+                    isLoading = false
                 }
             } catch {
                 print("Error fetching messages: \(error)")

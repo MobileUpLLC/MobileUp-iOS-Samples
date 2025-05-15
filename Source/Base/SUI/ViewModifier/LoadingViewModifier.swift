@@ -11,8 +11,7 @@ private struct LoadingViewModifier: ViewModifier {
 
     func body(content: Content) -> some View {
         if isLoading {
-            // заменить EmptyView() на свою LoadingView
-            EmptyView()
+            ProgressView()
         } else {
             content
         }

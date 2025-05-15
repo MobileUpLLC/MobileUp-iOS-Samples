@@ -15,6 +15,7 @@ struct NativeChatView: View {
                             .frame(maxWidth: .infinity, alignment: message.senderId == "user" ? .trailing : .leading)
                             .id(message.id)
                     }
+                    .loadable(isLoading: viewModel.isLoading)
                     .onChange(of: viewModel.messages) { newMessages in
                         if let lastMessageId = newMessages.last?.id {
                             withAnimation {

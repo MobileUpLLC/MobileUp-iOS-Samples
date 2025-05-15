@@ -1,11 +1,12 @@
 import Starscream
 import Foundation
 
-class WebSocketStarscreamService {
-    private var socket: WebSocket?
+class StarscreamWebSocketService {
     // swiftlint:disable:next force_unwrapping
     private let url = URL(string: "wss://echo.websocket.org")!
-    private var isConnected: Bool = false // Track connection state
+    private var socket: WebSocket?
+    private var isConnected: Bool = false
+    
     var onMessageReceived: ((String) -> Void)?
     
     func connect() async throws {
@@ -16,7 +17,6 @@ class WebSocketStarscreamService {
             socket = WebSocket(request: request)
             socket?.delegate = self
             socket?.connect()
-            // Continuation will be resumed in delegate
         }
     }
     
@@ -44,7 +44,7 @@ class WebSocketStarscreamService {
     }
 }
 
-extension WebSocketStarscreamService: WebSocketDelegate {
+extension StarscreamWebSocketService: WebSocketDelegate {
     func didReceive(event: WebSocketEvent, client: WebSocketClient) {
         switch event {
         case .connected:
