@@ -23,6 +23,7 @@ final class ChatsViewModel: ObservableObject {
     deinit { disconnect() }
     
     func handleFirstAppear() {
+        getMessages()
         connect()
     }
     
@@ -33,7 +34,12 @@ final class ChatsViewModel: ObservableObject {
     private func connect() {
         webSocketNativeService.onMessageReceived = { [weak self] text in
             Task { @MainActor in
-                let message = Message(id: UUID().uuidString, text: text, timestamp: Date(), senderId: "echo")
+                let message = Message(
+                    id: UUID().uuidString,
+                    text: text,
+                    timestamp: Date().timeIntervalSince1970,
+                    senderId: "echo"
+                )
                 self?.messages.append(message)
             }
         }
@@ -41,8 +47,6 @@ final class ChatsViewModel: ObservableObject {
         Task {
             try await webSocketNativeService.connect()
         }
-        
-        getMessages()
     }
     
     private func sendMessage() {
@@ -50,7 +54,12 @@ final class ChatsViewModel: ObservableObject {
             return
         }
         
-        let message = Message(id: UUID().uuidString, text: messageText, timestamp: Date(), senderId: "user")
+        let message = Message(
+            id: UUID().uuidString,
+            text: messageText,
+            timestamp: Date().timeIntervalSince1970,
+            senderId: "user"
+        )
         
         Task {
             try await webSocketNativeService.sendMessage(message.text)
@@ -67,8 +76,11 @@ final class ChatsViewModel: ObservableObject {
     private func getMessages() {
         Task {
             do {
-                messages = try await chatRepository.getMessages(chatId: chatId)
-                print(messages)
+                let fetchedMessages = try await chatRepository.getMessages(chatId: chatId)
+                
+                await MainActor.run {
+                    messages.append(contentsOf: fetchedMessages)
+                }
             } catch {
                 print("Error fetching messages: \(error)")
             }
