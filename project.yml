@@ -183,4 +183,4 @@ packages:
     exactVersion: 2.1.1
   munkit:
     url: https://github.com/MobileUpLLC/munkit
-    exactVersion: 1.0.5
+    exactVersion: 1.1.1
