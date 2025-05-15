@@ -55,6 +55,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             return
         }
 
-        window.rootViewController = RootFactory.createRootController(networkService: networkService, with: flow)
+        window.rootViewController = TypicalTasksFactory.createTypicalTasksController(networkService: networkService)
     }
 }

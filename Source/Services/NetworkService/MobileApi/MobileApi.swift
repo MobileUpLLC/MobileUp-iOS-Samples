@@ -5,6 +5,7 @@ import Moya
 enum MobileApi {
     case auth(AuthApi)
     case example(ExampleApi)
+    case chat(ChatApi)
 }
 
 extension MobileApi: MUNAPITarget {
@@ -22,28 +23,28 @@ extension MobileApi: MUNAPITarget {
 
     private func getBaseUrl() -> URL {
         switch self {
-        case .example(let type as MUNAPITarget), .auth(let type as MUNAPITarget):
+        case .example(let type as MUNAPITarget), .auth(let type as MUNAPITarget), .chat(let type as MUNAPITarget):
             return type.baseURL
         }
     }
 
     private func getPath() -> String {
         switch self {
-        case .example(let type as MUNAPITarget), .auth(let type as MUNAPITarget):
+        case .example(let type as MUNAPITarget), .auth(let type as MUNAPITarget), .chat(let type as MUNAPITarget):
             return type.path
         }
     }
 
     private func getMethod() -> Moya.Method {
         switch self {
-        case .example(let type as MUNAPITarget), .auth(let type as MUNAPITarget):
+        case .example(let type as MUNAPITarget), .auth(let type as MUNAPITarget), .chat(let type as MUNAPITarget):
             return type.method
         }
     }
 
     private func getTask() -> Task {
         switch self {
-        case .example(let type as MUNAPITarget), .auth(let type as MUNAPITarget):
+        case .example(let type as MUNAPITarget), .auth(let type as MUNAPITarget), .chat(let type as MUNAPITarget):
             return type.task
         }
     }
@@ -52,7 +53,7 @@ extension MobileApi: MUNAPITarget {
         var params: [String: Any] = [:]
 
         switch self {
-        case .example(let type as MUNAPITarget), .auth(let type as MUNAPITarget):
+        case .example(let type as MUNAPITarget), .auth(let type as MUNAPITarget), .chat(let type as MUNAPITarget):
             params = type.parameters
         }
 
@@ -67,7 +68,9 @@ extension MobileApi: MUNAPITarget {
         let additionalHeaders: [String: String]?
         
         switch self {
-        case .example(let target as MUNAPITarget), .auth(let target as MUNAPITarget):
+        case .example(let target as MUNAPITarget),
+                .auth(let target as MUNAPITarget),
+                .chat(let target as MUNAPITarget):
             additionalHeaders = target.headers
             
             if let additionalHeaders {
@@ -82,7 +85,7 @@ extension MobileApi: MUNAPITarget {
     
     private func getIsAccessTokenRequired() -> Bool {
         switch self {
-        case .example(let type as MUNAPITarget), .auth(let type as MUNAPITarget):
+        case .example(let type as MUNAPITarget), .auth(let type as MUNAPITarget), .chat(let type as MUNAPITarget):
             return type.isAccessTokenRequired
         }
     }
@@ -98,6 +101,8 @@ extension MobileApi: MUNAPITarget {
 
     private func getMockFileName() -> String? {
         switch self {
+        case .chat(let type as MUNAPITarget):
+            return type.mockFileName
         default:
             return nil
         }
@@ -105,6 +110,8 @@ extension MobileApi: MUNAPITarget {
 
     private func getIsMockEnabled() -> Bool {
         switch self {
+        case .chat:
+            return true
         default:
             return false
         }

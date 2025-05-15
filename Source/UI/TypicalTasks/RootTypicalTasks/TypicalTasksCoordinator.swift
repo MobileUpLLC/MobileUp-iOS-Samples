@@ -21,4 +21,9 @@ final class TypicalTasksCoordinator {
         controller.modalPresentationStyle = .fullScreen
         router?.present(controller: controller, isAnimated: true, completion: nil)
     }
+    
+    func showChatsModule() {
+        let controller = ChatsFactory.createChatsController(networkService: networkService)
+        router?.push(controller: controller, isAnimated: true)
+    }
 }
