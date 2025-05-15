@@ -10,3 +10,7 @@
 "collapsing-view-title" = "Collapsing View";
 "tabbar-button-title" = "TabBar";
 "close-button-title" = "Close";
+
+// Chats
+"typical-tasks-native-chats" = "Чат на URLSessionWebSocketTask";
+"typical-tasks-starscream-chats" = "Чат на Starscream";

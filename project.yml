@@ -146,6 +146,7 @@ targets:
         product: PulseUI
       - package: PagingList
       - package: munkit
+      - package: Starscream
 
 packages:
   SnapKit:
@@ -184,3 +185,6 @@ packages:
   munkit:
     url: https://github.com/MobileUpLLC/munkit
     exactVersion: 1.1.1
+  Starscream:
+    url: https://github.com/daltoniam/Starscream
+    exactVersion: 4.0.8

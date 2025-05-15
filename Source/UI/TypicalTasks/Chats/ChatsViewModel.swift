@@ -1,89 +1,30 @@
 import Foundation
 
 final class ChatsViewModel: ObservableObject {
-    @Published var messages: [Message] = []
-    @Published var messageText: String = ""
+    var chatViewItems: [ChatsViewItem] = []
     
     private let coordinator: ChatsCoordinator
-    private let chatRepository: ChatRepository
-    private let webSocketNativeService: WebSocketNativeService
     
-    private let chatId = "1"
-    
-    init(
-        coordinator: ChatsCoordinator,
-        chatRepository: ChatRepository,
-        webSocketNativeService: WebSocketNativeService
-    ) {
+    init(coordinator: ChatsCoordinator) {
         self.coordinator = coordinator
-        self.chatRepository = chatRepository
-        self.webSocketNativeService = webSocketNativeService
-    }
-    
-    deinit { disconnect() }
-    
-    func handleFirstAppear() {
-        getMessages()
-        connect()
-    }
-    
-    func handleSendMessageButtonTap() {
-        sendMessage()
-    }
-    
-    private func connect() {
-        webSocketNativeService.onMessageReceived = { [weak self] text in
-            Task { @MainActor in
-                let message = Message(
-                    id: UUID().uuidString,
-                    text: text,
-                    timestamp: Date().timeIntervalSince1970,
-                    senderId: "echo"
-                )
-                self?.messages.append(message)
-            }
-        }
         
-        Task {
-            try await webSocketNativeService.connect()
-        }
+        chatViewItems = getChatViewItems()
     }
     
-    private func sendMessage() {
-        guard messageText.isEmpty == false else {
-            return
-        }
-        
-        let message = Message(
-            id: UUID().uuidString,
-            text: messageText,
-            timestamp: Date().timeIntervalSince1970,
-            senderId: "user"
-        )
-        
-        Task {
-            try await webSocketNativeService.sendMessage(message.text)
-        }
-        
-        messages.append(message)
-        messageText = String.empty
+    func onItemTap(item: ChatsViewItem) {
+        item.action()
     }
     
-    private func disconnect() {
-        webSocketNativeService.disconnect()
-    }
-    
-    private func getMessages() {
-        Task {
-            do {
-                let fetchedMessages = try await chatRepository.getMessages(chatId: chatId)
-                
-                await MainActor.run {
-                    messages.append(contentsOf: fetchedMessages)
-                }
-            } catch {
-                print("Error fetching messages: \(error)")
-            }
-        }
+    private func getChatViewItems() -> [ChatsViewItem] {
+        return [
+            .init(
+                title: R.string.typicalTasks.typicalTasksNativeChats(),
+                action: { [weak self] in self?.coordinator.showNativeChatModule() }
+            ),
+            .init(
+                title: R.string.typicalTasks.typicalTasksStarscreamChats(),
+                action: { [weak self] in self?.coordinator.showStarscreamChatModule() }
+            )
+        ]
     }
 }

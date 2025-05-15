@@ -1,43 +1,63 @@
 import SwiftUI
 
+struct ChatsViewItem: Identifiable {
+    let id = UUID()
+    let title: String
+    let action: Closure.Void
+}
+
 struct ChatsView: View {
     @ObservedObject var viewModel: ChatsViewModel
     
     var body: some View {
-        VStack {
-            ScrollView {
-                ScrollViewReader { proxy in
-                    ForEach(viewModel.messages) { message in
-                        Text(message.text)
-                            .padding()
-                            .background(message.senderId == "user" ? Color.blue.opacity(0.2) : Color.gray.opacity(0.2))
-                            .cornerRadius(10)
-                            .frame(maxWidth: .infinity, alignment: message.senderId == "user" ? .trailing : .leading)
-                            .id(message.id)
-                    }
-                    .onChange(of: viewModel.messages) { newMessages in
-                        if let lastMessageId = newMessages.last?.id {
-                            withAnimation {
-                                proxy.scrollTo(lastMessageId, anchor: .bottom)
-                            }
-                        }
-                    }
+        VStack(alignment: .leading, spacing: .zero) {
+            Text(R.string.typicalTasks.typicalTasksChats())
+                .font(UIFont.Heading.primary.asFont)
+                .foregroundStyle(.black)
+                .padding(.vertical, 20)
+                .padding(.horizontal, 28)
+            ChatsContentView(items: viewModel.chatViewItems, onItemTap: viewModel.onItemTap(item:))
+        }
+    }
+}
+
+private struct ChatsContentView: View {
+    let items: [ChatsViewItem]
+    let onItemTap: Closure.Generic<ChatsViewItem>
+    
+    private let columns: [GridItem] = [GridItem(.fixed(UIScreen.main.bounds.width))]
+    
+    var body: some View {
+        ScrollView {
+            LazyVGrid(columns: columns, spacing: 10) {
+                ForEach(items) { item in
+                    ChatsCellView(text: item.title)
+                        .contentShape(Rectangle())
+                        .onTapGesture { onItemTap(item) }
                 }
             }
-            .scrollIndicators(.hidden)
-            HStack {
-                TextField("Type a message", text: $viewModel.messageText)
-                    .textFieldStyle(.roundedBorder)
-                Button("Send") {
-                    viewModel.handleSendMessageButtonTap()
-                }
-                .disabled(viewModel.messageText.isEmpty)
+        }
+    }
+}
+
+private struct ChatsCellView: View {
+    let text: String
+    
+    var body: some View {
+        VStack(spacing: .zero) {
+            HStack(spacing: .zero) {
+                Text(text)
+                    .font(UIFont.Heading.medium.asFont)
+                    .foregroundStyle(.black)
+                Spacer()
+                Image(systemName: "chevron.right")
             }
-            .padding()
+            .padding(.bottom, 10)
+            Rectangle()
+                .fill(.gray.opacity(0.5))
+                .frame(maxWidth: .infinity)
+                .frame(height: 0.3)
         }
-        .padding(.horizontal, 20)
-        .onFirstAppear {
-            viewModel.handleFirstAppear()
-        }
+        .padding(.horizontal, 16)
     }
 }
