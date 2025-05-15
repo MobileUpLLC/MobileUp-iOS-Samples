@@ -27,6 +27,7 @@ struct ToggleView: View {
         self.onTapAction = onTapAction
     }
 }
+
 #Preview {
     Checkbox(isSelected: .constant(true))
 }

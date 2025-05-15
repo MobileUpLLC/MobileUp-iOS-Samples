@@ -10,7 +10,6 @@ final class InputFormsViewModel: ObservableObject {
     @Published var age: String = ""
     @Published var pass: String = ""
     @Published var confirmPass: String = ""
-    @Published var testSingleline: String = ""
     @Published var testMultiline: String = ""
     @Published var testDynamicMultiline: String = ""
     @Published var isLoading = false
@@ -19,7 +18,6 @@ final class InputFormsViewModel: ObservableObject {
     var ageValidationRules: [ValidationRule] = []
     var passValidationRules: [ValidationRule] = []
     var confirmPassValidationRules: [ValidationRule] = []
-    var testSinglelineValidationRules: [ValidationRule] = []
     var testMultilineValidationRules: [ValidationRule] = []
     var testDynamicMultilineValidationRules: [ValidationRule] = []
     
@@ -79,10 +77,6 @@ final class InputFormsViewModel: ObservableObject {
             ValidationRule.custom(conditions: [.manual, .onFieldValueChanged]) { [weak self] in
                 return ($0 == self?.pass, "Not equal to pass")
             }
-        ]
-        
-        testSinglelineValidationRules = [
-            ValidationRule.notEmpty(conditions: [.manual, .onFieldValueChanged], message: "Test universal not empty")
         ]
         
         testMultilineValidationRules = [

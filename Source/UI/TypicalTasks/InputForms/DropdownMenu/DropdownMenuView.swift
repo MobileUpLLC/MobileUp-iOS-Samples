@@ -6,7 +6,7 @@ struct DropdownMenuView: View {
     
     private let title: String
     private let items: [String]
-    private let onSelection: (String) -> Void
+    private let onSelection: Closure.String
     
     var body: some View {
         VStack(spacing: 0) {
@@ -79,6 +79,7 @@ struct DropdownMenuView: View {
         self.items = items
         self.onSelection = onSelection
     }
+    
     private func getTitleFont() -> Font {
         return selectedItem.isEmpty ? UIFont.Body.primary.asFont : UIFont.Heading.small.asFont
     }

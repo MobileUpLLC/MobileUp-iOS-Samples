@@ -84,20 +84,6 @@ struct InputFormsView: View {
                 }
                 .disabled(viewModel.isLoading)
                 FormField(
-                    value: $viewModel.testSingleline,
-                    rules: viewModel.testSinglelineValidationRules
-                ) { failedRules in
-                    UniversalFieldView(
-                        config: TextFieldConfiguration(
-                            title: "Test Universal Singleline",
-                            value: $viewModel.testSingleline,
-                            mode: .singleline(isSecure: false),
-                            failedRules: failedRules
-                        )
-                    )
-                }
-                .disabled(viewModel.isLoading)
-                FormField(
                     value: $viewModel.testMultiline,
                     rules: viewModel.testMultilineValidationRules
                 ) { failedRules in
@@ -112,8 +98,8 @@ struct InputFormsView: View {
                 }
                 .disabled(viewModel.isLoading)
                 FormField(
-                    value: $viewModel.testMultiline,
-                    rules: viewModel.testMultilineValidationRules
+                    value: $viewModel.testDynamicMultiline,
+                    rules: viewModel.testDynamicMultilineValidationRules
                 ) { failedRules in
                     UniversalFieldView(
                         config: TextFieldConfiguration(
