@@ -47,10 +47,6 @@ final class StarscreamWebSocketService: WebSocketService {
         socket = nil
         isConnected = false
     }
-    
-    deinit {
-        disconnect()
-    }
 }
 
 extension StarscreamWebSocketService: WebSocketDelegate {
