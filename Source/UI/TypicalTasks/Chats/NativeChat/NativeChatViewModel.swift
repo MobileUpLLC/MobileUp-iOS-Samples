@@ -21,8 +21,6 @@ final class NativeChatViewModel: ObservableObject {
         self.nativeWebSocketService = nativeWebSocketService
     }
     
-    deinit { disconnect() }
-    
     func handleFirstAppear() {
         getMessages()
         connect()
@@ -68,10 +66,6 @@ final class NativeChatViewModel: ObservableObject {
         
         messages.append(message)
         messageText = String.empty
-    }
-    
-    private func disconnect() {
-        nativeWebSocketService.disconnect()
     }
     
     private func getMessages() {

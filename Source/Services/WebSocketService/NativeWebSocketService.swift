@@ -1,11 +1,14 @@
 import Foundation
 
-class NativeWebSocketService {
-    // swiftlint:disable:next force_unwrapping
-    private let url = URL(string: "wss://echo.websocket.org")!
+final class NativeWebSocketService: WebSocketService {
+    var onMessageReceived: Closure.String?
+    
     private var webSocketTask: URLSessionWebSocketTask?
     
-    var onMessageReceived: Closure.String?
+    // swiftlint:disable:next force_unwrapping
+    private let url = URL(string: "wss://echo.websocket.org")!
+    
+    deinit { disconnect() }
     
     func connect() async throws {
         webSocketTask = URLSession(configuration: .default).webSocketTask(with: url)

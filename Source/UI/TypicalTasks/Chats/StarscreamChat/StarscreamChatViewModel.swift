@@ -21,8 +21,6 @@ final class StarscreamChatViewModel: ObservableObject {
         self.starscreamWebSocketService = starscreamWebSocketService
     }
     
-    deinit { disconnect() }
-    
     func handleFirstAppear() {
         getMessages()
         connect()
@@ -81,9 +79,5 @@ final class StarscreamChatViewModel: ObservableObject {
                 print("Error fetching messages: \(error)")
             }
         }
-    }
-    
-    private func disconnect() {
-        starscreamWebSocketService.disconnect()
     }
 }

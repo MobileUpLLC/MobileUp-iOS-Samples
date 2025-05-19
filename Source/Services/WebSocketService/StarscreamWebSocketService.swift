@@ -1,46 +1,55 @@
-import Starscream
 import Foundation
+import Starscream
 
-class StarscreamWebSocketService {
-    // swiftlint:disable:next force_unwrapping
-    private let url = URL(string: "wss://echo.websocket.org")!
+final class StarscreamWebSocketService: WebSocketService {
+    var onMessageReceived: Closure.String?
+    
     private var socket: WebSocket?
     private var isConnected: Bool = false
     
-    var onMessageReceived: ((String) -> Void)?
+    // swiftlint:disable:next force_unwrapping
+    private let url = URL(string: "wss://echo.websocket.org")!
+    
+    deinit { disconnect() }
     
     func connect() async throws {
-        // swiftlint:disable:next unused_closure_parameter
-        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
-            var request = URLRequest(url: url)
-            request.timeoutInterval = 5
-            socket = WebSocket(request: request)
-            socket?.delegate = self
-            socket?.connect()
+        try await withCheckedThrowingContinuation { (_: CheckedContinuation<Void, Error>) in
+            let request = URLRequest(url: url, timeoutInterval: 5)
+            let socket = WebSocket(request: request)
+            
+            socket.delegate = self
+            self.socket = socket
+            
+            socket.connect()
         }
     }
     
     func sendMessage(_ message: String) async throws {
         try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
-            guard let socket = socket, isConnected else {
-                continuation.resume(
-                    throwing: NSError(
-                        domain: "",
-                        code: -1,
-                        userInfo: [NSLocalizedDescriptionKey: "WebSocket not connected"]
-                    )
-                )
+            guard let socket = socket else {
+                continuation.resume(throwing: WebSocketServiceError.notInitialized)
                 return
             }
-            socket.write(string: message)
-            continuation.resume(returning: ())
+            
+            guard isConnected else {
+                continuation.resume(throwing: WebSocketServiceError.notConnected)
+                return
+            }
+            
+            socket.write(string: message) {
+                continuation.resume(returning: ())
+            }
         }
     }
     
     func disconnect() {
         socket?.disconnect()
-        isConnected = false
         socket = nil
+        isConnected = false
+    }
+    
+    deinit {
+        disconnect()
     }
 }
 
@@ -48,18 +57,22 @@ extension StarscreamWebSocketService: WebSocketDelegate {
     func didReceive(event: WebSocketEvent, client: WebSocketClient) {
         switch event {
         case .connected:
-            print("WebSocket connected")
             isConnected = true
+            print("[WebSocket] Connected successfully")
         case let .disconnected(reason, code):
-            print("WebSocket disconnected: \(reason) with code: \(code)")
             isConnected = false
+            print("[WebSocket] Disconnected: \(reason) (code: \(code))")
         case .text(let text):
             onMessageReceived?(text)
         case .binary(let data):
-            print("Received binary data: \(data)")
+            print("[WebSocket] Received binary data: \(data.count) bytes")
         case .error(let error):
-            print("WebSocket error: \(error?.localizedDescription ?? "Unknown error")")
             isConnected = false
+            let errorDescription = error?.localizedDescription ?? "Unknown error"
+            print("[WebSocket] Error: \(errorDescription)")
+        case .cancelled:
+            isConnected = false
+            print("[WebSocket] Connection cancelled")
         default:
             break
         }
