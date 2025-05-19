@@ -81,7 +81,9 @@ targets:
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         LSRequiresIPhoneOS: true
         NSCameraUsageDescription:
+        NSMicrophoneUsageDescription:
         NSUserTrackingUsageDescription:
+        NSPhotoLibraryAddUsageDescription:
         UIApplicationSceneManifest:
           UIApplicationSupportsMultipleScenes: false
           UISceneConfigurations:
@@ -145,6 +147,7 @@ targets:
       - package: Pulse
         product: PulseUI
       - package: PagingList
+      - package: SwiftyCrop
       
 packages:
   SnapKit:
@@ -180,3 +183,6 @@ packages:
   PagingList:
     url: https://github.com/MobileUpLLC/PagingList.git
     exactVersion: 2.1.1
+  SwiftyCrop:
+    url: https://github.com/benedom/SwiftyCrop.git
+    exactVersion: 1.0.8

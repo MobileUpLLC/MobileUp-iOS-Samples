@@ -2,6 +2,7 @@
 "typical-tasks-authorization" = "Авторизация";
 "typical-tasks-lists" = "Списки";
 "complex-ui-elements" = "Сложные UI-элементы";
+"multimedia" = "Мультимедиа";
 
 // ComplexUIComponents
 "image-carousel-title" = "Image Carousel";
@@ -9,3 +10,10 @@
 "collapsing-view-title" = "Collapsing View";
 "tabbar-button-title" = "TabBar";
 "close-button-title" = "Close";
+
+// Multimedia
+"capture-photo-title" = "Capture photo";
+"capture-video-title" = "Capture video";
+"scan-code-title" = "Scan Code";
+"video-player-title" = "Video player";
+"crop-image-title" = "Crop image";

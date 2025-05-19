@@ -16,4 +16,10 @@ final class TypicalTasksCoordinator {
         controller.modalPresentationStyle = .fullScreen
         router?.present(controller: controller, isAnimated: true, completion: nil)
     }
+    
+    func showMultimedia() {
+        let controller = MultimediaFactory.createMiltimediaController()
+        controller.modalPresentationStyle = .fullScreen
+        router?.present(controller: controller, isAnimated: true, completion: nil)
+    }
 }
