@@ -3,5 +3,5 @@ struct PostModel: Codable {
     let title: String
     let imageUrl: String
     var isLiked: Bool
-    let likeCount: Int
+    var likeCount: Int
 }

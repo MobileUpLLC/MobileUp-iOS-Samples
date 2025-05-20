@@ -34,9 +34,7 @@ extension PostLikeableViewModel {
             // Сетевой запрос
             do {
                 try await postRepository.postLike(imageId: imageId, isLike: isLiked)
-                
-                // Закомментировано из-за отсутствия реального бека для имитации успешного поста лайка/анлайка
-                //            await likeService.removeLikeState(imageId: imageId)
+                await likeService.removeLikeState(imageId: imageId)
             } catch {
                 await likeService.removeLikeState(imageId: imageId)
                 

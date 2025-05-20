@@ -47,7 +47,8 @@ actor PostRepository {
                 throw URLError(.unknown)
             }
             
-            posts[postIndex].isLiked.toggle()
+            posts[postIndex].isLiked = isLike
+            posts[postIndex].likeCount += isLike ? 1 : -1
             
             try? dataStorage.setObject(posts, forKey: Constants.postsStorageKey, expiry: .never)
         } else {
