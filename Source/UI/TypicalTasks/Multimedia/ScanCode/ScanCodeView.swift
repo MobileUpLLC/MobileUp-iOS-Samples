@@ -2,8 +2,9 @@ import AVFoundation
 import SwiftUI
 
 struct ScanCodeView: UIViewRepresentable {
-    let containerView = UIView()
     let handleScanCompletion: Closure.String
+    
+    private let containerView = UIView()
     
     func makeUIView(context: Context) -> UIView {
         containerView.frame = UIScreen.main.bounds

@@ -13,10 +13,9 @@ struct CropImageView: View {
                     .aspectRatio(contentMode: .fit)
             }
             Button("Crop downloaded image") {
-                selectedImage = UIImage(named: "image")
+                selectedImage = R.image.image.asUIImage
                 showImageCropper.toggle()
             }
-
         }
         .fullScreenCover(isPresented: $showImageCropper) {
             if let selectedImage {

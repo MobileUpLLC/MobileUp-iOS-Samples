@@ -2,8 +2,8 @@ import AVFoundation
 import Photos
 
 final class CaptureVideoRecorder: NSObject, ObservableObject {
-    let session = AVCaptureSession()
     @Published var isRecording = false
+    let session = AVCaptureSession()
     
     private let movieOutput = AVCaptureMovieFileOutput()
     
@@ -86,11 +86,12 @@ extension CaptureVideoRecorder: AVCaptureFileOutputRecordingDelegate {
             return
         }
         
-        PHPhotoLibrary.shared().performChanges({
-            PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: outputFileURL)
-        },
-        completionHandler: { [weak self] saved, error in self?.handleSaveResult(saved, error) }
+        // swiftlint:disable opening_brace
+        PHPhotoLibrary.shared().performChanges(
+            { PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: outputFileURL) },
+            completionHandler: { [weak self] saved, error in self?.handleSaveResult(saved, error) }
         )
+        // swiftlint:enable opening_brace
     }
     
     private func handleSaveResult(_ saved: Bool, _ error: (any Error)?) {

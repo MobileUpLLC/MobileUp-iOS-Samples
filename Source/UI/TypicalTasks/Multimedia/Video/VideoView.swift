@@ -9,11 +9,12 @@ struct VideoView: View {
         VStack {
             if let url = URL(string: Constants.urlString) {
                 VideoPlayerView(url: url)
+                    .frame(height: UIScreen.main.bounds.width * 9 / 16)
             } else {
                 Text("Invalid url")
             }
         }
-        .frame(height: UIScreen.main.bounds.width * 9 / 16)
+        .background(Color.white)
     }
 }
 
