@@ -183,4 +183,4 @@ packages:
     exactVersion: 2.1.1
   FormView:
     url: https://github.com/MobileUpLLC/FormView
-    revision: 1256f82449bfc78b562255f45a6e1d2ad5f97b7f
+    exactVersion: 1.3.0
