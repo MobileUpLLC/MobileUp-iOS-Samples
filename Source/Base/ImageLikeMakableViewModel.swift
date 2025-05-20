@@ -2,10 +2,11 @@ import Foundation
 
 protocol ImageLikeMakableViewModel: AnyObject {
     var postRepository: PostRepository { get }
+    var likeService: LikeService { get }
     
     func performLikeAction(
         imageId: String,
-        isLike: Bool,
+        isLiked: Bool,
         currentLikeCount: Int,
         errorHandler: Closure.Generic<Error>?
     )
@@ -16,35 +17,33 @@ protocol ImageLikeMakableViewModel: AnyObject {
 extension ImageLikeMakableViewModel {
     func performLikeAction(
         imageId: String,
-        isLike: Bool,
+        isLiked: Bool,
         currentLikeCount: Int,
         errorHandler: Closure.Generic<Error>?
     ) {
-        // Оптимистичное обновление
-        let newLikeCount = currentLikeCount + (isLike ? 1 : -1)
-        LikeService.updateLikeState(LikeModel(imageId: imageId, isLike: isLike, likeCount: newLikeCount))
-        
-        // Отправка события через EventBus
-        let event = LikeModel(imageId: imageId, isLike: isLike, likeCount: newLikeCount)
         Task {
+            // Оптимистичное обновление
+            let newLikeCount = currentLikeCount + (isLiked ? 1 : -1)
+            await likeService.updateLikeState(LikeModel(imageId: imageId, isLike: isLiked, likeCount: newLikeCount))
+            
+            // Отправка события через EventBus
+            let event = LikeModel(imageId: imageId, isLike: isLiked, likeCount: newLikeCount)
             await postRepository.sendLikePostEvent(data: event)
-        }
-        
-        // Сетевой запрос
-        Perform { [weak self] in
-            try await self?.postRepository.postLike(imageId: imageId, isLike: isLike)
             
-            // Закомментировано из-за отсутствия реального бека для имитации успешного поста лайка/анлайка
-//            LikeService.removeLikeState(imageId: imageId)
-        } onError: { [weak self] error in
-            LikeService.removeLikeState(imageId: imageId)
-            
-            let event = LikeModel(imageId: imageId, isLike: !isLike, likeCount: currentLikeCount)
-            Task {
-                await self?.postRepository.sendLikePostEvent(data: event)
+            // Сетевой запрос
+            do {
+                try await postRepository.postLike(imageId: imageId, isLike: isLiked)
+                
+                // Закомментировано из-за отсутствия реального бека для имитации успешного поста лайка/анлайка
+                //            await likeService.removeLikeState(imageId: imageId)
+            } catch {
+                await likeService.removeLikeState(imageId: imageId)
+                
+                let event = LikeModel(imageId: imageId, isLike: !isLiked, likeCount: currentLikeCount)
+                await postRepository.sendLikePostEvent(data: event)
+                
+                errorHandler?(error)
             }
-            
-            errorHandler?(error)
         }
     }
 }

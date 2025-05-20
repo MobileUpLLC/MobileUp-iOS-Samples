@@ -33,3 +33,11 @@ struct EntranceView: View {
         .ignoresSafeArea()
     }
 }
+
+#Preview {
+    EntranceView(
+        viewModel: EntranceViewModel(
+            coordinator: EntranceCoordinator()
+        )
+    )
+}

@@ -1,6 +1,7 @@
 enum FavouritesDetailFactory {
     static func createFavouritesDetailController(
         networkService: NetworkService,
+        likeService: LikeService,
         imageId: String
     ) -> FavouritesDetailController {
         let coordinator = FavouritesDetailCoordinator()
@@ -8,6 +9,7 @@ enum FavouritesDetailFactory {
         let viewModel = FavouritesDetailViewModel(
             coordinator: coordinator,
             postRepository: postRepository,
+            likeService: likeService,
             imageId: imageId
         )
         let controller = FavouritesDetailController(viewModel: viewModel)

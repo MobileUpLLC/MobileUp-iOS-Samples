@@ -13,13 +13,16 @@ final class FavouritesListViewModel: ObservableObject, ImageLikeMakableViewModel
     
     private let coordinator: FavouritesListCoordinator
     let postRepository: PostRepository
+    let likeService: LikeService
     
     init(
         coordinator: FavouritesListCoordinator,
-        postRepository: PostRepository
+        postRepository: PostRepository,
+        likeService: LikeService
     ) {
         self.coordinator = coordinator
         self.postRepository = postRepository
+        self.likeService = likeService
         
         Task {
             await postRepository.setupLikePostUpdateAction { [weak self] likeModel in
@@ -51,10 +54,12 @@ final class FavouritesListViewModel: ObservableObject, ImageLikeMakableViewModel
         
         performLikeAction(
             imageId: imageId,
-            isLike: !item.isLiked,
+            isLiked: !item.isLiked,
             currentLikeCount: item.likeCount,
             errorHandler: { [weak self] error in
-                self?.coordinator.showErrorToast(message: "Не получилось обновить лайк: \(error)")
+                Task { @MainActor in
+                    self?.coordinator.showErrorToast(message: "Не получилось обновить лайк: \(error)")
+                }
             }
         )
     }
@@ -62,31 +67,35 @@ final class FavouritesListViewModel: ObservableObject, ImageLikeMakableViewModel
     private func loadImages() {
         state = .loading
         
-        Perform { [weak self] in
-            guard let self else {
-                return
-            }
-            
-            let models = try await postRepository.getPosts()
-            
-            let viewItems = models.map { [weak self] model in
-                FavouritesListViewItem(
-                    id: model.id,
-                    title: model.title,
-                    imageUrl: model.imageUrl,
-                    isLiked: LikeService.getLikeState(imageId: model.id)?.isLiked ?? model.isLiked,
-                    likeCount: LikeService.getLikeState(imageId: model.id)?.likeCount ?? model.likeCount,
-                    onTapAction: { [weak self] in self?.handleImageTap(imageId: model.id) },
-                    onLikeTapAction: { [weak self] id in self?.handleLikeTap(imageId: id) }
-                )
-            }
-            onMain {
+        Task { @MainActor in
+            do {
+                let models = try await postRepository.getPosts()
+                
+                var viewItems: [FavouritesListViewItem] = []
+                
+                for model in models {
+                    let likeState = await likeService.getLikeState(imageId: model.id)
+                        ?? LikeService.LikeState(isLiked: model.isLiked, likeCount: model.likeCount)
+                    
+                    viewItems.append(
+                        FavouritesListViewItem(
+                            id: model.id,
+                            title: model.title,
+                            imageUrl: model.imageUrl,
+                            isLiked: likeState.isLiked,
+                            likeCount: likeState.likeCount,
+                            onTapAction: { [weak self] in self?.handleImageTap(imageId: model.id) },
+                            onLikeTapAction: { [weak self] id in self?.handleLikeTap(imageId: id) }
+                        )
+                    )
+                }
+                
                 self.viewItems = viewItems
-                self.state = .content
-            }
-        } onError: { [weak self] _ in
-            onMain {
-                self?.state = .error
+                state = .content
+            } catch {
+                await MainActor.run {
+                    state = .error
+                }
             }
         }
     }

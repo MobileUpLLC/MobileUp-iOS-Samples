@@ -27,16 +27,16 @@ struct FavouritesListView: View {
                             }
                     }
                 }
-                .navigationTitle("Images")
+                .navigationTitle("Posts")
             case .error:
-                Text("Error loading images")
+                Text("Error loading posts")
             }
         }
         .onFirstAppear { viewModel.handleOnFirstAppear() }
     }
 }
 
-struct FavouritesListCellView: View {
+private struct FavouritesListCellView: View {
     @Binding var viewItem: FavouritesListViewItem
     
     var body: some View {

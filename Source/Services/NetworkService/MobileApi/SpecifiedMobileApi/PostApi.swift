@@ -1,6 +1,6 @@
+import Foundation
 import munkit
 import Moya
-import Foundation
 
 enum PostApi {
     case getPosts
@@ -42,14 +42,13 @@ extension PostApi: MUNAPITarget {
         }
     }
     
-    // swiftlint:disable force_unwrapping
     private func getBaseURL() -> URL {
         switch self {
         case .getPosts, .getPostDetail:
+            // swiftlint:disable:next force_unwrapping
             return URL(string: "https://www.example.com")! // Заглушка
         }
     }
-    // swiftlint:enable force_unwrapping
     
     private func getPath() -> String {
         switch self {

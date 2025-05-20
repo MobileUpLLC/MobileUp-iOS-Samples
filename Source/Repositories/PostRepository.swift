@@ -13,16 +13,16 @@ actor PostRepository {
         self.networkService = networkService
     }
     
-    func getPosts() async throws -> [ImageModel] {
+    func getPosts() async throws -> [PostModel] {
         return try await networkService.executeRequest(target: .post(.getPosts))
     }
     
-    func getPostDetail(id: String) async throws -> ImageModel? {
+    func getPostDetail(id: String) async throws -> PostModel? {
         return try await networkService.executeRequest(target: .post(.getPostDetail(id: id)))
     }
     
     func postLike(imageId: String, isLike: Bool) async throws {
-        try await Task.sleep(nanoseconds: 1_500_000_000)
+        try await Task.sleep(nanoseconds: 1_000_000_000)
         
         if Bool.random() {
             throw URLError(.unknown)

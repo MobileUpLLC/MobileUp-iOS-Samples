@@ -35,10 +35,10 @@ struct FavouritesDetailView: View {
                     Spacer()
                 }
                 .frame(maxWidth: .infinity)
-                .navigationTitle("Image Detail")
+                .navigationTitle("Post Detail")
             }
         case .error:
-            Text("Error loading image")
+            Text("Error loading post detail")
         }
     }
 }
