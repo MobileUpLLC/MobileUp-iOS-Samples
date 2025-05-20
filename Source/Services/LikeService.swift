@@ -1,5 +1,5 @@
 actor LikeService {
-    struct LikeState: Decodable {
+    struct LikeState {
         let isLiked: Bool
         let likeCount: Int
     }

@@ -1,6 +1,6 @@
 import Foundation
 
-protocol ImageLikeMakableViewModel: AnyObject {
+protocol PostLikeableViewModel: ObservableObject {
     var postRepository: PostRepository { get }
     var likeService: LikeService { get }
     
@@ -12,9 +12,10 @@ protocol ImageLikeMakableViewModel: AnyObject {
     )
     
     func handleLikeUpdate(with likeModel: LikeModel)
+    func setupLikePostUpdateAction()
 }
 
-extension ImageLikeMakableViewModel {
+extension PostLikeableViewModel {
     func performLikeAction(
         imageId: String,
         isLiked: Bool,
@@ -43,6 +44,14 @@ extension ImageLikeMakableViewModel {
                 await postRepository.sendLikePostEvent(data: event)
                 
                 errorHandler?(error)
+            }
+        }
+    }
+    
+    func setupLikePostUpdateAction() {
+        Task {
+            await postRepository.setupLikePostUpdateAction { [weak self] likeModel in
+                self?.handleLikeUpdate(with: likeModel)
             }
         }
     }

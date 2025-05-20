@@ -23,7 +23,7 @@ struct FavouritesListView: View {
                     ForEach($viewModel.viewItems, id: \.id) { item in
                         FavouritesListCellView(viewItem: item)
                             .onTapGesture {
-                                viewModel.handleImageTap(imageId: item.id)
+                                viewModel.handlePostTap(postId: item.id)
                             }
                     }
                 }

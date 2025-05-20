@@ -40,7 +40,7 @@ final class PaginationListViewModel: ObservableObject {
         }
         
         Task(priority: .background) {
-            do {
+            do { 
                 let page = isFirst ? currentPage : currentPage + .one
                 let response = try await repository.requestPaginationDataFromBackend(
                     sort: selectedSort,

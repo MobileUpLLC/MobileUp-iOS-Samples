@@ -1,6 +1,6 @@
 import Foundation
 
-final class FavouritesDetailViewModel: ObservableObject, ImageLikeMakableViewModel {
+final class FavouritesDetailViewModel: PostLikeableViewModel {
     enum ViewState {
         case initial
         case loading
@@ -27,12 +27,8 @@ final class FavouritesDetailViewModel: ObservableObject, ImageLikeMakableViewMod
         self.likeService = likeService
         self.imageId = imageId
         
+        setupLikePostUpdateAction()
         loadImage()
-        Task {
-            await postRepository.setupLikePostUpdateAction { [weak self] likeModel in
-                self?.handleLikeUpdate(with: likeModel)
-            }
-        }
     }
     
     func handleLikeUpdate(with likeModel: LikeModel) {
@@ -65,23 +61,21 @@ final class FavouritesDetailViewModel: ObservableObject, ImageLikeMakableViewMod
             return
         }
         
-        Task {
-            await MainActor.run {
-                viewItem = FavouritesDetailViewItem(
-                    id: currentItem.id,
-                    title: currentItem.title,
-                    imageUrl: currentItem.imageUrl,
-                    isLiked: isLiked,
-                    likeCount: likeCount
-                )
-            }
+        Task { @MainActor in
+            viewItem = FavouritesDetailViewItem(
+                id: currentItem.id,
+                title: currentItem.title,
+                imageUrl: currentItem.imageUrl,
+                isLiked: isLiked,
+                likeCount: likeCount
+            )
         }
     }
     
     private func loadImage() {
         state = .loading
         
-        Task {
+        Task { @MainActor in
             do {
                 guard let model = try await postRepository.getPostDetail(id: imageId) else {
                     return
@@ -98,14 +92,10 @@ final class FavouritesDetailViewModel: ObservableObject, ImageLikeMakableViewMod
                     likeCount: likeState.likeCount
                 )
                 
-                await MainActor.run {
-                    self.viewItem = viewItem
-                    state = .content
-                }
+                self.viewItem = viewItem
+                state = .content
             } catch {
-                await MainActor.run {
-                    state = .error
-                }
+                state = .error
             }
         }
     }

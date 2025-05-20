@@ -1,5 +1,6 @@
 final class FavouritesListCoordinator {
     weak var router: (NavigationRouter & ToastRouter)?
+    
     private let networkService: NetworkService
     private let likeService: LikeService
 

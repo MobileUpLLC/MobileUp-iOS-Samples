@@ -1,6 +1,6 @@
 import Foundation
 
-final class FavouritesListViewModel: ObservableObject, ImageLikeMakableViewModel {
+final class FavouritesListViewModel: PostLikeableViewModel {
     enum ViewState {
         case initial
         case loading
@@ -24,11 +24,7 @@ final class FavouritesListViewModel: ObservableObject, ImageLikeMakableViewModel
         self.postRepository = postRepository
         self.likeService = likeService
         
-        Task {
-            await postRepository.setupLikePostUpdateAction { [weak self] likeModel in
-                self?.handleLikeUpdate(with: likeModel)
-            }
-        }
+        setupLikePostUpdateAction()
     }
     
     func handleOnFirstAppear() {
@@ -36,15 +32,29 @@ final class FavouritesListViewModel: ObservableObject, ImageLikeMakableViewModel
     }
     
     func handleLikeUpdate(with likeModel: LikeModel) {
-        Task {
-            await MainActor.run {
-                updateViewItem(with: likeModel)
+        Task { @MainActor in
+            if let index = viewItems.firstIndex(where: { $0.id == likeModel.imageId }) {
+                viewItems[index] = FavouritesListViewItem(
+                    id: viewItems[index].id,
+                    title: viewItems[index].title,
+                    imageUrl: viewItems[index].imageUrl,
+                    isLiked: likeModel.isLike,
+                    likeCount: likeModel.likeCount,
+                    onTapAction: { [weak self] in
+                        guard let self else {
+                            return
+                        }
+                        
+                        handlePostTap(postId: viewItems[index].id)
+                    },
+                    onLikeTapAction: { [weak self] id in self?.handleLikeTap(imageId: id) }
+                )
             }
         }
     }
     
-    func handleImageTap(imageId: String) {
-        coordinator.showFavouritesDetail(imageId: imageId)
+    func handlePostTap(postId: String) {
+        coordinator.showFavouritesDetail(imageId: postId)
     }
     
     func handleLikeTap(imageId: String) {
@@ -84,7 +94,7 @@ final class FavouritesListViewModel: ObservableObject, ImageLikeMakableViewModel
                             imageUrl: model.imageUrl,
                             isLiked: likeState.isLiked,
                             likeCount: likeState.likeCount,
-                            onTapAction: { [weak self] in self?.handleImageTap(imageId: model.id) },
+                            onTapAction: { [weak self] in self?.handlePostTap(postId: model.id) },
                             onLikeTapAction: { [weak self] id in self?.handleLikeTap(imageId: id) }
                         )
                     )
@@ -93,30 +103,8 @@ final class FavouritesListViewModel: ObservableObject, ImageLikeMakableViewModel
                 self.viewItems = viewItems
                 state = .content
             } catch {
-                await MainActor.run {
-                    state = .error
-                }
+                state = .error
             }
-        }
-    }
-    
-    private func updateViewItem(with likeModel: LikeModel) {
-        if let index = viewItems.firstIndex(where: { $0.id == likeModel.imageId }) {
-            viewItems[index] = FavouritesListViewItem(
-                id: viewItems[index].id,
-                title: viewItems[index].title,
-                imageUrl: viewItems[index].imageUrl,
-                isLiked: likeModel.isLike,
-                likeCount: likeModel.likeCount,
-                onTapAction: { [weak self] in
-                    guard let self else {
-                        return
-                    }
-                    
-                    handleImageTap(imageId: viewItems[index].id)
-                },
-                onLikeTapAction: { [weak self] id in self?.handleLikeTap(imageId: id) }
-            )
         }
     }
 }
