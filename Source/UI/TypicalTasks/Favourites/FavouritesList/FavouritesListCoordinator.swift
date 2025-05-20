@@ -1,17 +1,14 @@
 final class FavouritesListCoordinator {
     weak var router: (NavigationRouter & ToastRouter)?
     
-    private let networkService: NetworkService
     private let likeService: LikeService
 
-    init(networkService: NetworkService, likeService: LikeService) {
-        self.networkService = networkService
+    init(likeService: LikeService) {
         self.likeService = likeService
     }
     
     func showFavouritesDetail(imageId: String) {
         let controller = FavouritesDetailFactory.createFavouritesDetailController(
-            networkService: networkService,
             likeService: likeService,
             imageId: imageId
         )

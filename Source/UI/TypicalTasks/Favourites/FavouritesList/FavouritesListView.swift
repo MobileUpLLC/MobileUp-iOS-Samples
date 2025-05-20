@@ -32,7 +32,7 @@ struct FavouritesListView: View {
                 Text("Error loading posts")
             }
         }
-        .onFirstAppear { viewModel.handleOnFirstAppear() }
+        .onAppear { viewModel.handleOnAppear() }
     }
 }
 

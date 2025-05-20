@@ -1,7 +1,7 @@
-struct PostModel: Decodable {
+struct PostModel: Codable {
     let id: String
     let title: String
     let imageUrl: String
-    let isLiked: Bool
+    var isLiked: Bool
     let likeCount: Int
 }

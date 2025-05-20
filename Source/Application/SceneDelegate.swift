@@ -2,6 +2,11 @@ import UIKit
 import munkit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+    private enum Constants {
+        static let postsStorageKey = "Posts"
+        static let postsMockFileName = "MockPosts"
+    }
+    
     var window: UIWindow?
     private var networkService: NetworkService?
 
@@ -37,6 +42,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         } else if connectionOptions.urlContexts.isEmpty == false {
             DeepLinkService.shared.handleDeepLink(scene: scene, urlContexts: connectionOptions.urlContexts)
         }
+        
+        setupPosts()
     }
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
@@ -56,5 +63,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
 
         window.rootViewController = TypicalTasksFactory.createTypicalTasksController(networkService: networkService)
+    }
+    
+    private func setupPosts() {
+        let dataStorageService = DataStorageService<[PostModel]>()
+        let decoder = JSONDecoder()
+        
+        guard
+            let url = Bundle.main.url(forResource: Constants.postsMockFileName, withExtension: "json"),
+            let jsonData = try? Data(contentsOf: url),
+            let posts = try? decoder.decode([PostModel].self, from: jsonData)
+        else {
+            return
+        }
+        
+        try? dataStorageService.setObject(posts, forKey: Constants.postsStorageKey, expiry: .never)
     }
 }

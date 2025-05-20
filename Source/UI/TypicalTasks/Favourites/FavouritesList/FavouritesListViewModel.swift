@@ -27,7 +27,7 @@ final class FavouritesListViewModel: PostLikeableViewModel {
         setupLikePostUpdateAction()
     }
     
-    func handleOnFirstAppear() {
+    func handleOnAppear() {
         loadImages()
     }
     
