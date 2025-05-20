@@ -33,12 +33,8 @@ struct FavoritesTip: Tip {
 
     var actions: [Action] {
         [
-            Action(id: "add-to-favorites", title: "Добавить в избранное", perform: {
-                print("Добавить в избранное")
-            }),
-            Action(id: "learn-more", title: "Узнать больше", perform: {
-                print("Узнать больше")
-            })
+            Action(id: "add-to-favorites", title: "Добавить в избранное"),
+            Action(id: "learn-more", title: "Узнать больше")
         ]
     }
 }

@@ -5,7 +5,14 @@ import SnapKit
 @available(iOS 17.0, *)
 final class OnboardingWithElementFocusController: HostingController<OnboardingWithElementFocusView> {
     private let favoritesTip = FavoritesTip()
-    private lazy var tipView = TipUIView(favoritesTip, arrowEdge: .trailing)
+
+    private lazy var tipView = TipUIView(favoritesTip, arrowEdge: .trailing) { [weak self] action in
+        if action.id == "add-to-favorites" {
+            self?.addToFavoritesTipButtonTapped()
+        } else if action.id == "learn-more" {
+            self?.learnMoreTipButtonTapped()
+        }
+    }
 
     private let notificationTip = NotificationTip()
 
@@ -59,6 +66,14 @@ final class OnboardingWithElementFocusController: HostingController<OnboardingWi
 
         notificationTipObservationTask?.cancel()
         notificationTipObservationTask = nil
+    }
+
+    private func addToFavoritesTipButtonTapped() {
+        print("Добавить в избранное")
+    }
+
+    private func learnMoreTipButtonTapped() {
+        print("Узнать больше")
     }
 
     private func handleFavoritesTipDisplayUpdates() {
