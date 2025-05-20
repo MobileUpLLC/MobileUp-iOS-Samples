@@ -1,10 +1,10 @@
 enum FavouritesListFactory {
-    static func createFavouritesListController() -> FavouritesListController {
-        let coordinator = FavouritesListCoordinator()
-        let publicationRepository = PublicationRepository()
+    static func createFavouritesListController(networkService: NetworkService) -> FavouritesListController {
+        let coordinator = FavouritesListCoordinator(networkService: networkService)
+        let postRepository = PostRepository(networkService: networkService)
         let viewModel = FavouritesListViewModel(
             coordinator: coordinator,
-            publicationRepository: publicationRepository
+            postRepository: postRepository
         )
         let controller = FavouritesListController(viewModel: viewModel)
         coordinator.router = controller

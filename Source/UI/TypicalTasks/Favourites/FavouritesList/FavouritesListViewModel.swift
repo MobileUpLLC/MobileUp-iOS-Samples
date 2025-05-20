@@ -12,17 +12,19 @@ final class FavouritesListViewModel: ObservableObject, ImageLikeMakableViewModel
     @Published var viewItems: [FavouritesListViewItem] = []
     
     private let coordinator: FavouritesListCoordinator
-    let publicationRepository: PublicationRepository
+    let postRepository: PostRepository
     
     init(
         coordinator: FavouritesListCoordinator,
-        publicationRepository: PublicationRepository
+        postRepository: PostRepository
     ) {
         self.coordinator = coordinator
-        self.publicationRepository = publicationRepository
+        self.postRepository = postRepository
         
-        publicationRepository.onLikePostUpdate = { [weak self] likeModel in
-            self?.handleLikeUpdate(with: likeModel)
+        Task {
+            await postRepository.setupLikePostUpdateAction { [weak self] likeModel in
+                self?.handleLikeUpdate(with: likeModel)
+            }
         }
     }
     
@@ -31,7 +33,11 @@ final class FavouritesListViewModel: ObservableObject, ImageLikeMakableViewModel
     }
     
     func handleLikeUpdate(with likeModel: LikeModel) {
-        updateViewItem(with: likeModel)
+        Task {
+            await MainActor.run {
+                updateViewItem(with: likeModel)
+            }
+        }
     }
     
     func handleImageTap(imageId: String) {
@@ -48,7 +54,7 @@ final class FavouritesListViewModel: ObservableObject, ImageLikeMakableViewModel
             isLike: !item.isLiked,
             currentLikeCount: item.likeCount,
             errorHandler: { [weak self] error in
-                self?.coordinator.showErrorToast(message: "Не получилось обновить лайк")
+                self?.coordinator.showErrorToast(message: "Не получилось обновить лайк: \(error)")
             }
         )
     }
@@ -62,7 +68,7 @@ final class FavouritesListViewModel: ObservableObject, ImageLikeMakableViewModel
             }
             
             // Имитация загрузки данных
-            let models = await publicationRepository.getPosts()
+            let models = try await postRepository.getPosts()
             
             let viewItems = models.map { [weak self] model in
                 FavouritesListViewItem(

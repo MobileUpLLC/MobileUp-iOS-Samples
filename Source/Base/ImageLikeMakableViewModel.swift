@@ -1,7 +1,7 @@
 import Foundation
 
 protocol ImageLikeMakableViewModel: AnyObject {
-    var publicationRepository: PublicationRepository { get }
+    var postRepository: PostRepository { get }
     
     func performLikeAction(
         imageId: String,
@@ -26,11 +26,13 @@ extension ImageLikeMakableViewModel {
         
         // Отправка события через EventBus
         let event = LikeModel(imageId: imageId, isLike: isLike, likeCount: newLikeCount)
-        publicationRepository.sendLikePostEvent(data: event)
+        Task {
+            await postRepository.sendLikePostEvent(data: event)
+        }
         
         // Сетевой запрос
         Perform { [weak self] in
-            try await self?.publicationRepository.postLike(imageId: imageId, isLike: isLike)
+            try await self?.postRepository.postLike(imageId: imageId, isLike: isLike)
             
             // Закомментировано из-за отсутствия реального бека для имитации успешного поста лайка/анлайка
 //            LikeService.removeLikeState(imageId: imageId)
@@ -38,7 +40,9 @@ extension ImageLikeMakableViewModel {
             LikeService.removeLikeState(imageId: imageId)
             
             let event = LikeModel(imageId: imageId, isLike: !isLike, likeCount: currentLikeCount)
-            self?.publicationRepository.sendLikePostEvent(data: event)
+            Task {
+                await self?.postRepository.sendLikePostEvent(data: event)
+            }
             
             errorHandler?(error)
         }

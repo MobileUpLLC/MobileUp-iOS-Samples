@@ -1,6 +1,6 @@
 import Foundation
 
-final class LikeService {
+enum LikeService {
     static private var likedImages: [String: LikeState] = [:]
     
     static func updateLikeState(_ likeModel: LikeModel) {
@@ -31,7 +31,7 @@ extension LikeModel: Eventable {
     static let eventId = UUID()
 }
 
-struct ImageModel {
+struct ImageModel: Codable {
     let id: String
     let title: String
     let imageUrl: String

@@ -23,7 +23,7 @@ final class TypicalTasksCoordinator {
     }
     
     func showFavouritesModule() {
-        let controller = FavouritesListFactory.createFavouritesListController()
+        let controller = FavouritesListFactory.createFavouritesListController(networkService: networkService)
         
         router?.push(controller: controller, isAnimated: true)
     }

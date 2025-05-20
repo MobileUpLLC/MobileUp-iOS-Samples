@@ -11,23 +11,24 @@ final class FavouritesDetailViewModel: ObservableObject, ImageLikeMakableViewMod
     @Published private(set) var state: ViewState = .initial
     @Published private(set) var viewItem: FavouritesDetailViewItem?
     
-    let publicationRepository: PublicationRepository
+    let postRepository: PostRepository
     private let coordinator: FavouritesDetailCoordinator
     private let imageId: String
     
     init(
         coordinator: FavouritesDetailCoordinator,
-        publicationRepository: PublicationRepository,
+        postRepository: PostRepository,
         imageId: String
     ) {
         self.coordinator = coordinator
-        self.publicationRepository = publicationRepository
+        self.postRepository = postRepository
         self.imageId = imageId
         
         loadImage()
-        
-        publicationRepository.onLikePostUpdate = { [weak self] likeModel in
-            self?.handleLikeUpdate(with: likeModel)
+        Task {
+            await postRepository.setupLikePostUpdateAction { [weak self] likeModel in
+                self?.handleLikeUpdate(with: likeModel)
+            }
         }
     }
     
@@ -49,7 +50,7 @@ final class FavouritesDetailViewModel: ObservableObject, ImageLikeMakableViewMod
             isLike: !item.isLiked,
             currentLikeCount: item.likeCount,
             errorHandler: { [weak self] error in
-                self?.coordinator.showErrorToast(message: "Не получилось обновить лайк")
+                self?.coordinator.showErrorToast(message: "Не получилось обновить лайк: \(error)")
             }
         )
     }
@@ -76,7 +77,7 @@ final class FavouritesDetailViewModel: ObservableObject, ImageLikeMakableViewMod
                 return
             }
             
-            guard let model = await publicationRepository.getPostDetail(id: imageId) else {
+            guard let model = await postRepository.getPostDetail(id: imageId) else {
                 return
             }
             

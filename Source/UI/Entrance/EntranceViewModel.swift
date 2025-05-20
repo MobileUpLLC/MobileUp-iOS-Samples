@@ -10,7 +10,5 @@ final class EntranceViewModel: ViewModel {
     // TODO: UPUP-1022 Реализовать авторизацию и регистрацию
     func onAuthorizationButtonTapped() {}
     
-    func onRegistrationButtonTapped() {
-        coordinator.openTypicalTasks()
-    }
+    func onRegistrationButtonTapped() {}
 }
