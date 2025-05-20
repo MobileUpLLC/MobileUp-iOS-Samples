@@ -1,0 +1,7 @@
+{
+    "id": "1",
+    "title": "Image 1",
+    "imageUrl": "https://picsum.photos/200",
+    "isLiked": false,
+    "likeCount": 10
+}

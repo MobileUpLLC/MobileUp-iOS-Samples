@@ -90,8 +90,8 @@ extension PostApi: MUNAPITarget {
         switch self {
         case .getPosts:
             return "MockPosts"
-        case .getPostDetail:
-            return nil
+        case .getPostDetail(let id):
+            return "MockPostDetail\(id)"
         }
     }
 }

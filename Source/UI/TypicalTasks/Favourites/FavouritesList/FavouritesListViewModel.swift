@@ -67,7 +67,6 @@ final class FavouritesListViewModel: ObservableObject, ImageLikeMakableViewModel
                 return
             }
             
-            // Имитация загрузки данных
             let models = try await postRepository.getPosts()
             
             let viewItems = models.map { [weak self] model in

@@ -60,24 +60,27 @@ final class FavouritesDetailViewModel: ObservableObject, ImageLikeMakableViewMod
             return
         }
         
-        viewItem = FavouritesDetailViewItem(
-            id: currentItem.id,
-            title: currentItem.title,
-            imageUrl: currentItem.imageUrl,
-            isLiked: isLiked,
-            likeCount: likeCount
-        )
+        Task {
+            await MainActor.run {
+                viewItem = FavouritesDetailViewItem(
+                    id: currentItem.id,
+                    title: currentItem.title,
+                    imageUrl: currentItem.imageUrl,
+                    isLiked: isLiked,
+                    likeCount: likeCount
+                )
+            }
+        }
     }
     
     private func loadImage() {
         state = .loading
         
         Perform { [weak self] in
-            guard let self else {
-                return
-            }
-            
-            guard let model = await postRepository.getPostDetail(id: imageId) else {
+            guard
+                let self,
+                let model = try await postRepository.getPostDetail(id: imageId)
+            else {
                 return
             }
             

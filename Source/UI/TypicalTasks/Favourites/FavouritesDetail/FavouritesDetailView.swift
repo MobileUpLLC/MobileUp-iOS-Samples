@@ -35,7 +35,6 @@ struct FavouritesDetailView: View {
                     Spacer()
                 }
                 .frame(maxWidth: .infinity)
-                .background(.white)
                 .navigationTitle("Image Detail")
             }
         case .error:
