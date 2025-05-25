@@ -8,12 +8,7 @@ struct NativeChatView: View {
             ScrollView {
                 ScrollViewReader { proxy in
                     ForEach(viewModel.messages) { message in
-                        Text(message.text)
-                            .padding()
-                            .background(message.senderId == "user" ? Color.blue.opacity(0.2) : Color.gray.opacity(0.2))
-                            .cornerRadius(10)
-                            .frame(maxWidth: .infinity, alignment: message.senderId == "user" ? .trailing : .leading)
-                            .id(message.id)
+                        ChatMessageCellView(message: message)
                     }
                     .loadable(isLoading: viewModel.isLoading)
                     .onChange(of: viewModel.messages) { newMessages in
@@ -26,14 +21,11 @@ struct NativeChatView: View {
                 }
             }
             .scrollIndicators(.hidden)
-            HStack {
-                TextField("Type a message", text: $viewModel.messageText)
-                    .textFieldStyle(.roundedBorder)
-                Button("Send") {
-                    viewModel.handleSendMessageButtonTap()
-                }
-                .disabled(viewModel.messageText.isEmpty)
-            }
+            ChatInputBarView(
+                messageText: $viewModel.messageText,
+                onSendMessageTapAction: viewModel.handleSendMessageButtonTap,
+                isDisabled: viewModel.messageText.isEmpty
+            )
             .padding()
         }
         .padding(.horizontal, 20)
