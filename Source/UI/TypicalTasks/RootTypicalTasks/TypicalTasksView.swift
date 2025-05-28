@@ -16,7 +16,6 @@ struct TypicalTasksView: View {
                 .foregroundStyle(.black)
                 .padding(.vertical, 20)
                 .padding(.horizontal, 28)
-            
             TypicalTasksContentView(items: viewModel.typicalTasks, onItemTap: viewModel.onItemTap(item:))
         }
         .background(.white)
@@ -53,11 +52,9 @@ private struct ExamplesCellView: View {
                     .foregroundStyle(.black)
                 
                 Spacer()
-                
                 Image(systemName: "chevron.right")
             }
             .padding(.bottom, 10)
-            
             Rectangle()
                 .fill(.gray.opacity(0.5))
                 .frame(maxWidth: .infinity)

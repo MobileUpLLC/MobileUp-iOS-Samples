@@ -35,7 +35,7 @@ final class SplashViewModel: ViewModel {
         }
     }
     
-    func onViewAppear() {
+    func handleViewAppear() {
         if authRepository.refreshToken == nil {
             completion(.entrance)
         } else {

@@ -25,9 +25,7 @@ final class TypicalTasksViewModel: ViewModel {
         return [
             .init(
                 title: R.string.typicalTasks.typicalTasksAuthorization(),
-                action: { [weak self] in
-                    self?.showAuthorizationModule()
-                }
+                action: { [weak self] in self?.showAuthorizationModule() }
             ),
             .init(
                 title: R.string.typicalTasks.typicalTasksLists(),

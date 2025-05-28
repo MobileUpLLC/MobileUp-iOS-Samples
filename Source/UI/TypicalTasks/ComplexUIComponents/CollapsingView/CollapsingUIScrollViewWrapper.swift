@@ -13,7 +13,7 @@ struct CollapsingUIScrollViewWrapper<Content: View>: UIViewRepresentable {
         scrollView.alwaysBounceVertical = true
         
         let hostingController = UIHostingController(rootView: content)
-        context.coordinator.hostingController = hostingController
+        context.coordinator.setHostingController(with: hostingController)
         hostingController.view.backgroundColor = .white
         
         scrollView.addSubview(hostingController.view)
@@ -36,13 +36,17 @@ struct CollapsingUIScrollViewWrapper<Content: View>: UIViewRepresentable {
     }
     
     class Coordinator: NSObject, UIScrollViewDelegate, UIGestureRecognizerDelegate {
-        var hostingController: UIHostingController<Content>?
-        let onDidScroll: Closure.Double
-        let onScrollFromTop: Closure.Double?
+        private var hostingController: UIHostingController<Content>?
+        private let onDidScroll: Closure.Double
+        private let onScrollFromTop: Closure.Double?
         
         init(onDidScroll: @escaping Closure.Double, onScrollFromTop: Closure.Double?) {
             self.onDidScroll = onDidScroll
             self.onScrollFromTop = onScrollFromTop
+        }
+        
+        func setHostingController(with controller: UIHostingController<Content>) {
+            hostingController = controller
         }
         
         func scrollViewDidScroll(_ scrollView: UIScrollView) {
