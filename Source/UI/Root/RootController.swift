@@ -6,7 +6,7 @@ final class RootController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        viewModel.onViewDidLoad()
+        viewModel.handleViewDidLoad()
     }
     
     init(viewModel: RootViewModel) {

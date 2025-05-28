@@ -9,7 +9,7 @@ final class RootViewModel: ViewModel {
         self.flow = flow
     }
     
-    func onViewDidLoad() {
+    func handleViewDidLoad() {
         switch flow {
         case .entrance:
             coordinator.showEntrance()

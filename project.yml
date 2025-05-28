@@ -25,7 +25,7 @@ configs:
   Release: release
       
 targets:
-  com.samples.app:
+  TypicalTasks:
     type: application
     platform: iOS
     deploymentTarget: "16.0"
@@ -48,13 +48,14 @@ targets:
       - path: Source/Resources/Localizable
         excludes:
           - ".gitkeep"
+    scheme: {}
     settings:
         base:
             MARKETING_VERSION: *app_version
             CURRENT_PROJECT_VERSION: "1"
             SWIFT_VERSION: "5.0"
-            PRODUCT_NAME: com.samples.app
-            PRODUCT_BUNDLE_IDENTIFIER: com.mobileUp.Example
+            PRODUCT_NAME: TypicalTasks
+            PRODUCT_BUNDLE_IDENTIFIER: com.mobileup.commontasks.ios
         configs:
             Debug:
                 CODE_SIGN_IDENTITY: iPhone Developer
@@ -147,6 +148,7 @@ targets:
       - package: Moya
       - package: Pulse
         product: PulseUI
+      - package: PagingList
       
 packages:
   InputMask:
@@ -185,3 +187,6 @@ packages:
   Pulse:
     url: https://github.com/kean/Pulse
     exactVersion: 5.1.2
+  PagingList:
+    url: https://github.com/MobileUpLLC/PagingList.git
+    exactVersion: 2.1.1

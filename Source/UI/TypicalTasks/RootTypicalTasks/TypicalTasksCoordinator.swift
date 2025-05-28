@@ -1,5 +1,5 @@
 final class TypicalTasksCoordinator {
-    weak var router: (NavigationRouter & ToastRouter & RootRouter)?
+    weak var router: (NavigationRouter & ToastRouter & RootRouter & PresentationRouter)?
     
     func showAuthorizationModule() {
         let controller = AuthorizationFactory.createAuthorizationController()
@@ -7,6 +7,18 @@ final class TypicalTasksCoordinator {
         router?.push(controller: controller, isAnimated: true)
     }
     
+    func showLists() {
+        let controller = ListsFactory.createListsController()
+        controller.modalPresentationStyle = .fullScreen
+        router?.present(controller: controller, isAnimated: true, completion: nil)
+    }
+    
+    func showComplexUIComponents() {
+        let controller = ComplexUIComponentsFactory.createComplexUIComponentsController()
+        controller.modalPresentationStyle = .fullScreen
+        router?.present(controller: controller, isAnimated: true, completion: nil)
+	}
+	
     func showSignInPhone() {
         let controller = SignInPhoneFactory.createSignInPhoneController()
         
