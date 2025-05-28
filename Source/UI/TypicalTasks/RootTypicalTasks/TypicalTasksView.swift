@@ -50,7 +50,6 @@ private struct ExamplesCellView: View {
                 Text(text)
                     .font(UIFont.Heading.medium.asFont)
                     .foregroundStyle(.black)
-                
                 Spacer()
                 Image(systemName: "chevron.right")
             }
