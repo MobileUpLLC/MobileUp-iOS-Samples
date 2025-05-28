@@ -15,9 +15,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         window?.makeKeyAndVisible()
         
-        let rootViewController = LaunchFactory.createLaunchController()
-        
-        window?.rootViewController = rootViewController
+        window?.rootViewController = SplashFactory.createSplashController { [weak self] flow in
+            self?.updateWindow(with: flow)
+        }
         
         if let userActivity = connectionOptions.userActivities.first {
             DeepLinkService.shared.handleDeepLink(scene: scene, userActivity: userActivity)
@@ -32,5 +32,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
         DeepLinkService.shared.handleDeepLink(scene: scene, userActivity: userActivity)
+    }
+    
+    private func updateWindow(with flow: InitialNavigationFlow) {
+        guard let window else {
+            return
+        }
+        
+        window.rootViewController = RootFactory.createRootController(with: flow)
     }
 }

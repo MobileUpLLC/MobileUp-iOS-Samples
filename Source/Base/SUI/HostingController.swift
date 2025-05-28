@@ -22,6 +22,7 @@ class HostingController<T: View>: UIHostingController<T>, Navigatable {
         
         configureNavigationBarVisibility()
         customTabBarController?.setTabBarViewVisibility(isHidden: isTabBarHidden)
+        typicalCustomTabBarController?.setTabBarViewVisibility(isHidden: isTabBarHidden)
     }
     
     override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {

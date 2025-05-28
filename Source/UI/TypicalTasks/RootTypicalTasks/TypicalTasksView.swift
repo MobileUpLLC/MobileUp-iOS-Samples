@@ -1,30 +1,30 @@
 import SwiftUI
 
-struct ExamplesViewItem: Identifiable {
+struct TypicalTasksViewItem: Identifiable {
     let id = UUID()
     let title: String
     let action: Closure.Void
 }
 
-struct ExamplesView: View {
-    @ObservedObject var viewModel: ExamplesViewModel
-    
+struct TypicalTasksView: View {
+    @ObservedObject var viewModel: TypicalTasksViewModel
+
     var body: some View {
         VStack(alignment: .leading, spacing: .zero) {
-            Text(R.string.examples.examplesTitle())
+            Text(R.string.typicalTasks.typicalTasksTitle())
                 .font(UIFont.Heading.primary.asFont)
                 .foregroundStyle(.black)
                 .padding(.vertical, 20)
                 .padding(.horizontal, 28)
-            ExamplesContentView(items: viewModel.examples, onItemTap: viewModel.onItemTap(item:))
+            TypicalTasksContentView(items: viewModel.typicalTasks, onItemTap: viewModel.onItemTap(item:))
         }
         .background(.white)
     }
 }
 
-private struct ExamplesContentView: View {
-    let items: [ExamplesViewItem]
-    let onItemTap: Closure.Generic<ExamplesViewItem>
+private struct TypicalTasksContentView: View {
+    let items: [TypicalTasksViewItem]
+    let onItemTap: Closure.Generic<TypicalTasksViewItem>
     
     private let columns: [GridItem] = [GridItem(.fixed(UIScreen.main.bounds.width))]
     
@@ -63,12 +63,10 @@ private struct ExamplesCellView: View {
     }
 }
 
-struct ExamplesView_Previews: PreviewProvider {
-    static var previews: some View {
-        ExamplesView(
-            viewModel: ExamplesViewModel(
-                coordinator: ExamplesCoordinator()
-            )
+#Preview {
+    TypicalTasksView(
+        viewModel: TypicalTasksViewModel(
+            coordinator: TypicalTasksCoordinator()
         )
-    }
+    )
 }
