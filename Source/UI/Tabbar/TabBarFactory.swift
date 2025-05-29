@@ -1,16 +1,28 @@
 enum TabBarFactory {
-    static func createTabbarController() -> CustomTabBarController {
-        let typicalTasksController = TypicalTasksFactory.createTypicalTasksController()
-        let examplesController = ExamplesFactory.createExamplesController()
-        let bottomSheetController = BottomSheetExampleFactory.createBottomSheetExampleController()
-        
-        let coordinator = TabBarCoordinator()
-        let viewModel = TabbarViewModel(coordinator: coordinator, pushService: .shared, mobileService: .shared)
+    static func createTabbarController(networkService: NetworkService) -> CustomTabBarController {
+        let typicalTasksController = TypicalTasksFactory.createTypicalTasksController(networkService: networkService)
+        let examplesController = ExamplesFactory.createExamplesController(networkService: networkService)
+        let bottomSheetController = BottomSheetExampleFactory.createBottomSheetExampleController(
+            networkService: networkService
+        )
+
+        let coordinator = TabBarCoordinator(networkService: networkService)
+        let viewModel = TabbarViewModel(coordinator: coordinator, pushService: .shared, networkService: networkService)
         let controller = CustomTabBarController(
             viewModel: viewModel,
             controllers: [typicalTasksController, examplesController, bottomSheetController]
         )
         coordinator.router = controller
+
+        Task {
+            await networkService.setAuthorizationObjects(
+                provider: AuthRepository(networkService: networkService),
+                refresher: AuthRepository(networkService: networkService),
+                tokenRefreshFailureHandler: {
+                    await coordinator.openLaunch()
+                }
+            )
+        }
 
         return controller
     }

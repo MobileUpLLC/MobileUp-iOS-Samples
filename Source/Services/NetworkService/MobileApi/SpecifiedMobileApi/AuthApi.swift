@@ -1,11 +1,12 @@
 import Foundation
 import Moya
+import munkit
 
 enum AuthApi {
     case refresh(token: String)
 }
 
-extension AuthApi: MobileApiTargetType {
+extension AuthApi: MUNAPITarget {
     var baseURL: URL { getBaseURL() }
     var path: String { getPath() }
     var method: Moya.Method { getMethod() }
@@ -15,7 +16,9 @@ extension AuthApi: MobileApiTargetType {
     var authorizationType: Moya.AuthorizationType? { .none }
     var isAccessTokenRequired: Bool { getIsAccessTokenRequired() }
     var isRefreshTokenRequest: Bool { getIsRefreshTokenRequest() }
-    
+    var mockFileName: String? { getMockFileName() }
+    var isMockEnabled: Bool { getIsMockEnabled() }
+
     private func getBaseURL() -> URL { Environments.mobileApiUrl }
     
     private func getPath() -> String {
@@ -67,6 +70,20 @@ extension AuthApi: MobileApiTargetType {
         switch self {
         case .refresh:
             return true
+        }
+    }
+
+    private func getMockFileName() -> String? {
+        switch self {
+        default:
+            return nil
+        }
+    }
+
+    private func getIsMockEnabled() -> Bool {
+        switch self {
+        default:
+            return false
         }
     }
 }

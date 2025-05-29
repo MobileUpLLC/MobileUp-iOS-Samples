@@ -1,6 +1,6 @@
 import Foundation
 
-extension URL: LosslessStringConvertible {
+extension URL: @retroactive LosslessStringConvertible {
     var description: String { absoluteString }
     
     public init?(_ description: String) {

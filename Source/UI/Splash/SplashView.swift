@@ -14,8 +14,8 @@ struct SplashView: View {
     SplashView(
         viewModel: SplashViewModel(
             coordinator: SplashCoordinator(),
-            mobileService: .shared,
-            authRepository: AuthRepository(),
+            networkService: .init(),
+            authRepository: AuthRepository(networkService: .init()),
             completion: { _ in }
         )
     )

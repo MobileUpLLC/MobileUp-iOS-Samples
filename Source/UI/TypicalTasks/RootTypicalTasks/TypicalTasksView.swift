@@ -66,7 +66,7 @@ private struct ExamplesCellView: View {
 #Preview {
     TypicalTasksView(
         viewModel: TypicalTasksViewModel(
-            coordinator: TypicalTasksCoordinator()
+            coordinator: TypicalTasksCoordinator(networkService: .init())
         )
     )
 }
