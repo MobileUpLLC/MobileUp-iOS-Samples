@@ -8,6 +8,6 @@ final class SplashController: HostingController<SplashView> {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        rootView.viewModel.onViewAppear()
+        rootView.viewModel.handleViewAppear()
     }
 }
