@@ -23,6 +23,7 @@ final class AuthorizationViewModel: ViewModel {
     
     func handleSignButtonTapped() {
         guard authRepository.refreshToken != nil else {
+            authorizeUserDevice(completion: { [weak self] in self?.authorize() })
             return
         }
         
@@ -31,6 +32,18 @@ final class AuthorizationViewModel: ViewModel {
     
     func handleFailedValid() {
         isLoading = false
+    }
+    
+    private func authorizeUserDevice(completion: @escaping Closure.Void) {
+        isLoading = true
+        
+        Perform { [weak self] in
+            try await self?.authRepository.authorizeUserDevice()
+            
+            onMain(execute: completion)
+        } onError: { [weak self] _ in
+            self?.isLoading = false
+        }
     }
     
     private func authorize() {
