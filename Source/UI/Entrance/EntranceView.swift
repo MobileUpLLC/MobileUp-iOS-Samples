@@ -15,10 +15,13 @@ struct EntranceView: View {
                 if isAnimating {
                     VStack(spacing: 12) {
                         Button(R.string.entrance.entranceRegistrationButtonTitle()) {
-                            viewModel.onRegistrationButtonTapped()
+                            viewModel.handleRegistrationButtonTapped()
                         }
                         Button(R.string.entrance.entranceAuthorizationButtonTitle()) {
-                            viewModel.onAuthorizationButtonTapped()
+                            viewModel.handleAuthorizationButtonTapped()
+                        }
+                        Button(R.string.entrance.entranceUnauthorizedZoneButtonTitle()) {
+                            viewModel.handleGoToUnauthorizedZoneButtonTapped()
                         }
                     }
                 }

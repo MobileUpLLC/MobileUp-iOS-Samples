@@ -1,9 +1,8 @@
 enum TabBarFactory {
-    @MainActor
-    static func createTabbarController(networkService: NetworkService) async -> CustomTabBarController {
+    @MainActor static func createTabbarController(networkService: NetworkService) async -> CustomTabBarController {
         let typicalTasksController = TypicalTasksFactory.createTypicalTasksController(networkService: networkService)
         let examplesController = ExamplesFactory.createExamplesController(networkService: networkService)
-        let bottomSheetController = BottomSheetExampleFactory.createBottomSheetExampleController(
+        let bottomSheetController = BottomSheetExampleFactory.createBottomSheetNavigationContriller(
             networkService: networkService
         )
 

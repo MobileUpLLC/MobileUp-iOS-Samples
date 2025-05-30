@@ -2,8 +2,7 @@ import UIKit
 import munkit
 
 enum SplashFactory {
-    @MainActor
-    static func createSplashController(
+    @MainActor static func createSplashController(
         networkService: NetworkService,
         completion: @escaping Closure.Generic<InitialNavigationFlow>
     ) async -> SplashController {

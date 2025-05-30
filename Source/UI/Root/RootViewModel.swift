@@ -14,7 +14,9 @@ final class RootViewModel: ViewModel {
         case .entrance:
             coordinator.showEntrance()
         case .tabBar:
-            Task { [weak self] in await self?.coordinator.showTabBar() }
+            Task { [weak self] in
+                await self?.coordinator.showTabBar()
+            }
         }
     }
 }

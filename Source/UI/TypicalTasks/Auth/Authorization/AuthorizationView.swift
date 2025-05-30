@@ -57,7 +57,6 @@ private struct InputContentView: View {
             .keyboardType(.emailAddress)
             .disableAutocorrection(true)
             .focused($isFocused)
-            
             InputFieldView(
                 header: R.string.auth.authorizationInputPasswordTitle(),
                 text: $viewModel.password,

@@ -65,7 +65,6 @@ private struct InputContentView: View {
                 .keyboardType(.emailAddress)
                 .disableAutocorrection(true)
                 .focused($isFocused)
-                
                 Spacer()
                     .frame(height: 12)
                 InputFieldView(
@@ -89,7 +88,6 @@ private struct InputContentView: View {
                 )
                 .padding(.top, 4)
                 .focused($isFocused)
-                
                 AgreementView(
                     termsLink: viewModel.termsLink,
                     privacyLink: viewModel.privacyLink,

@@ -1,5 +1,5 @@
 final class EntranceCoordinator {
-    weak var router: NavigationRouter?
+    weak var router: (NavigationRouter & RootRouter)?
     
     private let networkService: NetworkService
     
@@ -17,5 +17,11 @@ final class EntranceCoordinator {
         let controller = RegistrationFactory.createRegistrationController(networkService: networkService)
         
         router?.push(controller: controller, isAnimated: true)
+    }
+    
+    @MainActor func showTabbarModule() async {
+        let tabBarController = await TabBarFactory.createTabbarController(networkService: networkService)
+        
+        router?.showApplicationRoot(controller: tabBarController, animated: true)
     }
 }

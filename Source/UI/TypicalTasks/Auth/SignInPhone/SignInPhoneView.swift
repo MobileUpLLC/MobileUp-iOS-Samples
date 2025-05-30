@@ -42,7 +42,6 @@ private struct SignInPhoneBodyView: View {
     }
     
     @FocusState var isFocused: Bool
-    
     @Binding var phoneNumber: String
     @Binding var isPhoneNumberValid: Bool
     
@@ -95,7 +94,6 @@ private struct SignInPhoneOverlayedButtonsView: View {
     let isFocused: Bool
     let isLoading: Bool
     let smsCoolDown: String
-    
     let onSaveButtonTapAction: Closure.Void
     
     var body: some View {

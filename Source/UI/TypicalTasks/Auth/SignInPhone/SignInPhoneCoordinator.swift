@@ -36,16 +36,4 @@ final class SignInPhoneCoordinator {
         
         router?.push(controller: controller, isAnimated: true)
     }
-    
-//    func goToMain() {
-//        let controller = BaseTabBarFactory.createTabBarController(selectedIndex: .one)
-//        
-//        router?.showApplicationRoot(controller: controller)
-//    }
-//    
-//    func goToSignInCode(viewModelItem: SignInViewModelItem) {
-//        let controller = SignInCodeFactory.createSignInCodeController(viewModelItem: viewModelItem)
-//        
-//        router?.push(controller: controller, isAnimated: true)
-//    }
 }

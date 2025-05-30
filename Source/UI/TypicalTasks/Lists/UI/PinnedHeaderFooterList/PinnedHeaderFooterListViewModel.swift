@@ -25,7 +25,9 @@ final class PinnedHeaderFooterListViewModel: ObservableObject {
     }
     
     func requestData() {
-        Task { [weak self] in await self?.requestDataAsync() }
+        Task { [weak self] in
+            await self?.requestDataAsync()
+        }
     }
     
     func requestDataAsync(isRefresh: Bool = false) async {
