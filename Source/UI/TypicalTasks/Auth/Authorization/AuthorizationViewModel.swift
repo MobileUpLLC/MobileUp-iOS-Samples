@@ -56,9 +56,7 @@ final class AuthorizationViewModel: ViewModel {
             
             let request = EmailAuthRequest(email: email, password: password)
             try await authRepository.authorizeUserWithEmail(with: request)
-            onMain { [weak self] in
-                self?.showTabBarScreen()
-            }
+            showTabBarScreen()
         } onError: { [weak self] error in
             guard let self else {
                 return

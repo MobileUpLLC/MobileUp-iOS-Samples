@@ -11,7 +11,7 @@ final class AuthorizationCoordinator {
         router?.showToast(with: .init(message: error.localizedDescription, style: .failure))
     }
     
-    func showTabBarScreen() async {
+    @MainActor func showTabBarScreen() async {
         let controller = await TabBarFactory.createTabbarController(networkService: networkService)
         
         router?.showApplicationRoot(controller: controller, animated: true)

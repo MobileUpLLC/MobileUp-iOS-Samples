@@ -15,7 +15,7 @@ final class ConfirmationCodeCoordinator {
         router?.pop(isAnimated: true)
     }
     
-    func showTabBarScreen() async {
+    @MainActor func showTabBarScreen() async {
         let controller = await TabBarFactory.createTabbarController(networkService: networkService)
         
         router?.showApplicationRoot(controller: controller, animated: true)

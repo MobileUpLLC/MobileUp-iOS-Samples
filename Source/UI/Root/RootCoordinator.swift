@@ -13,8 +13,7 @@ final class RootCoordinator {
         router?.showApplicationRoot(controller: controller, animated: true)
     }
     
-    @MainActor
-    func showTabBar() async {
+    @MainActor func showTabBar() async {
         let controller = await TabBarFactory.createTabbarController(networkService: networkService)
         
         router?.showApplicationRoot(controller: controller, animated: true)

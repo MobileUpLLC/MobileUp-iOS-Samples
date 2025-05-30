@@ -17,7 +17,7 @@ final class SignInPhoneCoordinator {
         router?.popToRoot(isAnimated: true)
     }
     
-    func showTabBarScreen() async {
+    @MainActor func showTabBarScreen() async {
         let controller = await TabBarFactory.createTabbarController(networkService: networkService)
         
         router?.showApplicationRoot(controller: controller, animated: true)

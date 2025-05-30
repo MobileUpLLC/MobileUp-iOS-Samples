@@ -98,14 +98,18 @@ extension MobileApi: MUNAPITarget {
 
     private func getMockFileName() -> String? {
         switch self {
-        default:
+        case .auth(let type as MUNAPITarget):
+            return type.mockFileName
+        case .example:
             return nil
         }
     }
 
     private func getIsMockEnabled() -> Bool {
         switch self {
-        default:
+        case .auth(let type as MUNAPITarget):
+            return type.isMockEnabled
+        case .example:
             return false
         }
     }

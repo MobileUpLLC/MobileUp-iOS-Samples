@@ -13,8 +13,14 @@ final class BottomSheetExampleCoordinator {
         router?.present(controller: controller, isAnimated: true, completion: nil)
     }
     
-    func showExampleModule() async {
+    @MainActor func showExampleModule() async {
         let controller = await TabBarFactory.createTabbarController(networkService: networkService)
+        
+        router?.showApplicationRoot(controller: controller, animated: true)
+    }
+    
+    func showEntrance() {
+        let controller = EntranceFactory.createEntranceController(networkService: networkService)
         
         router?.showApplicationRoot(controller: controller, animated: true)
     }

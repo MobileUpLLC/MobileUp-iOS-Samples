@@ -23,17 +23,15 @@ final class BottomSheetExampleViewModel: ObservableObject {
         }
     }
     
-    func onShowAlertButtonTapped() {
+    func handleShowAlertButtonTapped() {
         isLogoutAlertPresented = true
     }
     
-    func onAlertLogoutButtonTapped() {
-        isDeleteAlertPresented = true
-    }
-    
-    func onDeleteAlertLogoutButtonTapped() {
+    func handleAlertLogoutButtonTapped() {
         do {
             try authRepository.clearKeychainDataInStorage()
+            isLogoutAlertPresented = true
+            coordinator.showEntrance()
         } catch {
             coordinator.showErrorToast(with: error)
         }
