@@ -16,7 +16,7 @@ enum OuterValidationRule: Equatable {
     var message: String {
         switch self {
         case .unknown:
-            return "unknown"
+            return R.string.common.ruleUnknownError()
         case .emailNotFound:
             return R.string.auth.authorizationEmailNotRegisteredTitle()
         case .emailNotConfirmed:

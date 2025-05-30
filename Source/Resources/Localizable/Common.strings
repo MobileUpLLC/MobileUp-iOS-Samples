@@ -26,6 +26,7 @@
 "rule-field-required" = "Это поле обязательно";
 "rule-look-like-date" = "Неверный формат даты";
 "rule-older-than" = "Вы должны быть старше %@ лет, чтобы создать аккаунт";
+"rule-unknown-error" = "Неизвестная ошибка";
 
 // Documents
 "documents-terms-of-use-button-title" = "Условия использования";
