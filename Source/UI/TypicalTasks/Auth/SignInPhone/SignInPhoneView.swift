@@ -118,8 +118,8 @@ private struct SignInPhoneOverlayedButtonsView: View {
 
 struct SignInPhoneView_Previews: PreviewProvider {
     static let viewModel = SignInPhoneViewModel(
-        coordinator: SignInPhoneCoordinator(),
-        authRepository: AuthRepository()
+        coordinator: SignInPhoneCoordinator(networkService: .init()),
+        authRepository: AuthRepository(networkService: .init())
     )
     
     static var previews: some View {

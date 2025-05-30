@@ -1,8 +1,13 @@
 final class TypicalTasksCoordinator {
     weak var router: (NavigationRouter & ToastRouter & RootRouter & PresentationRouter)?
-    
+    private let networkService: NetworkService
+
+    init(networkService: NetworkService) {
+        self.networkService = networkService
+    }
+
     func showAuthorizationModule() {
-        let controller = AuthorizationFactory.createAuthorizationController()
+        let controller = AuthorizationFactory.createAuthorizationController(networkService: networkService)
         
         router?.push(controller: controller, isAnimated: true)
     }
@@ -14,19 +19,19 @@ final class TypicalTasksCoordinator {
     }
     
     func showComplexUIComponents() {
-        let controller = ComplexUIComponentsFactory.createComplexUIComponentsController()
+        let controller = ComplexUIComponentsFactory.createComplexUIComponentsController(networkService: networkService)
         controller.modalPresentationStyle = .fullScreen
         router?.present(controller: controller, isAnimated: true, completion: nil)
 	}
 	
     func showSignInPhone() {
-        let controller = SignInPhoneFactory.createSignInPhoneController()
+        let controller = SignInPhoneFactory.createSignInPhoneController(networkService: networkService)
         
         router?.push(controller: controller, isAnimated: true)
     }
     
     func showEntrance() {
-        let controller = EntranceFactory.createEntranceController()
+        let controller = EntranceFactory.createEntranceController(networkService: networkService)
         
         router?.showApplicationRoot(controller: controller, animated: true)
     }
@@ -36,7 +41,7 @@ final class TypicalTasksCoordinator {
     }
     
     func showRegistrationModule() {
-        let controller = RegistrationFactory.createRegistrationController()
+        let controller = RegistrationFactory.createRegistrationController(networkService: networkService)
         
         router?.push(controller: controller, isAnimated: true)
     }

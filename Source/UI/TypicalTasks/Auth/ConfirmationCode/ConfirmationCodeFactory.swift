@@ -2,12 +2,13 @@ import UIKit
 
 enum ConfirmationCodeFactory {
     static func createConfirmationCodeController(
+        networkService: NetworkService,
         credentials: String,
         resendCodeInterval: TimeInterval,
         displayType: ConfirmationCodeDisplayType
     ) -> ConfirmationCodeController {
-        let coordinator = ConfirmationCodeCoordinator()
-        let authRepository = AuthRepository()
+        let coordinator = ConfirmationCodeCoordinator(networkService: networkService)
+        let authRepository = AuthRepository(networkService: networkService)
         let timerService = TimerService(timerInterval: resendCodeInterval, timerUpdateRate: .one)
         let viewModel = ConfirmationCodeViewModel(
             credentials: credentials,

@@ -96,8 +96,8 @@ private struct ForgotPasswordButton: View {
 #Preview {
     AuthorizationView(
         viewModel: AuthorizationViewModel(
-            coordinator: AuthorizationCoordinator(),
-            authRepository: AuthRepository()
+            coordinator: AuthorizationCoordinator(networkService: .init()),
+            authRepository: AuthRepository(networkService: .init())
         )
     )
 }

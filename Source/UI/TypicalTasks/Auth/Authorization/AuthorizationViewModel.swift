@@ -59,13 +59,13 @@ final class AuthorizationViewModel: ViewModel {
             onMain { [weak self] in
                 self?.showTabBarScreen()
             }
-        } onError: { [weak self] serverError in
+        } onError: { [weak self] error in
             guard let self else {
                 return
             }
             
             isLoading = false
-            switch serverError.details.statusCode {
+            switch error.response?.statusCode {
             case 201:
                 confirmEmail(email)
             case 404:
@@ -73,7 +73,7 @@ final class AuthorizationViewModel: ViewModel {
             case 422:
                 outerPasswordRules = [.passwordInvalid]
             default:
-                coordinator.showErrorToast(with: serverError)
+                coordinator.showErrorToast(with: error)
             }
         }
     }
@@ -99,6 +99,8 @@ final class AuthorizationViewModel: ViewModel {
     }
     
     private func showTabBarScreen() {
-        coordinator.showTabBarScreen()
+        Task { [weak self] in
+            await self?.coordinator.showTabBarScreen()
+        }
     }
 }

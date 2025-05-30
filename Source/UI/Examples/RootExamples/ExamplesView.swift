@@ -67,7 +67,7 @@ struct ExamplesView_Previews: PreviewProvider {
     static var previews: some View {
         ExamplesView(
             viewModel: ExamplesViewModel(
-                coordinator: ExamplesCoordinator()
+                coordinator: ExamplesCoordinator(networkService: .init())
             )
         )
     }

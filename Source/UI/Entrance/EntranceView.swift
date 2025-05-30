@@ -37,7 +37,7 @@ struct EntranceView: View {
 #Preview {
     EntranceView(
         viewModel: EntranceViewModel(
-            coordinator: EntranceCoordinator()
+            coordinator: EntranceCoordinator(networkService: .init())
         )
     )
 }

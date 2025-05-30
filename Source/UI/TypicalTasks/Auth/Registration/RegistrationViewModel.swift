@@ -108,7 +108,7 @@ final class RegistrationViewModel: ViewModel {
                 return
             }
             
-            if serverError.details.statusCode == 422 {
+            if serverError.response?.statusCode == 422 {
                 outerEmailRules = [.emailAlreadyExists]
             } else {
                 coordinator.showErrorToast()

@@ -88,11 +88,10 @@ final class ConfirmationCodeViewModel: ViewModel {
             self?.codeOTPBlockState = .error
             
             switch error {
-            case .tooManyRequest(let details):
-                let message = details.message != .empty
-                ? details.message
-                : R.string.common.errorStateTitle()
-                self?.coordinator.showErrorToast(with: message)
+            case .statusCode(let response):
+                if response.statusCode == 429 {
+                    self?.coordinator.showErrorToast(with: R.string.common.errorStateTitle())
+                }
             default:
                 let message = R.string.auth.confirmationCodeInvalidCode()
                 self?.coordinator.showErrorToast(with: message)
@@ -112,7 +111,9 @@ final class ConfirmationCodeViewModel: ViewModel {
                 return
             }
             
-            coordinator.showTabBarScreen()
+            Task { [weak self] in
+                await self?.coordinator.showTabBarScreen()
+            }
         }
     }
     
@@ -161,11 +162,11 @@ final class ConfirmationCodeViewModel: ViewModel {
             self?.state = .initial
             
             switch error {
-            case .tooManyRequest(let details):
-                let message = details.message != .empty
-                ? details.message
-                : R.string.common.errorStateTitle()
-                self?.coordinator.showErrorToast(with: message)
+            case .statusCode(let response):
+                if response.statusCode == 429 {
+                    response.data
+                    self?.coordinator.showErrorToast(with: R.string.common.errorStateTitle())
+                }
             default:
                 self?.coordinator.showErrorToast()
             }

@@ -39,7 +39,9 @@ final class SignInPhoneViewModel: ViewModel {
     }
     
     private func showTabBarScreen() {
-        coordinator.showTabBarScreen()
+        Task { [weak self] in
+            await self?.coordinator.showTabBarScreen()
+        }
     }
     
     private func authorize() {

@@ -1,14 +1,20 @@
 final class BottomSheetExampleCoordinator {
     weak var router: (PresentationRouter & RootRouter & ToastRouter)?
-    
+
+    private var networkService: NetworkService
+
+    init(networkService: NetworkService) {
+        self.networkService = networkService
+    }
+
     func showSkeletonModule() {
         let controller = SkeletonFactory.createSkeletonController()
-        
+
         router?.present(controller: controller, isAnimated: true, completion: nil)
     }
     
-    func showExampleModule() {
-        let controller = TabBarFactory.createTabbarController()
+    func showExampleModule() async {
+        let controller = await TabBarFactory.createTabbarController(networkService: networkService)
         
         router?.showApplicationRoot(controller: controller, animated: true)
     }

@@ -1,5 +1,6 @@
 import Foundation
 import Moya
+import munkit
 
 enum AuthApi {
     case refresh(token: String)
@@ -11,7 +12,7 @@ enum AuthApi {
     case authorizeUserDevice(request: UDIDRequest)
 }
 
-extension AuthApi: MobileApiTargetType {
+extension AuthApi: MUNAPITarget {
     var baseURL: URL { getBaseURL() }
     var path: String { getPath() }
     var method: Moya.Method { getMethod() }
@@ -21,7 +22,9 @@ extension AuthApi: MobileApiTargetType {
     var authorizationType: Moya.AuthorizationType? { .none }
     var isAccessTokenRequired: Bool { getIsAccessTokenRequired() }
     var isRefreshTokenRequest: Bool { getIsRefreshTokenRequest() }
-    
+    var mockFileName: String? { getMockFileName() }
+    var isMockEnabled: Bool { getIsMockEnabled() }
+
     private func getBaseURL() -> URL { Environments.mobileApiUrl }
     
     private func getPath() -> String {
@@ -102,10 +105,10 @@ extension AuthApi: MobileApiTargetType {
     private func getIsAccessTokenRequired() -> Bool {
         switch self {
         case .refresh,
-                .sendConfirmationCode,
                 .authorizeUserDevice:
             return false
         case .authorizeUserWithEmail,
+                .sendConfirmationCode,
                 .authorizeUserWithPhone,
                 .sendRecoveryConfirmationCode,
                 .checkConfirmationСode:
@@ -137,6 +140,35 @@ extension AuthApi: MobileApiTargetType {
                 .authorizeUserWithPhone,
                 .sendRecoveryConfirmationCode:
             return .bearer
+        }
+    }
+
+    func getMockFileName() -> String? {
+        switch self {
+        case .refresh:
+            return nil
+        case .authorizeUserWithEmail, .authorizeUserWithPhone:
+            return "MockAuthorizeUserModel"
+        case .authorizeUserDevice:
+            return "MockTempTokenModel"
+        case .sendRecoveryConfirmationCode, .sendConfirmationCode:
+            return "MockUserRegistrationModel"
+        case .checkConfirmationСode:
+            return "MockTokenModel"
+        }
+    }
+    
+    private func getIsMockEnabled() -> Bool {
+        switch self {
+        case .refresh:
+            return false
+        case .authorizeUserWithEmail,
+                .sendRecoveryConfirmationCode,
+                .checkConfirmationСode,
+                .authorizeUserDevice,
+                .authorizeUserWithPhone,
+                .sendConfirmationCode:
+            return true
         }
     }
 }

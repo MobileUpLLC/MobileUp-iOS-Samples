@@ -79,8 +79,8 @@ private struct ResendSMSView: View {
         viewModel: ConfirmationCodeViewModel(
             credentials: "test@gmail.com",
             displayType: .present,
-            coordinator: ConfirmationCodeCoordinator(),
-            authRepository: AuthRepository(),
+            coordinator: ConfirmationCodeCoordinator(networkService: .init()),
+            authRepository: AuthRepository(networkService: .init()),
             timerService: TimerService(timerInterval: 60, timerUpdateRate: .one)
         )
     )

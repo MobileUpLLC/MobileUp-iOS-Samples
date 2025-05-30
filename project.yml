@@ -149,7 +149,8 @@ targets:
       - package: Pulse
         product: PulseUI
       - package: PagingList
-      
+      - package: munkit
+
 packages:
   InputMask:
     url: https://github.com/RedMadRobot/input-mask-ios
@@ -190,3 +191,6 @@ packages:
   PagingList:
     url: https://github.com/MobileUpLLC/PagingList.git
     exactVersion: 2.1.1
+  munkit:
+    url: https://github.com/MobileUpLLC/munkit
+    exactVersion: 1.1.2

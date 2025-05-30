@@ -25,8 +25,8 @@ final class SwiftUIListViewModel: ObservableObject {
     }
     
     func requestData() {
-        Task {
-            await requestDataAsync()
+        Task { [weak self] in
+            await self?.requestDataAsync()
         }
     }
     

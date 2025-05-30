@@ -159,8 +159,8 @@ private struct TermsView: View {
 #Preview {
     RegistrationView(
         viewModel: RegistrationViewModel(
-            coordinator: RegistrationCoordinator(),
-            authRepository: AuthRepository()
+            coordinator: RegistrationCoordinator(networkService: .init()),
+            authRepository: AuthRepository(networkService: .init())
         )
     )
 }

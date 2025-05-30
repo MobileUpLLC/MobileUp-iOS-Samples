@@ -1,6 +1,7 @@
 import Foundation
+import munkit
 
-class AuthRepository: TokenRefreshProvider, AccessTokenProvider {
+class AuthRepository: MUNAccessTokenProvider, MUNAccessTokenRefresher, @unchecked Sendable {
     private enum Constants {
         static let refreshTokenKey = UniqueStorageKey<String>(value: "AuthRepository.refreshTokenKey")
         static let accessTokenKey = UniqueStorageKey<String>(value: "AuthRepository.accessTokenKey")
@@ -10,25 +11,38 @@ class AuthRepository: TokenRefreshProvider, AccessTokenProvider {
         static let savedTemporaryTokensDescription = "Temporary tokens saved"
         static let savedTokensDescription = "Tokens saved"
     }
-    
-    var accessToken: String? { try? keychainStorageService.object(forKey: Constants.accessTokenKey) }
-    var refreshToken: String? { try? keychainStorageService.object(forKey: Constants.refreshTokenKey) }
+
+    private let networkService: NetworkService
+    private var _accessToken: String?
+    private var _refreshToken: String?
+    private let tokensQueue: DispatchQueue
+
+    var accessToken: String? { tokensQueue.sync { _accessToken } }
+    var refreshToken: String? { tokensQueue.sync { _refreshToken } }
     var udid: String? { try? keychainStorageService.object(forKey: Constants.udidKey) }
     
     var isUserAuthorized: Bool { accessToken != nil }
-    
+
+    init(networkService: NetworkService) {
+         self.networkService = networkService
+         self.tokensQueue = DispatchQueue(
+             label: "com.mobileup.auth-repository.access-token-queue",
+             qos: .userInitiated
+         )
+         self._accessToken = try? keychainStorageService.object(forKey: Constants.accessTokenKey)
+         self._refreshToken = try? keychainStorageService.object(forKey: Constants.refreshTokenKey)
+     }
+
+    func refresh() async throws {
+        try await networkService.executeRequest(target: .auth(.refresh(token: "refreshToken")))
+    }
+
     private let keychainStorageService = KeychainStorageService<String>(
         transformer: KeychainTransformerFactory.forCodable(ofType: String.self)
     )
-        
-    private lazy var mobileService = MobileService.shared
-    
-    func refreshToken() async throws -> String {
-        try await mobileService.request(target: .auth(.refresh(token: "refreshToken")))
-    }
-    
+
     func sendRecoveryConfirmationCode(with request: EmailRequest) async throws {
-        let _: UserRegistrationModel = try await mobileService.request(
+        let _: UserRegistrationModel = try await networkService.executeRequest(
             target: .auth(.sendRecoveryConfirmationCode(request: request))
         )
     }
@@ -42,7 +56,7 @@ class AuthRepository: TokenRefreshProvider, AccessTokenProvider {
             let details = ErrorDetails(message: Constants.invalidConfirmationCodeDescription)
             throw ServerError.unknown(details: details)
         }
-        let tokenModel: ConfirmCodeTokenModel = try await mobileService.request(
+        let tokenModel: ConfirmCodeTokenModel = try await networkService.executeRequest(
             target: .auth(.checkConfirmationСode(request: request))
         )
         try saveAccessToken(tokenModel.accessToken)
@@ -51,7 +65,7 @@ class AuthRepository: TokenRefreshProvider, AccessTokenProvider {
     }
     
     func register(with request: EmailAuthRequest) async throws {
-        let _: UserRegistrationModel = try await mobileService.request(
+        let _: UserRegistrationModel = try await networkService.executeRequest(
             target: .auth(.sendConfirmationCode(request: request))
         )
     }
@@ -63,7 +77,7 @@ class AuthRepository: TokenRefreshProvider, AccessTokenProvider {
         }
         
         let request = UDIDRequest(udid: udid)
-        let tokenModel: TokenModel = try await mobileService.request(
+        let tokenModel: TokenModel = try await networkService.executeRequest(
             target: .auth(.authorizeUserDevice(request: request))
         )
         try saveAccessToken(tokenModel.accessToken)
@@ -84,7 +98,7 @@ class AuthRepository: TokenRefreshProvider, AccessTokenProvider {
         if request.password != "AbraCadabra13!" {
             throw ServerError.notFound(details: ErrorDetails(statusCode: 422, message: "Incorrect password"))
         }
-        let authorizeUserModel: AuthorizeUserModel = try await mobileService.request(
+        let authorizeUserModel: AuthorizeUserModel = try await networkService.executeRequest(
             target: .auth(.authorizeUserWithEmail(request: request))
         )
         try saveAccessToken(authorizeUserModel.accessToken)
@@ -92,7 +106,7 @@ class AuthRepository: TokenRefreshProvider, AccessTokenProvider {
     }
     
     func authorizeUserWithPhone(with request: PhoneAuthRequest) async throws {
-        let authorizeUserModel: AuthorizeUserModel = try await mobileService.request(
+        let authorizeUserModel: AuthorizeUserModel = try await networkService.executeRequest(
             target: .auth(.authorizeUserWithPhone(request: request))
         )
         try saveAccessToken(authorizeUserModel.accessToken)
@@ -116,22 +130,32 @@ class AuthRepository: TokenRefreshProvider, AccessTokenProvider {
     }
     
     private func removeAllFromKeychaine() throws {
-        try keychainStorageService.removeAll()
+        try tokensQueue.sync {
+            try keychainStorageService.removeAll()
+        }
     }
     
     private func saveRefreshToken(_ token: String) throws {
-        try keychainStorageService.setObject(
-            token,
-            forKey: Constants.refreshTokenKey,
-            expiry: .never
-        )
+        try tokensQueue.sync {
+            _refreshToken = token
+
+            try keychainStorageService.setObject(
+                token,
+                forKey: Constants.refreshTokenKey,
+                expiry: .never
+            )
+        }
     }
     
     private func saveAccessToken(_ token: String) throws {
-        try keychainStorageService.setObject(
-            token,
-            forKey: Constants.accessTokenKey,
-            expiry: .never
-        )
+        try tokensQueue.sync {
+            _accessToken = token
+
+            try keychainStorageService.setObject(
+                token,
+                forKey: Constants.accessTokenKey,
+                expiry: .never
+            )
+        }
     }
 }

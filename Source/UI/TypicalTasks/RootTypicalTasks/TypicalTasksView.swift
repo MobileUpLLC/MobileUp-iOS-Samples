@@ -100,7 +100,8 @@ private struct ExamplesCellView: View {
 #Preview {
     TypicalTasksView(
         viewModel: TypicalTasksViewModel(
-            coordinator: TypicalTasksCoordinator(), authRepository: AuthRepository()
+            coordinator: TypicalTasksCoordinator(networkService: .init()),
+            authRepository: .init(networkService: .init())
         )
     )
 }

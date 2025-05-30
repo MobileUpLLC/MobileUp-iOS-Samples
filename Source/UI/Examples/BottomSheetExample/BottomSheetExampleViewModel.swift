@@ -18,7 +18,9 @@ final class BottomSheetExampleViewModel: ObservableObject {
     }
     
     func onShowExamplesModuleButtonTapped() {
-        coordinator.showExampleModule()
+        Task { [weak self] in
+            await self?.coordinator.showExampleModule()
+        }
     }
     
     func onShowAlertButtonTapped() {
