@@ -8,13 +8,13 @@ final class RootCoordinator {
     }
     
     func showEntrance() {
-        let controller = EntranceFactory.createEntranceController()
+        let controller = EntranceFactory.createEntranceController(networkService: networkService)
         
         router?.showApplicationRoot(controller: controller, animated: true)
     }
     
-    func showTabBar() {
-        let controller = TabBarFactory.createTabbarController(networkService: networkService)
+    @MainActor func showTabBar() async {
+        let controller = await TabBarFactory.createTabbarController(networkService: networkService)
         
         router?.showApplicationRoot(controller: controller, animated: true)
     }

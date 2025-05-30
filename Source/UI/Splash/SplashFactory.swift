@@ -2,7 +2,7 @@ import UIKit
 import munkit
 
 enum SplashFactory {
-    static func createSplashController(
+    @MainActor static func createSplashController(
         networkService: NetworkService,
         completion: @escaping Closure.Generic<InitialNavigationFlow>
     ) async -> SplashController {
@@ -11,7 +11,11 @@ enum SplashFactory {
         await networkService.setAuthorizationObjects(
             provider: authRepository,
             refresher: authRepository,
-            tokenRefreshFailureHandler: { completion(.entrance) }
+            tokenRefreshFailureHandler: {
+                // TODO: вместе с di подумать куда можно убрать логику очистки хранилища
+                try? authRepository.clearKeychainDataInStorage()
+                completion(.entrance)
+            }
         )
 
         let coordinator = SplashCoordinator()
@@ -21,7 +25,7 @@ enum SplashFactory {
             authRepository: authRepository,
             completion: completion
         )
-        let controller = await SplashController(viewModel: viewModel)
+        let controller = SplashController(viewModel: viewModel)
         coordinator.router = controller
         
         return controller

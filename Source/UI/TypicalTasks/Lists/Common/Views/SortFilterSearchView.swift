@@ -35,7 +35,7 @@ struct SortFilterSearchView: View {
                     }
                 }
             }
-            InputFieldView(text: $searchText, prompt: "Search")
+            SortFilterFieldView(text: $searchText, prompt: "Search")
         }
     }
 }
