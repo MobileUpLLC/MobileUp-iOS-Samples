@@ -44,6 +44,26 @@ extension ToastItem {
             return UIImage(systemName: "xmark.circle") ?? UIImage()
         }
     }
+    
+    static func createWentWrongToastItem(
+        with message: String = R.string.common.errorStateTitle(),
+        toastType: ToastType = .local,
+        bottomInset: CGFloat = 0
+    ) -> ToastItem {
+        return ToastItem(
+            viewItem: .init(
+                style: .failure,
+                message: message,
+                leftIcon: nil,
+                rightIcon: nil
+            ),
+            toastType: toastType,
+            direction: .bottom,
+            duration: .three,
+            isHideOnTap: true,
+            onTap: {}
+        )
+    }
 }
 
 protocol ToastRouter: AnyObject {
@@ -164,8 +184,13 @@ private class ToastPresenter {
             options: .curveEaseInOut,
             animations: { toastView.alpha = .one },
             completion: { [weak self] _ in
+                // если не захватить self, то при глобальном тоасте если закрыть экран тоаст останется вечно висеть
+                guard let self else {
+                    return
+                }
+                
                 onMainAfter(deadline: .now() + duration) {
-                    self?.remove(toastView: toastView)
+                    self.remove(toastView: toastView)
                 }
             }
         )

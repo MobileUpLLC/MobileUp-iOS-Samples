@@ -1,8 +1,8 @@
 enum TabBarFactory {
-    static func createTabbarController(networkService: NetworkService) -> CustomTabBarController {
+    @MainActor static func createTabbarController(networkService: NetworkService) async -> CustomTabBarController {
         let typicalTasksController = TypicalTasksFactory.createTypicalTasksController(networkService: networkService)
         let examplesController = ExamplesFactory.createExamplesController(networkService: networkService)
-        let bottomSheetController = BottomSheetExampleFactory.createBottomSheetExampleController(
+        let bottomSheetController = BottomSheetExampleFactory.createBottomSheetNavigationContriller(
             networkService: networkService
         )
 
@@ -13,17 +13,13 @@ enum TabBarFactory {
             controllers: [typicalTasksController, examplesController, bottomSheetController]
         )
         coordinator.router = controller
-
-        Task {
-            await networkService.setAuthorizationObjects(
-                provider: AuthRepository(networkService: networkService),
-                refresher: AuthRepository(networkService: networkService),
-                tokenRefreshFailureHandler: {
-                    await coordinator.openLaunch()
-                }
-            )
-        }
-
+        
+        await networkService.setAuthorizationObjects(
+            provider: AuthRepository(networkService: networkService),
+            refresher: AuthRepository(networkService: networkService),
+            tokenRefreshFailureHandler: { await coordinator.openLaunch() }
+        )
+        
         return controller
     }
 }

@@ -23,13 +23,16 @@ final class SplashViewModel: ViewModel {
         self.completion = completion
         
         super.init()
-    }
-    
-    func handleViewAppear() {
+        
+        // Без задержки почему-то не открывает экран
         if authRepository.refreshToken == nil {
-            completion(.entrance)
+            onMainAfter(deadline: .now() + 1) {
+                completion(.entrance)
+            }
         } else {
-            completion(.tabBar)
+            onMainAfter(deadline: .now() + 1) {
+                completion(.tabBar)
+            }
         }
     }
 }

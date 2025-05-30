@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct InputFieldView: View {
+struct SortFilterFieldView: View {
     @Binding private var text: String
     @FocusState private var isFocused: Bool
     private let prompt: String
@@ -36,5 +36,5 @@ struct InputFieldView: View {
 }
 
 #Preview {
-    InputFieldView(text: .constant(.empty), prompt: "prompt")
+    SortFilterFieldView(text: .constant(.empty), prompt: "prompt")
 }

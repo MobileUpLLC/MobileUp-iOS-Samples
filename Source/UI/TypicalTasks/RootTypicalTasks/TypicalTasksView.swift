@@ -16,9 +16,43 @@ struct TypicalTasksView: View {
                 .foregroundStyle(.black)
                 .padding(.vertical, 20)
                 .padding(.horizontal, 28)
+            
             TypicalTasksContentView(items: viewModel.typicalTasks, onItemTap: viewModel.onItemTap(item:))
         }
         .background(.white)
+        .alert(
+            String.empty,
+            isPresented: $viewModel.isDeleteAlertPresented,
+            actions: {
+                Button(R.string.examples.alertCancelButtonTitle(), role: .cancel) { }
+                Button(R.string.examples.alertLogoutButtonTitle(), role: .destructive) {
+                    viewModel.onDeleteAlertLogoutButtonTapped()
+                }
+            },
+            message: { Text(R.string.examples.secondAlertMessage()) }
+        )
+        .alert(
+            String.empty,
+            isPresented: $viewModel.isSuccessAuthAlertPresented,
+            actions: {
+                Button(R.string.examples.alertCancelButtonTitle(), role: .cancel) { }
+                Button(R.string.examples.alertLogoutButtonTitle(), role: .destructive) {
+                    viewModel.clearUserData()
+                }
+            },
+            message: { Text(R.string.typicalTasks.typicalTasksAuthorizedMessage()) }
+        )
+        .alert(
+            String.empty,
+            isPresented: $viewModel.isNotAuthAlertPresented,
+            actions: {
+                Button(R.string.examples.alertCancelButtonTitle(), role: .cancel) { }
+                Button(R.string.examples.alertLogoutButtonTitle(), role: .destructive) {
+                    viewModel.openEntranceModule()
+                }
+            },
+            message: { Text(R.string.typicalTasks.typicalTasksNotAuthorizedMessage()) }
+        )
     }
 }
 
@@ -66,7 +100,8 @@ private struct ExamplesCellView: View {
 #Preview {
     TypicalTasksView(
         viewModel: TypicalTasksViewModel(
-            coordinator: TypicalTasksCoordinator(networkService: .init())
+            coordinator: TypicalTasksCoordinator(networkService: .init()),
+            authRepository: .init(networkService: .init())
         )
     )
 }

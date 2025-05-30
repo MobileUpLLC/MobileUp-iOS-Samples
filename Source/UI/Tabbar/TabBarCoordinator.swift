@@ -11,7 +11,7 @@ final class TabBarCoordinator {
         router?.selectTab(index: .one)
     }
     
-    func openLaunch() async {
+    @MainActor func openLaunch() async {
         let controller = await LaunchFactory.createLaunchController(networkService: networkService)
         router?.showApplicationRoot(controller: controller, animated: true)
     }

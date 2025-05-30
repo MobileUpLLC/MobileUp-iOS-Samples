@@ -14,7 +14,7 @@ struct BottomSheetExampleView: View {
                     viewModel.onShowBottomSheetButtonTapped()
                 }
                 Button(R.string.examples.showLogoutAlertButtonTitle()) {
-                    viewModel.onShowAlertButtonTapped()
+                    viewModel.handleShowAlertButtonTapped()
                 }
             }
         }
@@ -39,19 +39,10 @@ struct BottomSheetExampleView: View {
                     viewModel.onShowBottomSheetButtonTapped()
                 }
                 Button(R.string.examples.alertLogoutButtonTitle()) {
-                    viewModel.onAlertLogoutButtonTapped()
+                    viewModel.handleAlertLogoutButtonTapped()
                 }
             },
             message: { Text(R.string.examples.logoutAlertMessage()) }
-        )
-        .alert(
-            "",
-            isPresented: $viewModel.isDeleteAlertPresented,
-            actions: {
-                Button(R.string.examples.alertCancelButtonTitle(), role: .cancel) { }
-                Button(R.string.examples.alertLogoutButtonTitle(), role: .destructive) { }
-            },
-            message: { Text(R.string.examples.secondAlertMessage()) }
         )
     }
 }
@@ -73,5 +64,10 @@ struct GreenBottomSheetView: View {
 }
 
 #Preview {
-    BottomSheetExampleView(viewModel: .init(coordinator: .init(networkService: .init())))
+    BottomSheetExampleView(
+        viewModel: .init(
+            coordinator: .init(networkService: .init()),
+            authRepository: .init(networkService: .init())
+        )
+    )
 }
