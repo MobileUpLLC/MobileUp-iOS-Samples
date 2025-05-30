@@ -26,10 +26,10 @@ final class SplashViewModel: ViewModel {
     }
     
     func handleViewAppear() {
-        if authRepository.refreshToken == nil {
-            completion(.entrance)
-        } else {
+//        if authRepository.refreshToken == nil {
+//            completion(.entrance)
+//        } else {
             completion(.tabBar)
-        }
+//        }
     }
 }

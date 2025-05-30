@@ -56,10 +56,4 @@ final class ExamplesCoordinator {
         
         router?.push(controller: controller, isAnimated: true)
     }
-    
-    func showOnboardingExampleModule() {
-        let controller = OnboardingExampleFactory.createOnboardingExampleController()
-        
-        router?.push(controller: controller, isAnimated: true)
-    }
 }

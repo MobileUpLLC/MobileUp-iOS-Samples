@@ -21,6 +21,10 @@ final class TypicalTasksViewModel: ViewModel {
         coordinator.showAuthorizationModule()
     }
     
+    private func showOnboardingExample() {
+        coordinator.showOnboardingExampleModule()
+    }
+    
     private func getTypicalTasks() -> [TypicalTasksViewItem] {
         return [
             .init(
@@ -34,7 +38,10 @@ final class TypicalTasksViewModel: ViewModel {
             .init(
                 title: R.string.typicalTasks.complexUiElements(),
                 action: { [weak self] in self?.coordinator.showComplexUIComponents() }
-            )
+            ),
+            .init(title: R.string.examples.examplesOnboardingCellTitle()) { [weak self] in
+                self?.showOnboardingExample()
+            }
         ]
     }
 }

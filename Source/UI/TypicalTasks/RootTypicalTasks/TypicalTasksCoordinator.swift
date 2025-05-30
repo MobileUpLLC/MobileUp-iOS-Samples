@@ -21,4 +21,10 @@ final class TypicalTasksCoordinator {
         controller.modalPresentationStyle = .fullScreen
         router?.present(controller: controller, isAnimated: true, completion: nil)
     }
+    
+    func showOnboardingExampleModule() {
+        let controller = OnboardingExampleFactory.createOnboardingExampleController()
+        
+        router?.push(controller: controller, isAnimated: true)
+    }
 }
