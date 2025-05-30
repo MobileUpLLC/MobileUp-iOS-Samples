@@ -47,8 +47,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         DeepLinkService.shared.handleDeepLink(scene: scene, userActivity: userActivity)
     }
     
-    @MainActor
-    private func updateWindow(with flow: InitialNavigationFlow) {
+    @MainActor private func updateWindow(with flow: InitialNavigationFlow) {
         guard let window else {
             return
         }
