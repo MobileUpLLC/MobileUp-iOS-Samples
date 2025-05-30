@@ -2,7 +2,13 @@ import Foundation
 
 final class ExamplesCoordinator {
     weak var router: (PresentationRouter & NavigationRouter)?
-    
+
+    private var networkService: NetworkService
+
+    init(networkService: NetworkService) {
+        self.networkService = networkService
+    }
+
     func showWebPageModule(pageModel: WebPageModel) {
         let controller = WebPageFactory.createWebPageController(pageModel: pageModel)
         
@@ -16,8 +22,8 @@ final class ExamplesCoordinator {
     }
     
     func showBottomSheetExample() {
-        let controller = BottomSheetExampleFactory.createBottomSheetExampleController()
-        
+        let controller = BottomSheetExampleFactory.createBottomSheetExampleController(networkService: networkService)
+
         router?.push(controller: controller, isAnimated: true)
     }
     
@@ -46,7 +52,7 @@ final class ExamplesCoordinator {
     }
     
     func showNetworkExampleModule() {
-        let controller = NetworkExampleFactory.createNetworkExampleController()
+        let controller = NetworkExampleFactory.createNetworkExampleController(networkService: networkService)
         
         router?.push(controller: controller, isAnimated: true)
     }

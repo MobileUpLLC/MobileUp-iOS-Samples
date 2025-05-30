@@ -15,5 +15,5 @@ struct LaunchView: View {
 }
 
 #Preview {
-    LaunchView(viewModel: .init(coordinator: .init()))
+    LaunchView(viewModel: .init(coordinator: .init(), networkService: .init()))
 }

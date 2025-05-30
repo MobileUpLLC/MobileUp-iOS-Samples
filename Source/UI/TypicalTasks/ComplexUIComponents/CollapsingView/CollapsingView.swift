@@ -2,6 +2,7 @@ import SwiftUI
 
 struct CollapsingView: View {
     @State private var isCollapsed = false
+    
     private let onlyFromTop: Bool
     
     var body: some View {
@@ -65,7 +66,6 @@ struct CollapsingView: View {
     
     init(onlyFromTop: Bool) {
         self.onlyFromTop = onlyFromTop
-        self.isCollapsed = isCollapsed
     }
 }
 
