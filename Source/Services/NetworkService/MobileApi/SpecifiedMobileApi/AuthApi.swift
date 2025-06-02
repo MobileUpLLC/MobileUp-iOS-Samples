@@ -4,6 +4,12 @@ import munkit
 
 enum AuthApi {
     case refresh(token: String)
+    case authorizeUserWithEmail(request: EmailAuthRequest)
+    case authorizeUserWithPhone(request: PhoneAuthRequest)
+    case sendRecoveryConfirmationCode(request: EmailRequest)
+    case sendConfirmationCode(request: EmailAuthRequest)
+    case checkConfirmationСode(request: ConfirmationCodeRequest)
+    case authorizeUserDevice(request: UDIDRequest)
 }
 
 extension AuthApi: MUNAPITarget {
@@ -25,6 +31,18 @@ extension AuthApi: MUNAPITarget {
         switch self {
         case .refresh:
             return "/chains.json"
+        case .authorizeUserWithEmail:
+            return "/auth-service/api/v1/authWithEmail"
+        case .authorizeUserWithPhone:
+            return "/auth-service/api/v1/authWithPhone"
+        case .sendConfirmationCode:
+            return "/auth/email/send_confirmation_code"
+        case .checkConfirmationСode:
+            return "/auth-service/api/v1/auth/email/checkConfirmationCode"
+        case .sendRecoveryConfirmationCode:
+            return "/auth-service/api/v1/user/email/sendConfirmationCode"
+        case .authorizeUserDevice:
+            return "/auth-service/api/v1/auth/userDevice"
         }
     }
     
@@ -32,6 +50,13 @@ extension AuthApi: MUNAPITarget {
         switch self {
         case .refresh:
             return .get
+        case .authorizeUserWithEmail,
+                .sendRecoveryConfirmationCode,
+                .checkConfirmationСode,
+                .authorizeUserDevice,
+                .authorizeUserWithPhone,
+                .sendConfirmationCode:
+            return .post
         }
     }
     
@@ -39,6 +64,18 @@ extension AuthApi: MUNAPITarget {
         switch self {
         case .refresh:
             return .requestPlain
+        case .authorizeUserWithEmail(let emailAuthRequest):
+            return .requestJSONEncodable(emailAuthRequest)
+        case .authorizeUserWithPhone(let phoneAuthRequest):
+            return .requestJSONEncodable(phoneAuthRequest)
+        case .sendRecoveryConfirmationCode(let emailRequest):
+            return .requestJSONEncodable(emailRequest)
+        case .sendConfirmationCode(let emailAuthRequest):
+            return .requestJSONEncodable(emailAuthRequest)
+        case .checkConfirmationСode(let codeRequest):
+            return .requestJSONEncodable(codeRequest)
+        case .authorizeUserDevice(let udidRequest):
+            return .requestJSONEncodable(udidRequest)
         }
     }
     
@@ -46,7 +83,13 @@ extension AuthApi: MUNAPITarget {
         let params: [String: Any] = [:]
         
         switch self {
-        case .refresh:
+        case .refresh,
+                .authorizeUserWithEmail,
+                .sendRecoveryConfirmationCode,
+                .sendConfirmationCode,
+                .authorizeUserDevice,
+                .authorizeUserWithPhone,
+                .checkConfirmationСode:
             break
         }
         
@@ -61,8 +104,15 @@ extension AuthApi: MUNAPITarget {
         
     private func getIsAccessTokenRequired() -> Bool {
         switch self {
-        case .refresh:
+        case .refresh,
+                .authorizeUserDevice:
             return false
+        case .authorizeUserWithEmail,
+                .sendConfirmationCode,
+                .authorizeUserWithPhone,
+                .sendRecoveryConfirmationCode,
+                .checkConfirmationСode:
+            return true
         }
     }
     
@@ -70,20 +120,55 @@ extension AuthApi: MUNAPITarget {
         switch self {
         case .refresh:
             return true
+        case .authorizeUserWithEmail,
+                .sendRecoveryConfirmationCode,
+                .sendConfirmationCode,
+                .authorizeUserDevice,
+                .authorizeUserWithPhone,
+                .checkConfirmationСode:
+            return false
         }
     }
-
-    private func getMockFileName() -> String? {
+    
+    private func getAuthorizationType() -> AuthorizationType? {
         switch self {
-        default:
-            return nil
+        case .sendConfirmationCode,
+                .checkConfirmationСode,
+                .authorizeUserWithEmail,
+                .authorizeUserDevice,
+                .refresh,
+                .authorizeUserWithPhone,
+                .sendRecoveryConfirmationCode:
+            return .bearer
         }
     }
 
+    func getMockFileName() -> String? {
+        switch self {
+        case .refresh:
+            return nil
+        case .authorizeUserWithEmail, .authorizeUserWithPhone:
+            return "MockAuthorizeUserModel"
+        case .authorizeUserDevice:
+            return "MockTempTokenModel"
+        case .sendRecoveryConfirmationCode, .sendConfirmationCode:
+            return "MockUserRegistrationModel"
+        case .checkConfirmationСode:
+            return "MockTokenModel"
+        }
+    }
+    
     private func getIsMockEnabled() -> Bool {
         switch self {
-        default:
+        case .refresh:
             return false
+        case .authorizeUserWithEmail,
+                .sendRecoveryConfirmationCode,
+                .checkConfirmationСode,
+                .authorizeUserDevice,
+                .authorizeUserWithPhone,
+                .sendConfirmationCode:
+            return true
         }
     }
 }

@@ -18,7 +18,7 @@ final class NetworkExampleViewModel: ObservableObject {
         self.networkService = networkService
     }
         
-    func onRequestDataButtonTapped() {
+    func handleTapOnRequestDataButton() {
         restultText = "in progress"
         
         task?.cancel()
@@ -42,7 +42,7 @@ final class NetworkExampleViewModel: ObservableObject {
         }
     }
     
-    func onCancelRequestButtonTapped() {
+    func handleTapOnCancelRequestButton() {
         task?.cancel()
         
         Log.refreshTokenFlow.debug(logEntry: .text("NetworkExampleViewModel. Cancel task"))

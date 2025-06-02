@@ -10,7 +10,7 @@ struct ErrorHandlingView: View {
                 SkeletonContentView()
             }
             .errorState(isError: viewModel.isError) {
-                ErrorView(onRetry: viewModel.onRetryButtonTapped)
+                ErrorView(onRetry: viewModel.handleTapOnRetryButton)
             }
     }
 }

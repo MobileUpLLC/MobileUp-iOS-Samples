@@ -39,7 +39,7 @@ final class PaginationListViewModel: ObservableObject {
             pagingState = .pagingLoading
         }
         
-        Task(priority: .background) {
+        Task {
             do {
                 let page = isFirst ? currentPage : currentPage + .one
                 let response = try await repository.requestPaginationDataFromBackend(

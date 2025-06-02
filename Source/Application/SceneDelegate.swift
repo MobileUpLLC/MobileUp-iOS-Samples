@@ -47,7 +47,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         DeepLinkService.shared.handleDeepLink(scene: scene, userActivity: userActivity)
     }
     
-    private func updateWindow(with flow: InitialNavigationFlow) {
+    @MainActor private func updateWindow(with flow: InitialNavigationFlow) {
         guard let window else {
             return
         }
@@ -55,6 +55,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             return
         }
 
-        window.rootViewController = TypicalTasksFactory.createTypicalTasksController(networkService: networkService)
+        window.rootViewController = RootFactory.createRootController(networkService: networkService, with: flow)
     }
 }

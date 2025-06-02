@@ -18,8 +18,8 @@ extension MobileApi: MUNAPITarget {
     var authorizationType: AuthorizationType? { .bearer }
     var isAccessTokenRequired: Bool { getIsAccessTokenRequired() }
     var isRefreshTokenRequest: Bool { getIsRefreshTokenRequest() }
-    var mockFileName: String? { getMockFileName() }
     var isMockEnabled: Bool { getIsMockEnabled() }
+    var mockFileName: String? { getMockFileName() }
 
     private func getBaseUrl() -> URL {
         switch self {
@@ -101,18 +101,22 @@ extension MobileApi: MUNAPITarget {
 
     private func getMockFileName() -> String? {
         switch self {
+        case .auth(let type as MUNAPITarget):
+            return type.mockFileName
         case .chat(let type as MUNAPITarget):
             return type.mockFileName
-        default:
+        case .example:
             return nil
         }
     }
 
     private func getIsMockEnabled() -> Bool {
         switch self {
+        case .auth(let type as MUNAPITarget):
+            return type.isMockEnabled
         case .chat:
             return true
-        default:
+        case .example:
             return false
         }
     }

@@ -5,11 +5,11 @@ struct ToastExampleView: View {
 
     var body: some View {
         Button("Show local toast") {
-            viewModel.handleShowLocalToastButton()
+            viewModel.handleTapOnShowLocalToastButton()
         }
 
         Button("Show global toast") {
-            viewModel.handleShowGlobalToastButton()
+            viewModel.handleTapOnShowGlobalToastButton()
         }
     }
 }
