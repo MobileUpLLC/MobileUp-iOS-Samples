@@ -19,7 +19,7 @@ struct NetworkExampleView: View {
 #Preview {
     let viewModel = NetworkExampleViewModel(
         coordinator: NetworkExampleCoordinator(),
-        mobileService: .shared
+        networkService: .init()
     )
     
     return NetworkExampleView(viewModel: viewModel)

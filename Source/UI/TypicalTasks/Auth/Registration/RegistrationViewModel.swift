@@ -104,14 +104,10 @@ final class RegistrationViewModel: ViewModel {
         } onError: { [weak self] serverError in
             self?.isLoading = false
             
-            guard let self else {
-                return
-            }
-            
-            if serverError.details.statusCode == 422 {
-                outerEmailRules = [.emailAlreadyExists]
+            if serverError.response?.statusCode == 422 {
+                self?.outerEmailRules = [.emailAlreadyExists]
             } else {
-                coordinator.showErrorToast()
+                self?.coordinator.showErrorToast()
             }
         }
     }

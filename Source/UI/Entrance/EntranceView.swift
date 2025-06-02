@@ -15,13 +15,13 @@ struct EntranceView: View {
                 if isAnimating {
                     VStack(spacing: 12) {
                         Button(R.string.entrance.entranceRegistrationButtonTitle()) {
-                            viewModel.handleTapOnRegistrationButton()
+                            viewModel.handleRegistrationButtonTapped()
                         }
                         Button(R.string.entrance.entranceAuthorizationButtonTitle()) {
-                            viewModel.handleTapOnAuthorizationButton()
+                            viewModel.handleAuthorizationButtonTapped()
                         }
-                        Button(R.string.entrance.entranceTabBarButtonTitle()) {
-                            viewModel.handleTapOnTabBarButton()
+                        Button(R.string.entrance.entranceUnauthorizedZoneButtonTitle()) {
+                            viewModel.handleGoToUnauthorizedZoneButtonTapped()
                         }
                     }
                 }
@@ -40,7 +40,7 @@ struct EntranceView: View {
 #Preview {
     EntranceView(
         viewModel: EntranceViewModel(
-            coordinator: EntranceCoordinator()
+            coordinator: EntranceCoordinator(networkService: .init())
         )
     )
 }

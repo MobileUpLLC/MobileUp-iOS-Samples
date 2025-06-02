@@ -8,12 +8,12 @@ struct LaunchView: View {
             Color.white
                 .ignoresSafeArea()
             Button("Go to tabbar") {
-                viewModel.handleTapOnGoToTabbarButton()
+                viewModel.onGoToTabbarButtonTapped()
             }
         }
     }
 }
 
 #Preview {
-    LaunchView(viewModel: .init(coordinator: .init()))
+    LaunchView(viewModel: .init(coordinator: .init(), networkService: .init()))
 }

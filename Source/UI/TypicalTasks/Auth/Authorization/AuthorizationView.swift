@@ -57,7 +57,6 @@ private struct InputContentView: View {
             .keyboardType(.emailAddress)
             .disableAutocorrection(true)
             .focused($isFocused)
-            
             InputFieldView(
                 header: R.string.auth.authorizationInputPasswordTitle(),
                 text: $viewModel.password,
@@ -96,8 +95,8 @@ private struct ForgotPasswordButton: View {
 #Preview {
     AuthorizationView(
         viewModel: AuthorizationViewModel(
-            coordinator: AuthorizationCoordinator(),
-            authRepository: AuthRepository()
+            coordinator: AuthorizationCoordinator(networkService: .init()),
+            authRepository: AuthRepository(networkService: .init())
         )
     )
 }

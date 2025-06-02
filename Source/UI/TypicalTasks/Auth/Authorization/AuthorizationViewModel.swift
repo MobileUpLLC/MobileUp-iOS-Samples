@@ -23,6 +23,7 @@ final class AuthorizationViewModel: ViewModel {
     
     func handleSignButtonTapped() {
         guard authRepository.refreshToken != nil else {
+            authorizeUserDevice(completion: { [weak self] in self?.authorize() })
             return
         }
         
@@ -31,6 +32,18 @@ final class AuthorizationViewModel: ViewModel {
     
     func handleFailedValid() {
         isLoading = false
+    }
+    
+    private func authorizeUserDevice(completion: @escaping Closure.Void) {
+        isLoading = true
+        
+        Perform { [weak self] in
+            try await self?.authRepository.authorizeUserDevice()
+            
+            onMain(execute: completion)
+        } onError: { [weak self] _ in
+            self?.isLoading = false
+        }
     }
     
     private func authorize() {
@@ -43,16 +56,14 @@ final class AuthorizationViewModel: ViewModel {
             
             let request = EmailAuthRequest(email: email, password: password)
             try await authRepository.authorizeUserWithEmail(with: request)
-            onMain { [weak self] in
-                self?.showTabBarScreen()
-            }
-        } onError: { [weak self] serverError in
+            showTabBarScreen()
+        } onError: { [weak self] error in
             guard let self else {
                 return
             }
             
             isLoading = false
-            switch serverError.details.statusCode {
+            switch error.response?.statusCode {
             case 201:
                 confirmEmail(email)
             case 404:
@@ -60,7 +71,7 @@ final class AuthorizationViewModel: ViewModel {
             case 422:
                 outerPasswordRules = [.passwordInvalid]
             default:
-                coordinator.showErrorToast(with: serverError)
+                coordinator.showErrorToast(with: error)
             }
         }
     }
@@ -86,6 +97,8 @@ final class AuthorizationViewModel: ViewModel {
     }
     
     private func showTabBarScreen() {
-        coordinator.showTabBarScreen()
+        Task { [weak self] in
+            await self?.coordinator.showTabBarScreen()
+        }
     }
 }

@@ -8,19 +8,11 @@ extension String {
         static let defaultDateFormat = "d MMMM"
     }
     
-    static var divider: Self { "|" }
-    static var tilde: Self { "~" }
-    static var squareLeftBracket: Self { "[" }
-    static var squareRightBracket: Self { "]" }
-    static var phoneNumberRegionCode: Self { "+7" }
-    static var onlyNumbersRegularExpression: Self { "[^0-9]" }
-    static var onlyNumbersAndEnLettersRegularExpression: Self { "[^0-9A-Za-z]" }
-    static var phoneNumberRegularExpression: Self {
-        #"^\+?7?[ ][(]?[0-9]{3}[)][ ]?[0-9]{3}[-]?[0-9]{2}[-]?[0-9]{2}.*$"#
-    }
-    static var emptyEmailRegularExpression: Self {
-        #"^(?:[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}|)$"#
-    }
+    static let phoneNumberRegionCode = "+7"
+    static let onlyNumbersRegularExpression = "[^0-9]"
+    static let onlyNumbersAndEnLettersRegularExpression = "[^0-9A-Za-z]"
+    static let phoneNumberRegularExpression = #"^\+?7?[ ][(]?[0-9]{3}[)][ ]?[0-9]{3}[-]?[0-9]{2}[-]?[0-9]{2}.*$"#
+    static let emptyEmailRegularExpression = #"^(?:[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}|)$"#
     
     func matches(for regex: String) -> [String] {
         do {
@@ -98,11 +90,11 @@ extension String {
         var startDate: String?
         
         if isSameYear && isSameMonth {
-            startDate = self.getFormattedDate(format: Constants.dayOnlyDateFormat)
+            startDate = getFormattedDate(format: Constants.dayOnlyDateFormat)
         } else if isSameYear {
-            startDate = self.getFormattedDate()
+            startDate = getFormattedDate()
         } else {
-            startDate = self.getFormattedDate(format: Constants.fullDateFormat)
+            startDate = getFormattedDate(format: Constants.fullDateFormat)
         }
         
         guard
@@ -132,12 +124,12 @@ extension String {
         var resultString: String = .empty
         let characterArray = Array(self)
         
-        for i in 0..<characterArray.count {
+        for i in .zero..<characterArray.count {
             if i == 0, characterArray[i] == "\"" {
                 resultString.append("«")
-            } else if i == characterArray.count - 1, characterArray[i] == "\"" {
+            } else if i == characterArray.count - .one, characterArray[i] == "\"" {
                 resultString.append("»")
-            } else if characterArray[i] == "\"", resultString[i - 1] == " " || resultString[i - 1] == "«" {
+            } else if characterArray[i] == "\"", resultString[i - .one] == " " || resultString[i - .one] == "«" {
                 resultString.append("«")
             } else if characterArray[i] == "\"" {
                 resultString.append("»")
@@ -150,6 +142,6 @@ extension String {
     }
     
     func numberOfOccurrencesOf(string: String) -> Int {
-        return self.components(separatedBy:string).count - 1
+        return self.components(separatedBy: string).count - .one
     }
 }

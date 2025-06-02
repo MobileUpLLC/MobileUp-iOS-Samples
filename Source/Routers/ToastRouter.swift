@@ -184,8 +184,13 @@ private class ToastPresenter {
             options: .curveEaseInOut,
             animations: { toastView.alpha = .one },
             completion: { [weak self] _ in
+                // если не захватить self, то при глобальном тоасте если закрыть экран тоаст останется вечно висеть
+                guard let self else {
+                    return
+                }
+                
                 onMainAfter(deadline: .now() + duration) {
-                    self?.remove(toastView: toastView)
+                    self.remove(toastView: toastView)
                 }
             }
         )

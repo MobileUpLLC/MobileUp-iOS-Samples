@@ -42,7 +42,6 @@ private struct SignInPhoneBodyView: View {
     }
     
     @FocusState var isFocused: Bool
-    
     @Binding var phoneNumber: String
     @Binding var isPhoneNumberValid: Bool
     
@@ -95,7 +94,6 @@ private struct SignInPhoneOverlayedButtonsView: View {
     let isFocused: Bool
     let isLoading: Bool
     let smsCoolDown: String
-    
     let onSaveButtonTapAction: Closure.Void
     
     var body: some View {
@@ -118,8 +116,8 @@ private struct SignInPhoneOverlayedButtonsView: View {
 
 struct SignInPhoneView_Previews: PreviewProvider {
     static let viewModel = SignInPhoneViewModel(
-        coordinator: SignInPhoneCoordinator(),
-        authRepository: AuthRepository()
+        coordinator: SignInPhoneCoordinator(networkService: .init()),
+        authRepository: AuthRepository(networkService: .init())
     )
     
     static var previews: some View {

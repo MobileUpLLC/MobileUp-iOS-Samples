@@ -6,12 +6,13 @@ struct PhoneNumberInputBlock: View {
         static let phoneNumberMaxInputCount = 18
     }
     
-    @Binding var phoneNumber: String
-    @Binding var isValid: Bool
-    @Binding var outerValidationStatus: InputOuterValidationStatus
+    @Binding private var phoneNumber: String
+    @Binding private var isValid: Bool
+    @Binding private var outerValidationStatus: InputOuterValidationStatus
+    
+    private let rules: [TextValidationRule] = [.regex(value: .phoneNumberRegularExpression, message: .empty)]
         
     var body: some View {
-        let rules: [TextValidationRule] = [.regex(value: .phoneNumberRegularExpression, message: .empty)]
         FormField(value: $phoneNumber, rules: rules) { _ in
             HStack(spacing: 0) {
                 if phoneNumber.isEmpty {

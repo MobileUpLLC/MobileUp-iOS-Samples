@@ -17,21 +17,21 @@ final class BottomSheetExampleViewModel: ObservableObject {
         isBottomSheetPresented = true
     }
     
-    func handleTapOnShowExamplesModuleButton() {
-        coordinator.showExampleModule()
+    func handleShowExamplesModuleButtonTapped() {
+        Task { [weak self] in
+            await self?.coordinator.showExampleModule()
+        }
     }
     
-    func handleTapOnShowAlertButton() {
+    func handleShowAlertButtonTapped() {
         isLogoutAlertPresented = true
     }
     
-    func handleTapOnAlertLogoutButton() {
-        isDeleteAlertPresented = true
-    }
-    
-    func handleTapOnDeleteAlertLogoutButton() {
+    func handleAlertLogoutButtonTapped() {
         do {
             try authRepository.clearKeychainDataInStorage()
+            isLogoutAlertPresented = true
+            coordinator.showEntrance()
         } catch {
             coordinator.showErrorToast(with: error)
         }

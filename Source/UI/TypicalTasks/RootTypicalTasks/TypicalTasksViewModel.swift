@@ -76,39 +76,27 @@ final class TypicalTasksViewModel: ViewModel {
         return [
             .init(
                 title: R.string.typicalTasks.typicalTasksAuthorization(),
-                action: { [weak self] in
-                    self?.showAuthorizationModule()
-                }
+                action: { [weak self] in self?.showAuthorizationModule() }
             ),
             .init(
                 title: R.string.typicalTasks.typicalTasksRegistration(),
-                action: { [weak self] in
-                    self?.showRegistrationModule()
-                }
+                action: { [weak self] in self?.showRegistrationModule() }
             ),
             .init(
                 title: R.string.typicalTasks.typicalTasksDeleteAccountSheetTitle(),
-                action: { [weak self] in
-                    self?.showDeleteAccountAlert()
-                }
+                action: { [weak self] in self?.showDeleteAccountAlert() }
             ),
             .init(
                 title: R.string.typicalTasks.typicalTasksLimitedByAuthTitle(),
-                action: { [weak self] in
-                    self?.handleTapOnLimitedByAuthButton()
-                }
+                action: { [weak self] in self?.handleTapOnLimitedByAuthButton() }
             ),
             .init(
                 title: R.string.typicalTasks.typicalTasksPhoneAuthorization(),
-                action: { [weak self] in
-                    self?.openSignInPhoneModule()
-                }
+                action: { [weak self] in self?.openSignInPhoneModule() }
             ),
             .init(
                 title: R.string.typicalTasks.typicalTasksNavigation(),
-                action: { [weak self] in
-                    self?.showNavigationExampleModule()
-                }
+                action: { [weak self] in self?.showNavigationExampleModule() }
             )
         ]
     }

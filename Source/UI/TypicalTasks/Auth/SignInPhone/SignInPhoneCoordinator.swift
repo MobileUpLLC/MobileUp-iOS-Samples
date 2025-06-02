@@ -3,6 +3,12 @@ import UIKit
 final class SignInPhoneCoordinator {
     weak var router: (RootRouter & NavigationRouter)?
     
+    private let networkService: NetworkService
+    
+    init(networkService: NetworkService) {
+        self.networkService = networkService
+    }
+    
     func goBack() {
         router?.pop(isAnimated: true)
     }
@@ -11,8 +17,8 @@ final class SignInPhoneCoordinator {
         router?.popToRoot(isAnimated: true)
     }
     
-    func showTabBarScreen() {
-        let controller = TabBarFactory.createTabbarController()
+    @MainActor func showTabBarScreen() async {
+        let controller = await TabBarFactory.createTabbarController(networkService: networkService)
         
         router?.showApplicationRoot(controller: controller, animated: true)
     }
@@ -22,6 +28,7 @@ final class SignInPhoneCoordinator {
         resendCodeInterval: TimeInterval
     ) {
         let controller = ConfirmationCodeFactory.createConfirmationCodeController(
+            networkService: networkService,
             credentials: phoneNumber,
             resendCodeInterval: resendCodeInterval,
             displayType: .push
@@ -29,16 +36,4 @@ final class SignInPhoneCoordinator {
         
         router?.push(controller: controller, isAnimated: true)
     }
-    
-//    func goToMain() {
-//        let controller = BaseTabBarFactory.createTabBarController(selectedIndex: .one)
-//        
-//        router?.showApplicationRoot(controller: controller)
-//    }
-//    
-//    func goToSignInCode(viewModelItem: SignInViewModelItem) {
-//        let controller = SignInCodeFactory.createSignInCodeController(viewModelItem: viewModelItem)
-//        
-//        router?.push(controller: controller, isAnimated: true)
-//    }
 }

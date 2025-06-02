@@ -13,8 +13,6 @@ final class SignInPhoneViewModel: ViewModel {
     @Published var isLegalInfoSheetShown = false
     @Published var smsCoolDown = String.empty
             
-    let legalInfo: String
-    
     private let coordinator: SignInPhoneCoordinator
     private let authRepository: AuthRepository
     
@@ -24,8 +22,6 @@ final class SignInPhoneViewModel: ViewModel {
     ) {
         self.coordinator = coordinator
         self.authRepository = authRepository
-
-        legalInfo = .empty
         
         super.init()
     }
@@ -39,7 +35,9 @@ final class SignInPhoneViewModel: ViewModel {
     }
     
     private func showTabBarScreen() {
-        coordinator.showTabBarScreen()
+        Task { [weak self] in
+            await self?.coordinator.showTabBarScreen()
+        }
     }
     
     private func authorize() {

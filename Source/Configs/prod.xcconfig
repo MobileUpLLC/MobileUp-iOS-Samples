@@ -3,6 +3,8 @@
 
 INSTANCE = prod
 
+SLASH = /
+
 BUNDLE_NAME = $(PRODUCT_NAME).$(INSTANCE)
 BUNDLE_DISPLAY_NAME = $(mobileup-ios-samples)
 

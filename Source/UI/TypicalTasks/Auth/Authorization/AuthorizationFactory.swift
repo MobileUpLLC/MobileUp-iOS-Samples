@@ -1,7 +1,7 @@
 enum AuthorizationFactory {
-    static func createAuthorizationController() -> AuthorizationController {
-        let coordinator = AuthorizationCoordinator()
-        let authRepository = AuthRepository()
+    static func createAuthorizationController(networkService: NetworkService) -> AuthorizationController {
+        let coordinator = AuthorizationCoordinator(networkService: networkService)
+        let authRepository = AuthRepository(networkService: networkService)
         let viewModel = AuthorizationViewModel(coordinator: coordinator, authRepository: authRepository)
         
         let controller = AuthorizationController(viewModel: viewModel)

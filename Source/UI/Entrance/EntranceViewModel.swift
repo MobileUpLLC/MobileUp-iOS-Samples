@@ -7,15 +7,17 @@ final class EntranceViewModel: ViewModel {
         self.coordinator = coordinator
     }
     
-    func handleTapOnAuthorizationButton() {
+    func handleAuthorizationButtonTapped() {
         coordinator.showAuthorizationModule()
     }
     
-    func handleTapOnRegistrationButton() {
+    func handleRegistrationButtonTapped() {
         coordinator.showRegistrationModule()
     }
     
-    func handleTapOnTabBarButton() {
-        coordinator.showTabbarModule()
+    func handleGoToUnauthorizedZoneButtonTapped() {
+        Task { [weak self] in
+            await self?.coordinator.showTabbarModule()
+        }
     }
 }

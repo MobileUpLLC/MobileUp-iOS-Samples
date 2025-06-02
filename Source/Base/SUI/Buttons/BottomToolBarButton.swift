@@ -1,19 +1,19 @@
 import SwiftUI
 
 struct BottomToolBarButton<Content: View>: View {
-    @Binding var isShowDivider: Bool
-    @Binding var isLoading: Bool
+    @Binding private var isShowDivider: Bool
+    @Binding private var isLoading: Bool
     
-    let title: String
-    let bottomContent: () -> Content
-    let action: Closure.Void
+    private let title: String
+    private let bottomContent: () -> Content
+    private let action: Closure.Void
     
     @Environment(\.keyboardHeight) private var keyboardHeight
     @State private var isKeyboardShown = false
     
     var body: some View {
-        VStack(spacing: .zero) {
-            VStack(spacing: .zero) {
+        VStack(spacing: 0) {
+            VStack(spacing: 0) {
                 Button(title) {
                     action()
                 }

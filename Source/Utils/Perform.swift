@@ -1,19 +1,20 @@
 import Foundation
+import Moya
 
 struct Perform {
     @discardableResult
     init(
         operation: @escaping () async throws -> Void,
-        onError: Closure.Generic<ServerError>? = nil
+        onError: Closure.Generic<MoyaError>? = nil
     ) {
-        Task {
+        _Concurrency.Task {
             do {
                 try await operation()
             } catch let error {
                 Log.perform.error(logEntry: .text(error.localizedDescription))
                 
                 onMain {
-                    let error = error as? ServerError ?? .unknown(details: ErrorDetails(error: error))
+                    let error = error as? MoyaError ?? .underlying(error, nil)
                     onError?(error)
                 }
             }

@@ -3,11 +3,18 @@ import UIKit
 final class RegistrationCoordinator {
     weak var router: (NavigationRouter & ToastRouter & PresentationRouter & RootRouter)?
     
+    private var networkService: NetworkService
+    
+    init(networkService: NetworkService) {
+        self.networkService = networkService
+    }
+    
     func showConfirmationScreen(
         with email: String,
         resendCodeInterval: TimeInterval
     ) {
         let controller = ConfirmationCodeFactory.createConfirmationCodeController(
+            networkService: networkService,
             credentials: email,
             resendCodeInterval: resendCodeInterval,
             displayType: .push
@@ -27,8 +34,8 @@ final class RegistrationCoordinator {
         router?.showToast(with: .createWentWrongToastItem())
     }
     
-    func showTabBarScreen() {
-        let controller = TabBarFactory.createTabbarController()
+    @MainActor func showTabBarScreen() async {
+        let controller = await TabBarFactory.createTabbarController(networkService: networkService)
         
         router?.showApplicationRoot(controller: controller, animated: true)
     }
