@@ -24,11 +24,7 @@ struct FavoritesTip: Tip {
     }
 
     var rules: [Rule] {
-        [
-            // swiftlint:disable empty_count
-            #Rule(Self.favoritesButtonTapped) { $0.donations.count > 0 }
-            // swiftlint:enable empty_count
-        ]
+        [#Rule(Self.favoritesButtonTapped) { $0.donations.count > 0 }]
     }
 
     var actions: [Action] {

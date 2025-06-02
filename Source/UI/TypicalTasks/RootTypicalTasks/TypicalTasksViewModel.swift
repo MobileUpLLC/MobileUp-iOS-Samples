@@ -27,7 +27,7 @@ final class TypicalTasksViewModel: ViewModel {
         isDeleteAlertPresented = true
     }
     
-    func onLimitedByAuthButtonTapped() {
+    func handleTapOnLimitedByAuthButton() {
         if authRepository.isUserAuthorized {
             isSuccessAuthAlertPresented = true
         } else {
@@ -35,7 +35,7 @@ final class TypicalTasksViewModel: ViewModel {
         }
     }
     
-    func onDeleteAlertLogoutButtonTapped() {
+    func handleTapOnDeleteAlertLogoutButton() {
         do {
             try authRepository.clearKeychainDataInStorage()
             coordinator.showEntrance()
@@ -72,6 +72,10 @@ final class TypicalTasksViewModel: ViewModel {
         coordinator.showOnboardingExampleModule()
     }
     
+    private func showNavigationExampleModule() {
+        coordinator.showNavigationExampleModule()
+    }
+    
     private func getTypicalTasks() -> [TypicalTasksViewItem] {
         return [
             .init(
@@ -88,12 +92,16 @@ final class TypicalTasksViewModel: ViewModel {
             ),
             .init(
                 title: R.string.typicalTasks.typicalTasksLimitedByAuthTitle(),
-                action: { [weak self] in self?.onLimitedByAuthButtonTapped() }
+                action: { [weak self] in self?.handleTapOnLimitedByAuthButton() }
             ),
             .init(
                 title: R.string.typicalTasks.typicalTasksPhoneAuthorization(),
                 action: { [weak self] in self?.openSignInPhoneModule() }
             ),
+            .init(
+                title: R.string.typicalTasks.typicalTasksNavigation(),
+                action: { [weak self] in self?.showNavigationExampleModule() }
+			),
             .init(
                 title: R.string.typicalTasks.complexUiElements(),
                 action: { [weak self] in self?.coordinator.showComplexUIComponents() }

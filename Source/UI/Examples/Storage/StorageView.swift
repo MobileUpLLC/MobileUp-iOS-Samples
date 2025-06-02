@@ -13,36 +13,36 @@ struct StorageView: View {
                 .padding()
             
             Button(R.string.examples.storageSaveToCache()) {
-                viewModel.onSaveToCacheButtonTapped()
+                viewModel.handleTapOnSaveToCacheButton()
             }
             Button(R.string.examples.storageLoadFromCache()) {
-                viewModel.onLoadFromCacheButtonTapped()
+                viewModel.handleTapOnLoadFromCacheButton()
             }
             Button(R.string.examples.storageClearCache()) {
-                viewModel.onRemoveAllFromCacheButtonTapped()
+                viewModel.handleTapOnRemoveAllFromCacheButton()
             }
             Text(R.string.examples.storageCacheText(viewModel.messageInCache))
                 .padding()
             Button(R.string.examples.storageTitleSaveToDisk()) {
-                viewModel.onSaveOnDiskButtonTapped()
+                viewModel.handleTapOnSaveOnDiskButton()
             }
             Button(R.string.examples.storageTitleLoadFromDisk()) {
-                viewModel.onLoadFromDiskButtonTapped()
+                viewModel.handleTapOnLoadFromDiskButton()
             }
             Button(R.string.examples.storageTitleClearDisk()) {
-                viewModel.onRemoveAllFromDiskButtonTapped()
+                viewModel.handleTapOnRemoveAllFromDiskButton()
             }
             Text(R.string.examples.storageDiskText(viewModel.messageOnDisk))
                 .padding()
             
             Button(R.string.examples.storageSaveToKeychain()) {
-                viewModel.onSaveToKeychainButtonTapped()
+                viewModel.handleTapOnSaveToKeychainButton()
             }
             Button(R.string.examples.storageLoadFromKeychain()) {
-                viewModel.onLoadFromKeychainButtonTapped()
+                viewModel.handleTapOnLoadFromKeychainButton()
             }
             Button(R.string.examples.storageClearKeychain()) {
-                viewModel.onRemoveAllFromKeychainButtonTapped()
+                viewModel.handleTapOnRemoveAllFromKeychainButton()
             }
             Text(R.string.examples.storageKeychainText(viewModel.messageInKeychain))
                 .padding()

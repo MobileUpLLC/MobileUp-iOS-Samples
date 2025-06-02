@@ -51,6 +51,9 @@
 "common-onboarding-next-button-title" = "Next";
 "common-onboarding-back-button-title" = "Back";
 
+"tip-onboarding-add-to-favorite-title" = "Добавить в избранное";
+"tip-onboarding-learn-more-title" = "Узнать больше";
+
 "test-onboarding-finish-Button-Title" = "Finish";
 "test-onboarding-first-item-title" = "Это первый заголовок онбординга";
 "test-onboarding-first-item-description" = "Описание первого онбординга";

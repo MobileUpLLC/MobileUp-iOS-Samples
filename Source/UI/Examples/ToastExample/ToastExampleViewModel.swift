@@ -7,11 +7,11 @@ final class ToastExampleViewModel: ObservableObject {
         self.coordinator = coordinator
     }
 
-    func handleShowGlobalToastButton() {
+    func handleTapOnShowGlobalToastButton() {
         coordinator.showGlobalToast()
     }
 
-    func handleShowLocalToastButton() {
+    func handleTapOnShowLocalToastButton() {
         coordinator.showLocalToast()
     }
 }

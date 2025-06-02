@@ -19,7 +19,7 @@ struct MultipleBottomSheetExampleView: View {
                         .opacity(0.5)
                         .ignoresSafeArea()
                     Button("Show blue sheet") {
-                        viewModel.onShowBlueSheetButtonTapped()
+                        viewModel.handleTapOnShowBlueSheetButton()
                     }
                 }
                 .presentationDetents([.medium])
@@ -29,7 +29,7 @@ struct MultipleBottomSheetExampleView: View {
                         .opacity(0.5)
                         .ignoresSafeArea()
                     Button("Show green sheet") {
-                        viewModel.onShowGreenSheetButtonTapped()
+                        viewModel.handleTapOnShowGreenSheetButton()
                     }
                 }
                 .presentationDetents([.medium])

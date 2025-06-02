@@ -14,6 +14,10 @@
 "#network-gateway-time-out-error-text" = "Истекло время ожидания шлюза";
 "#network-internet-connection-error-title" = "Нет подключения к интернету";
 
+// Button
+"close-button-title" = "Закрыть";
+"ok-button-title" = "ОК";
+
 // Field rule
 "rule-email" = "Неверный формат почты";
 "rule-for-field-not-empty" = "Это поле должно быть заполнено";

@@ -2,6 +2,7 @@
 "typical-tasks-authorization" = "Авторизация";
 "typical-tasks-lists" = "Списки";
 "complex-ui-elements" = "Сложные UI-элементы";
+"typical-tasks-navigation" = "Навигация";
 "typical-tasks-registration" = "Регистрация";
 "typical-tasks-delete-account-sheet-title" = "Удалить аккаунт";
 "typical-tasks-limited-by-auth-title" = "Недоступный для неавторизованного юзера экран";

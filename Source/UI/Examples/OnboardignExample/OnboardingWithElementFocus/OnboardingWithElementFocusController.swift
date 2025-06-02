@@ -69,11 +69,11 @@ final class OnboardingWithElementFocusController: HostingController<OnboardingWi
     }
 
     private func addToFavoritesTipButtonTapped() {
-        print("Добавить в избранное")
+        showToast(with: .createInfoItem(with: R.string.examples.tipOnboardingAddToFavoriteTitle()))
     }
 
     private func learnMoreTipButtonTapped() {
-        print("Узнать больше")
+        showToast(with: .createInfoItem(with: R.string.examples.tipOnboardingLearnMoreTitle()))
     }
 
     private func handleFavoritesTipDisplayUpdates() {

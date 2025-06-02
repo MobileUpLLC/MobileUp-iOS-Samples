@@ -164,7 +164,6 @@ final class ConfirmationCodeViewModel: ViewModel {
             switch error {
             case .statusCode(let response):
                 if response.statusCode == 429 {
-                    response.data
                     self?.coordinator.showErrorToast(with: R.string.common.errorStateTitle())
                 }
             default:
