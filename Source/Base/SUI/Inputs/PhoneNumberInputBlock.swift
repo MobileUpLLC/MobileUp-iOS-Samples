@@ -13,7 +13,7 @@ struct PhoneNumberInputBlock: View {
     private let rules: [TextValidationRule] = [.regex(value: .phoneNumberRegularExpression, message: .empty)]
         
     var body: some View {
-        FormField(value: $phoneNumber, rules: rules) { failedRules in
+        FormField(value: $phoneNumber, rules: rules) { _ in
             HStack(spacing: 0) {
                 if phoneNumber.isEmpty {
                     Text(String.phoneNumberRegionCode)

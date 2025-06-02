@@ -64,12 +64,12 @@ final class NavigationBarCentralItemView: BaseView {
     }
     
     private func addTapGestureRecognizer() {
-        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture))
 
         addGestureRecognizer(tap)
     }
     
-    @objc private func handleTap() {
+    @objc private func handleTapGesture() {
         item.onTapAction?()
     }
 }

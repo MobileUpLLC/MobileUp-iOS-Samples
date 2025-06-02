@@ -13,7 +13,7 @@ struct AuthorizationView: View {
                 InputContentView(viewModel: viewModel, isFocused: _isFocused)
                     .padding(.horizontal, 20)
                     .background(.white)
-            } bottomToolBar: { isContentOverToolBar in
+            } bottomToolBar: { _ in
                 Button(R.string.auth.authorizationSignButtonTitle()) {
                     if proxy.validate() {
                         isFocused = false

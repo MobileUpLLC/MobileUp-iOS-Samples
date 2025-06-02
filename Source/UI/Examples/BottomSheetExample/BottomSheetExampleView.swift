@@ -8,10 +8,10 @@ struct BottomSheetExampleView: View {
             Color.white
             VStack(spacing: 20) {
                 Button(R.string.examples.showExamplesButtonTitle()) {
-                    viewModel.onShowExamplesModuleButtonTapped()
+                    viewModel.handleShowExamplesModuleButtonTapped()
                 }
                 Button(R.string.examples.showBottomSheetButtonTitle()) {
-                    viewModel.onShowBottomSheetButtonTapped()
+                    viewModel.handleTapOnShowBottomSheetButton()
                 }
                 Button(R.string.examples.showLogoutAlertButtonTitle()) {
                     viewModel.handleShowAlertButtonTapped()
@@ -28,7 +28,7 @@ struct BottomSheetExampleView: View {
         }
         .ignoresSafeArea()
         .sheet(isPresented: $viewModel.isBottomSheetPresented) {
-            GreenBottomSheetView(showSkeletonButtonHandler: viewModel.onShowSkeletonButtonTapped)
+            GreenBottomSheetView(showSkeletonButtonHandler: viewModel.handleTapOnShowSkeletonButton)
                 .enablePresentationBackgroundInteraction(upThrough: .medium)
         }
         .alert(
@@ -36,7 +36,7 @@ struct BottomSheetExampleView: View {
             isPresented: $viewModel.isLogoutAlertPresented,
             actions: {
                 Button(R.string.examples.alertCancelButtonTitle()) {
-                    viewModel.onShowBottomSheetButtonTapped()
+                    viewModel.handleTapOnShowBottomSheetButton()
                 }
                 Button(R.string.examples.alertLogoutButtonTitle()) {
                     viewModel.handleAlertLogoutButtonTapped()
@@ -48,7 +48,7 @@ struct BottomSheetExampleView: View {
 }
 
 struct GreenBottomSheetView: View {
-    let showSkeletonButtonHandler: () -> Void
+    let showSkeletonButtonHandler: Closure.Void
     
     var body: some View {
         ZStack {

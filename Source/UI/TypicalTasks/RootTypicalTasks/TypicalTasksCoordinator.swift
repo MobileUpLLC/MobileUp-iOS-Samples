@@ -45,4 +45,10 @@ final class TypicalTasksCoordinator {
         
         router?.push(controller: controller, isAnimated: true)
     }
+        
+    func showNavigationExampleModule() {
+        let controller = NavigationExampleFactory.createNavigationExampleController()
+        
+        router?.push(controller: controller, isAnimated: true)
+    }
 }

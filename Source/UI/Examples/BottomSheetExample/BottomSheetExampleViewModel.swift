@@ -13,11 +13,11 @@ final class BottomSheetExampleViewModel: ObservableObject {
         self.authRepository = authRepository
     }
     
-    func onShowBottomSheetButtonTapped() {
+    func handleTapOnShowBottomSheetButton() {
         isBottomSheetPresented = true
     }
     
-    func onShowExamplesModuleButtonTapped() {
+    func handleShowExamplesModuleButtonTapped() {
         Task { [weak self] in
             await self?.coordinator.showExampleModule()
         }
@@ -37,9 +37,10 @@ final class BottomSheetExampleViewModel: ObservableObject {
         }
     }
     
-    func onShowSkeletonButtonTapped() {
+    func handleTapOnShowSkeletonButton() {
         isBottomSheetPresented = false
         
+        // Задержка нужна, чтобы успевать закрыть предыдущий боттом шит, решение через onDismiss не подходит
         onMainAfter(deadline: .now() + .one) { [weak self] in
             self?.coordinator.showSkeletonModule()
         }
