@@ -8,13 +8,13 @@ struct BottomSheetExampleView: View {
             Color.white
             VStack(spacing: 20) {
                 Button(R.string.examples.showExamplesButtonTitle()) {
-                    viewModel.onShowExamplesModuleButtonTapped()
+                    viewModel.handleShowExamplesModuleButtonTapped()
                 }
                 Button(R.string.examples.showBottomSheetButtonTitle()) {
-                    viewModel.onShowBottomSheetButtonTapped()
+                    viewModel.handleTapOnShowBottomSheetButton()
                 }
                 Button(R.string.examples.showLogoutAlertButtonTitle()) {
-                    viewModel.onShowAlertButtonTapped()
+                    viewModel.handleShowAlertButtonTapped()
                 }
             }
         }
@@ -28,7 +28,7 @@ struct BottomSheetExampleView: View {
         }
         .ignoresSafeArea()
         .sheet(isPresented: $viewModel.isBottomSheetPresented) {
-            GreenBottomSheetView(showSkeletonButtonHandler: viewModel.onShowSkeletonButtonTapped)
+            GreenBottomSheetView(showSkeletonButtonHandler: viewModel.handleTapOnShowSkeletonButton)
                 .enablePresentationBackgroundInteraction(upThrough: .medium)
         }
         .alert(
@@ -36,28 +36,19 @@ struct BottomSheetExampleView: View {
             isPresented: $viewModel.isLogoutAlertPresented,
             actions: {
                 Button(R.string.examples.alertCancelButtonTitle()) {
-                    viewModel.onShowBottomSheetButtonTapped()
+                    viewModel.handleTapOnShowBottomSheetButton()
                 }
                 Button(R.string.examples.alertLogoutButtonTitle()) {
-                    viewModel.onAlertLogoutButtonTapped()
+                    viewModel.handleAlertLogoutButtonTapped()
                 }
             },
             message: { Text(R.string.examples.logoutAlertMessage()) }
-        )
-        .alert(
-            "",
-            isPresented: $viewModel.isDeleteAlertPresented,
-            actions: {
-                Button(R.string.examples.alertCancelButtonTitle(), role: .cancel) { }
-                Button(R.string.examples.alertLogoutButtonTitle(), role: .destructive) { }
-            },
-            message: { Text(R.string.examples.secondAlertMessage()) }
         )
     }
 }
 
 struct GreenBottomSheetView: View {
-    let showSkeletonButtonHandler: () -> Void
+    let showSkeletonButtonHandler: Closure.Void
     
     var body: some View {
         ZStack {
@@ -73,5 +64,10 @@ struct GreenBottomSheetView: View {
 }
 
 #Preview {
-    BottomSheetExampleView(viewModel: .init(coordinator: .init(networkService: .init())))
+    BottomSheetExampleView(
+        viewModel: .init(
+            coordinator: .init(networkService: .init()),
+            authRepository: .init(networkService: .init())
+        )
+    )
 }

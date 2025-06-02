@@ -13,15 +13,20 @@ extension Navigatable where Self: UIViewController {
         configureNavigationBarCentralItem()
         configureNavigationBarLeftItem()
         configureNavigationBarRightItems()
+        configureNavigationBarAppearance()
     }
 
     func configureNavigationBarVisibility() {
         navigationController?.navigationBar.isHidden = isNavigationBarHidden
         navigationItem.setHidesBackButton(isBackButtonHidden, animated: false)
     }
+    
+    func configureBackSwipeGesture(isEnabled: Bool = true) {
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = isEnabled
+    }
 
     private func configureNavigationBarCentralItem() {
-        navigationController?.navigationBar.tintColor = R.color.icon.iconPrimary.asUIColor
+        navigationController?.navigationBar.tintColor = navigationBarItem.foregroundColor
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = navigationBarItem.isLargeTitle ? .always : .never
         configureToolbarItem()
@@ -48,7 +53,7 @@ extension Navigatable where Self: UIViewController {
             )
         case .back:
             navigationItem.leftBarButtonItem = UIBarButtonItem(
-                image: R.image.arrow24.asUIImage,
+                image: R.image.ic24.arrow.asUIImage,
                 style: .plain,
                 target: self,
                 action: #selector(handleTapOnNavigationBarLeftItem)
@@ -58,6 +63,13 @@ extension Navigatable where Self: UIViewController {
             navigationItem.hidesBackButton = true
         case let .customView(view):
             navigationItem.leftBarButtonItem = UIBarButtonItem(customView: view)
+        case .text(let text):
+            navigationItem.leftBarButtonItem = UIBarButtonItem(
+                title: text,
+                style: .plain,
+                target: self,
+                action: #selector(handleTapOnNavigationBarLeftItem)
+            )
         }
 
         navigationItem.leftBarButtonItem?.isEnabled = navigationBarItem.leftItem.isEnabled
@@ -86,6 +98,21 @@ extension Navigatable where Self: UIViewController {
                 let newBarButtonItem = UIBarButtonItem(customView: view)
                 newBarButtonItem.isEnabled = item.isEnabled
                 rightBarButtonItems.append(newBarButtonItem)
+            case .text(let text):
+                let newBarButtonItem = UIBarButtonItem(
+                    title: text,
+                    style: .plain,
+                    target: self,
+                    action: #selector(handleTapOnNavigationRightItem)
+                )
+                let attributes: [NSAttributedString.Key: Any] = [
+                    .font: UIFont.systemFont(ofSize: 15),
+                    .foregroundColor: UIColor.black
+                ]
+                newBarButtonItem.setTitleTextAttributes(attributes, for: .normal)
+                newBarButtonItem.setTitleTextAttributes(attributes, for: .highlighted)
+                newBarButtonItem.isEnabled = item.isEnabled
+                rightBarButtonItems.append(newBarButtonItem)
             }
         }
 
@@ -99,6 +126,39 @@ extension Navigatable where Self: UIViewController {
             navigationItem.title = nil
         }
     }
+    
+    private func configureNavigationBarAppearance() {
+        // Заголовок и фон
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = navigationBarItem.backgroundColor
+        appearance.titleTextAttributes = [.foregroundColor: navigationBarItem.foregroundColor]
+        appearance.largeTitleTextAttributes = [
+            .foregroundColor: navigationBarItem.foregroundColor,
+            .font: UIFont.boldSystemFont(ofSize: 34)
+        ]
+        appearance.shadowColor = .clear
+        
+        // Кастомная кнопка назад
+        let backButton = UIImage(systemName: "chevron.left")
+        appearance.setBackIndicatorImage(backButton, transitionMaskImage: backButton)
+        navigationItem.standardAppearance = appearance
+        navigationItem.scrollEdgeAppearance = appearance
+        navigationItem.compactAppearance = appearance
+        
+        // Кнопки справа
+        let buttonAppearance = UIBarButtonItemAppearance()
+        buttonAppearance.normal.titleTextAttributes = [.foregroundColor: navigationBarItem.foregroundColor]
+        navigationItem.standardAppearance?.buttonAppearance = buttonAppearance
+        navigationItem.compactAppearance?.buttonAppearance = buttonAppearance
+        navigationItem.rightBarButtonItem?.tintColor = navigationBarItem.foregroundColor
+        
+        // Кнопки назад
+        let backButtonAppearance = UIBarButtonItemAppearance()
+        backButtonAppearance.normal.titleTextAttributes = [.foregroundColor: navigationBarItem.foregroundColor]
+        navigationItem.standardAppearance?.backButtonAppearance = backButtonAppearance
+        navigationItem.compactAppearance?.backButtonAppearance = backButtonAppearance
+    }
 }
 
 fileprivate extension UIViewController {
@@ -108,7 +168,7 @@ fileprivate extension UIViewController {
         }
 
         switch self.navigationBarItem.leftItem.type {
-        case .icon, .empty, .customView:
+        case .icon, .empty, .customView, .text:
             break
         case .back:
             navigationController?.popViewController(animated: true)

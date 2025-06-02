@@ -1,15 +1,41 @@
 // Error
-"error-state-title" = "Something went wrong";
-"error-state-subtitle" = "Please try again";
-"error-state-button-title" = "Try again";
+"error-state-title" = "Что-то пошло не так";
+"error-state-subtitle" = "Пожалуйста, попробуйте снова";
+"error-state-button-title" = "Попробовать снова";
 
 // Date
-"date-today-name" = "Today";
-"date-yesterday-name" = "Yesterday";
+"date-today-name" = "Сегодня";
+"date-yesterday-name" = "Вчера";
 
 // Network
 "#network-common-error-title" = "Ошибка";
 "#network-internet-connection-error-text" = "Пожалуйста проверьте настройки сети и попробуйте снова";
-"#network-decoding-error-text" = "Decoding Error";
-"#network-gateway-time-out-error-text" = "Gateway Time-out";
+"#network-decoding-error-text" = "Ошибка декодирования";
+"#network-gateway-time-out-error-text" = "Истекло время ожидания шлюза";
 "#network-internet-connection-error-title" = "Нет подключения к интернету";
+
+// Button
+"close-button-title" = "Закрыть";
+"ok-button-title" = "ОК";
+
+// Field rule
+"rule-email" = "Неверный формат почты";
+"rule-for-field-not-empty" = "Это поле должно быть заполнено";
+"rule-confirm-password" = "Пароли не совпадают";
+"rule-min-max-length" = "От %@ до %@ символов";
+"rule-not-contain-spaces" = "Не должно содержать пробелы";
+"rule-at-least-one-capital-letter" = "Должна быть хотя бы 1 заглавная буква";
+"rule-at-least-one-digit" = "Должна быть хотя бы 1 циф.ra";
+"rule-at-least-one-special-char" = "Должен быть хотя бы 1 специальный символ (! ? # @ & > < € % / \)";
+"rule-field-required" = "Это поле обязательно";
+"rule-look-like-date" = "Неверный формат даты";
+"rule-older-than" = "Вы должны быть старше %@ лет, чтобы создать аккаунт";
+"rule-unknown-error" = "Неизвестная ошибка";
+
+// Documents
+"documents-terms-of-use-button-title" = "Условия использования";
+"documents-privacy-policy-button-title" = "Политика конфиденциальности";
+
+// Buttons
+"button-title-send" = "Отправить";
+"button-title-skip" = "Пропустить";

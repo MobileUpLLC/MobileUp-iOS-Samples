@@ -10,6 +10,12 @@ final class LaunchViewModel: ObservableObject {
     }
 
     func onGoToTabbarButtonTapped() {
-        coordinator.showTabbarModule(networkService: networkService)
+        Task { [weak self] in
+            guard let self else {
+                return
+            }
+            
+            await self.coordinator.showTabbarModule(networkService: self.networkService)
+        }
     }
 }
