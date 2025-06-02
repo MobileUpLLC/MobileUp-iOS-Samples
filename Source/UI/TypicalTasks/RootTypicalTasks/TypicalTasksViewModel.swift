@@ -66,6 +66,10 @@ final class TypicalTasksViewModel: ViewModel {
     
     private func showRegistrationModule() {
         coordinator.showRegistrationModule()
+	}
+
+    private func showOnboardingExample() {
+        coordinator.showOnboardingExampleModule()
     }
     
     private func showNavigationExampleModule() {
@@ -97,6 +101,14 @@ final class TypicalTasksViewModel: ViewModel {
             .init(
                 title: R.string.typicalTasks.typicalTasksNavigation(),
                 action: { [weak self] in self?.showNavigationExampleModule() }
+			),
+            .init(
+                title: R.string.typicalTasks.complexUiElements(),
+                action: { [weak self] in self?.coordinator.showComplexUIComponents() }
+            ),
+            .init(
+                title: R.string.examples.examplesOnboardingCellTitle(),
+                action: { [weak self] in self?.showOnboardingExample() }
             )
         ]
     }

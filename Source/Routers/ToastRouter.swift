@@ -64,6 +64,26 @@ extension ToastItem {
             onTap: {}
         )
     }
+    
+    static func createInfoItem(
+        with message: String = R.string.common.errorStateTitle(),
+        toastType: ToastType = .local,
+        bottomInset: CGFloat = 0
+    ) -> ToastItem {
+        return ToastItem(
+            viewItem: .init(
+                style: .information,
+                message: message,
+                leftIcon: nil,
+                rightIcon: nil
+            ),
+            toastType: toastType,
+            direction: .bottom,
+            duration: .two,
+            isHideOnTap: true,
+            onTap: {}
+        )
+    }
 }
 
 protocol ToastRouter: AnyObject {

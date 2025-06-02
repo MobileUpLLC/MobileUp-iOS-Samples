@@ -14,7 +14,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         onMainAfter(deadline: .now() + .one) {
             ATTrackingManager.requestTrackingAuthorization { _ in }
         }
-        
+
+        TipsService.shared.configureTip()
+
         return true
     }
 }

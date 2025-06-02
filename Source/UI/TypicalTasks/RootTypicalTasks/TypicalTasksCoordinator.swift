@@ -48,6 +48,12 @@ final class TypicalTasksCoordinator {
         
     func showNavigationExampleModule() {
         let controller = NavigationExampleFactory.createNavigationExampleController()
+
+		router?.push(controller: controller, isAnimated: true)
+	}
+    
+    func showOnboardingExampleModule() {
+        let controller = OnboardingExampleFactory.createOnboardingExampleController()
         
         router?.push(controller: controller, isAnimated: true)
     }

@@ -26,7 +26,7 @@ extension Navigatable where Self: UIViewController {
     }
 
     private func configureNavigationBarCentralItem() {
-        navigationController?.navigationBar.tintColor = R.color.icon.iconPrimary.asUIColor
+        navigationController?.navigationBar.tintColor = navigationBarItem.foregroundColor
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = navigationBarItem.isLargeTitle ? .always : .never
         configureToolbarItem()
@@ -53,7 +53,7 @@ extension Navigatable where Self: UIViewController {
             )
         case .back:
             navigationItem.leftBarButtonItem = UIBarButtonItem(
-                image: R.image.arrow24.asUIImage,
+                image: R.image.ic24.arrow.asUIImage,
                 style: .plain,
                 target: self,
                 action: #selector(handleTapOnNavigationBarLeftItem)
@@ -128,16 +128,13 @@ extension Navigatable where Self: UIViewController {
     }
     
     private func configureNavigationBarAppearance() {
-        let backgroundColor = UIColor.clear
-        let foregroundColor = UIColor.black
-        
         // Заголовок и фон
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = backgroundColor
-        appearance.titleTextAttributes = [.foregroundColor: foregroundColor]
+        appearance.backgroundColor = navigationBarItem.backgroundColor
+        appearance.titleTextAttributes = [.foregroundColor: navigationBarItem.foregroundColor]
         appearance.largeTitleTextAttributes = [
-            .foregroundColor: foregroundColor,
+            .foregroundColor: navigationBarItem.foregroundColor,
             .font: UIFont.boldSystemFont(ofSize: 34)
         ]
         appearance.shadowColor = .clear
@@ -151,14 +148,14 @@ extension Navigatable where Self: UIViewController {
         
         // Кнопки справа
         let buttonAppearance = UIBarButtonItemAppearance()
-        buttonAppearance.normal.titleTextAttributes = [.foregroundColor: foregroundColor]
+        buttonAppearance.normal.titleTextAttributes = [.foregroundColor: navigationBarItem.foregroundColor]
         navigationItem.standardAppearance?.buttonAppearance = buttonAppearance
         navigationItem.compactAppearance?.buttonAppearance = buttonAppearance
-        navigationItem.rightBarButtonItem?.tintColor = foregroundColor
+        navigationItem.rightBarButtonItem?.tintColor = navigationBarItem.foregroundColor
         
         // Кнопки назад
         let backButtonAppearance = UIBarButtonItemAppearance()
-        backButtonAppearance.normal.titleTextAttributes = [.foregroundColor: foregroundColor]
+        backButtonAppearance.normal.titleTextAttributes = [.foregroundColor: navigationBarItem.foregroundColor]
         navigationItem.standardAppearance?.backButtonAppearance = backButtonAppearance
         navigationItem.compactAppearance?.backButtonAppearance = backButtonAppearance
     }
