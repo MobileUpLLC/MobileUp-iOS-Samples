@@ -17,3 +17,12 @@
 "collapsing-view-title" = "Collapsing View";
 "tabbar-button-title" = "TabBar";
 "close-button-title" = "Close";
+
+// Favorites
+"favorites-detail-navigation-title" = "Post Detail";
+"favorites-detail-error-title" = "Error loading post detail";
+"favorites-detail-like-title" = "Likes: %d";
+"favorites-detail-like-error-toast-title" = "Не получилось обновить лайк: %@";
+"favorites-navigation-title" = "Posts";
+"favorites-error-title" = "Error loading posts";
+"favorites-like-error-toast-title" = "Не получилось обновить лайк: %@";

@@ -59,7 +59,13 @@ final class TypicalTasksCoordinator {
     }
     
     func showInputFormsModule() {
-        let controller = InputFormsFactory.createInputFormsController()
+        let controller = InputFormsFactory.createInputFormsController()    
+    
+        router?.push(controller: controller, isAnimated: true)
+    }
+
+    func showFavouritesModule() {
+        let controller = FavouritesListFactory.createFavouritesListController()
         
         router?.push(controller: controller, isAnimated: true)
     }

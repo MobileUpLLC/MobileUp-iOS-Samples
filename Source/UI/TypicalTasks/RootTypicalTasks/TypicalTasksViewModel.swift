@@ -113,6 +113,10 @@ final class TypicalTasksViewModel: ViewModel {
             .init(
                 title: R.string.typicalTasks.typicalTasksInputForms(),
                 action: { [weak self] in self?.coordinator.showInputFormsModule() }
+			),
+            .init(
+                title: R.string.examples.examplesFavoritesCellTitle(),
+                action: { [weak self] in self?.coordinator.showFavouritesModule() }
             )
         ]
     }
