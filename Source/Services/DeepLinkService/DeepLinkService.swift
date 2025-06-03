@@ -16,19 +16,7 @@ protocol DeepLinkProvider: AnyObject {
 final class DeepLinkService {
     static let shared = DeepLinkService()
     
-    var onDeeplinkReceived: Closure.Generic<DeepLink>? {
-        didSet {
-            guard let buffer else {
-                return
-            }
-            
-            self.buffer = nil
-            
-            onMain { [weak self] in
-                self?.onDeeplinkReceived?(buffer)
-            }
-        }
-    }
+    var onDeeplinkReceived: Closure.Generic<DeepLink>? { didSet { clearBufferOnSetDeeplinkClosure() } }
     
     private var buffer: DeepLink?
     private var providers: [DeepLinkProvider] = []
@@ -58,6 +46,18 @@ final class DeepLinkService {
             onDeeplinkReceived(deepLink)
         } else {
             buffer = deepLink
+        }
+    }
+    
+    private func clearBufferOnSetDeeplinkClosure() {
+        guard let buffer else {
+            return
+        }
+        
+        self.buffer = nil
+        
+        onMain { [weak self] in
+            self?.onDeeplinkReceived?(buffer)
         }
     }
 }

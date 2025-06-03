@@ -1,7 +1,5 @@
-import UIKit
-
 enum WebPageFactory {
-    static func createWebPageController(pageModel: WebPageModel) -> UINavigationController {
+    static func createWebPageController(pageModel: WebPageModel) -> NavigationController {
         let coordinator = WebPageCoordinator()
         let viewModel = WebPageViewModel(
             coordinator: coordinator,
@@ -10,6 +8,6 @@ enum WebPageFactory {
         let controller = WebPageController(viewModel: viewModel)
         coordinator.router = controller
         
-        return UINavigationController(rootViewController: controller)
+        return NavigationController(rootViewController: controller)
     }
 }

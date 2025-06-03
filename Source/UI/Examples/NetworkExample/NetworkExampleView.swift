@@ -7,10 +7,10 @@ struct NetworkExampleView: View {
         VStack(spacing: 50) {
             Text("Result: \(viewModel.restultText)")
             Button("Request") {
-                viewModel.onRequestDataButtonTapped()
+                viewModel.handleTapOnRequestDataButton()
             }
             Button("Cancel request") {
-                viewModel.onCancelRequestButtonTapped()
+                viewModel.handleTapOnCancelRequestButton()
             }
         }
     }
@@ -19,7 +19,7 @@ struct NetworkExampleView: View {
 #Preview {
     let viewModel = NetworkExampleViewModel(
         coordinator: NetworkExampleCoordinator(),
-        mobileService: .shared
+        networkService: .init()
     )
     
     return NetworkExampleView(viewModel: viewModel)

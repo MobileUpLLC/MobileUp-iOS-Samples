@@ -16,11 +16,11 @@ final class MultipleBottomSheetExampleViewModel: ObservableObject {
         self.coordinator = coordinator
     }
     
-    func onShowBlueSheetButtonTapped() {
+    func handleTapOnShowBlueSheetButton() {
         bottomSheet = .blueSheet
     }
     
-    func onShowGreenSheetButtonTapped() {
+    func handleTapOnShowGreenSheetButton() {
         bottomSheet = .greenSheet
     }
 }

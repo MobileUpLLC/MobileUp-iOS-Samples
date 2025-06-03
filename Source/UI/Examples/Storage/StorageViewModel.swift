@@ -13,7 +13,7 @@ final class StorageViewModel: ObservableObject {
         self.storageRepository = storageRepository
     }
     
-    func onSaveToCacheButtonTapped() {
+    func handleTapOnSaveToCacheButton() {
         Perform { [weak self] in
             guard let self else {
                 return
@@ -25,7 +25,7 @@ final class StorageViewModel: ObservableObject {
         }
     }
     
-    func onLoadFromCacheButtonTapped() {
+    func handleTapOnLoadFromCacheButton() {
         Perform { [weak self] in
             guard let self else {
                 return
@@ -41,7 +41,7 @@ final class StorageViewModel: ObservableObject {
         }
     }
     
-    func onRemoveAllFromCacheButtonTapped() {
+    func handleTapOnRemoveAllFromCacheButton() {
         Perform { [weak self] in
             guard let self else {
                 return
@@ -57,7 +57,7 @@ final class StorageViewModel: ObservableObject {
         }
     }
     
-    func onSaveOnDiskButtonTapped() {
+    func handleTapOnSaveOnDiskButton() {
         Perform { [weak self] in
             guard let self else {
                 return
@@ -69,7 +69,7 @@ final class StorageViewModel: ObservableObject {
         }
     }
     
-    func onLoadFromDiskButtonTapped() {
+    func handleTapOnLoadFromDiskButton() {
         Perform { [weak self] in
             guard let self else {
                 return
@@ -85,7 +85,7 @@ final class StorageViewModel: ObservableObject {
         }
     }
     
-    func onRemoveAllFromDiskButtonTapped() {
+    func handleTapOnRemoveAllFromDiskButton() {
         Perform { [weak self] in
             guard let self else {
                 return
@@ -101,7 +101,7 @@ final class StorageViewModel: ObservableObject {
         }
     }
     
-    func onSaveToKeychainButtonTapped() {
+    func handleTapOnSaveToKeychainButton() {
         Perform { [weak self] in
             guard let self else {
                 return
@@ -113,7 +113,7 @@ final class StorageViewModel: ObservableObject {
         }
     }
     
-    func onLoadFromKeychainButtonTapped() {
+    func handleTapOnLoadFromKeychainButton() {
         Perform { [weak self] in
             guard let self else {
                 return
@@ -129,7 +129,7 @@ final class StorageViewModel: ObservableObject {
         }
     }
     
-    func onRemoveAllFromKeychainButtonTapped() {
+    func handleTapOnRemoveAllFromKeychainButton() {
         Perform { [weak self] in
             guard let self else {
                 return

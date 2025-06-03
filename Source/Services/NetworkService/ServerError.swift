@@ -20,6 +20,9 @@ enum ServerError: Error {
     /// statusCode: 404
     case notFound(details: ErrorDetails)
     
+    /// statusCode: 429
+    case tooManyRequest(details: ErrorDetails)
+    
     /// statusCode: 500
     case internalServerError(details: ErrorDetails)
     
@@ -63,6 +66,8 @@ enum ServerError: Error {
             return details
         case let .swiftError(details):
             return details
+        case let .tooManyRequest(details):
+            return details
         }
     }
     
@@ -100,6 +105,10 @@ enum ServerError: Error {
             serverError = .forbidden(details: errorDetails)
         case 404:
             serverError = .notFound(details: errorDetails)
+        case 429:
+            let customError = decodeCustomError(with: response)
+            errorDetails.message = customError?.errors.detail ?? .empty
+            serverError = .tooManyRequest(details: errorDetails)
         case 500:
             serverError = .internalServerError(details: errorDetails)
         case 502:
@@ -139,6 +148,12 @@ enum ServerError: Error {
         errorCode == NSURLErrorDataNotAllowed
 
         return isNetworkErrorCode
+    }
+    
+    private static func decodeCustomError(with response: Response) -> ErrorModel? {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        return try? decoder.decode(ErrorModel.self, from: response.data)
     }
 }
 

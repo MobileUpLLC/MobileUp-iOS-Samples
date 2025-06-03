@@ -90,6 +90,8 @@ targets:
                 UISceneDelegateClassName: $(PRODUCT_MODULE_NAME).SceneDelegate
         INSTANCE: $(INSTANCE)
         MOBILE_API_URL: $(MOBILE_API_URL)
+        TERMS_OF_USE_URL: $(TERMS_OF_USE_URL)
+        PRIVACY_POLICY_URL: $(PRIVACY_POLICY_URL)
         DEEPLINK_SCHEME: $(DEEPLINK_SCHEME)
         APP_DISPLAY_NAME: $(APP_DISPLAY_NAME)
         CFBundleURLTypes:
@@ -102,13 +104,25 @@ targets:
       Release: Source/Configs/release.xcconfig
     preBuildScripts:
       - script: |
-                export PATH="$PATH:/opt/homebrew/bin"
+            export PATH="$HOME/.mint/bin:/opt/homebrew/bin:$PATH"
+            expected_swiflint_version="0.58.2"
 
-                if which swiftlint >/dev/null; then
-                  swiftlint --config .swiftlint.yml
-                else
-                  echo "warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint"
-                fi
+            echo "Доступные пакеты минта:"
+            mint list
+    
+            if (mint list | grep "$expected_swiflint_version"); then
+                echo "🍀 На машине есть нужная версия линта: ${expected_swiflint_version}"
+                mint install realm/SwiftLint@"$expected_swiflint_version"
+    
+                echo "🍀 Mint переключил версию линта"
+                mint list
+    
+                swiftlint --config .swiftlint.yml
+            else
+                echo "error: 🧨 На машине нет нужной версии линта: ${expected_swiflint_version}"
+                echo "warning: ⚙️ Запустите в терминале команду: mint install realm/SwiftLint@"$expected_swiflint_version""
+                exit 1
+            fi
         name: SwiftLint
         basedOnDependencyAnalysis: false
       - script: |
@@ -131,6 +145,8 @@ targets:
       - plugin: RswiftGenerateInternalResources
         package: Rswift
     dependencies:
+      - package: InputMask
+      - package: FormView
       - package: SnapKit
       - package: Rswift
         product: RswiftLibrary
@@ -145,9 +161,15 @@ targets:
       - package: Pulse
         product: PulseUI
       - package: PagingList
-      - package: FormView
+      - package: munkit
       
 packages:
+  InputMask:
+    url: https://github.com/RedMadRobot/input-mask-ios
+    exactVersion: 6.1.0
+  FormView:
+    url: https://github.com/MobileUpLLC/FormView
+    exactVersion: 1.3.0
   SnapKit:
     url: https://github.com/SnapKit/SnapKit.git
     exactVersion: 5.7.1
@@ -181,6 +203,6 @@ packages:
   PagingList:
     url: https://github.com/MobileUpLLC/PagingList.git
     exactVersion: 2.1.1
-  FormView:
-    url: https://github.com/MobileUpLLC/FormView
-    exactVersion: 1.3.0
+  munkit:
+    url: https://github.com/MobileUpLLC/munkit
+    exactVersion: 1.1.2

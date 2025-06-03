@@ -13,29 +13,34 @@ final class BottomSheetExampleViewModel: ObservableObject {
         self.authRepository = authRepository
     }
     
-    func onShowBottomSheetButtonTapped() {
+    func handleTapOnShowBottomSheetButton() {
         isBottomSheetPresented = true
     }
     
-    func onShowExamplesModuleButtonTapped() {
-        coordinator.showExampleModule()
+    func handleShowExamplesModuleButtonTapped() {
+        Task { [weak self] in
+            await self?.coordinator.showExampleModule()
+        }
     }
     
-    func onShowAlertButtonTapped() {
+    func handleShowAlertButtonTapped() {
         isLogoutAlertPresented = true
     }
     
-    func onAlertLogoutButtonTapped() {
-        isDeleteAlertPresented = true
+    func handleAlertLogoutButtonTapped() {
+        do {
+            try authRepository.clearKeychainDataInStorage()
+            isLogoutAlertPresented = true
+            coordinator.showEntrance()
+        } catch {
+            coordinator.showErrorToast(with: error)
+        }
     }
     
-    func onDeleteAccountButtonTapped() {
-        // TODO: UPUP-1022 Добавить чистку кейчейна
-    }
-    
-    func onShowSkeletonButtonTapped() {
+    func handleTapOnShowSkeletonButton() {
         isBottomSheetPresented = false
         
+        // Задержка нужна, чтобы успевать закрыть предыдущий боттом шит, решение через onDismiss не подходит
         onMainAfter(deadline: .now() + .one) { [weak self] in
             self?.coordinator.showSkeletonModule()
         }

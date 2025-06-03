@@ -25,6 +25,8 @@ extension Log {
     
     static let mockableMobileApiTarget = Log(subsystem: subsystem, category: "MockableMobileApiTarget")
     
+    static let authRepository = Log(subsystem: subsystem, category: "AuthRepository")
+    
     private static let subsystem = Bundle.main.bundleIdentifier ?? .empty
 }
 

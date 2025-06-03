@@ -26,5 +26,11 @@ struct ComplexUIComponentsView: View {
 }
 
 #Preview {
-    ComplexUIComponentsView(viewModel: ComplexUIComponentsViewModel(coordinator: ComplexUIComponentsCoordinator()))
+    ComplexUIComponentsView(
+        viewModel: ComplexUIComponentsViewModel(
+            coordinator: ComplexUIComponentsCoordinator(
+                networkService: .init()
+            )
+        )
+    )
 }

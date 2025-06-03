@@ -20,6 +20,39 @@ struct TypicalTasksView: View {
             TypicalTasksContentView(items: viewModel.typicalTasks, onItemTap: viewModel.onItemTap(item:))
         }
         .background(.white)
+        .alert(
+            String.empty,
+            isPresented: $viewModel.isDeleteAlertPresented,
+            actions: {
+                Button(R.string.examples.alertCancelButtonTitle(), role: .cancel) { }
+                Button(R.string.examples.alertLogoutButtonTitle(), role: .destructive) {
+                    viewModel.handleTapOnDeleteAlertLogoutButton()
+                }
+            },
+            message: { Text(R.string.examples.secondAlertMessage()) }
+        )
+        .alert(
+            String.empty,
+            isPresented: $viewModel.isSuccessAuthAlertPresented,
+            actions: {
+                Button(R.string.examples.alertCancelButtonTitle(), role: .cancel) { }
+                Button(R.string.examples.alertLogoutButtonTitle(), role: .destructive) {
+                    viewModel.clearUserData()
+                }
+            },
+            message: { Text(R.string.typicalTasks.typicalTasksAuthorizedMessage()) }
+        )
+        .alert(
+            String.empty,
+            isPresented: $viewModel.isNotAuthAlertPresented,
+            actions: {
+                Button(R.string.examples.alertCancelButtonTitle(), role: .cancel) { }
+                Button(R.string.examples.alertLogoutButtonTitle(), role: .destructive) {
+                    viewModel.openEntranceModule()
+                }
+            },
+            message: { Text(R.string.typicalTasks.typicalTasksNotAuthorizedMessage()) }
+        )
     }
 }
 
@@ -51,13 +84,10 @@ private struct ExamplesCellView: View {
                 Text(text)
                     .font(UIFont.Heading.medium.asFont)
                     .foregroundStyle(.black)
-                
                 Spacer()
-                
                 Image(systemName: "chevron.right")
             }
             .padding(.bottom, 10)
-            
             Rectangle()
                 .fill(.gray.opacity(0.5))
                 .frame(maxWidth: .infinity)
@@ -70,7 +100,8 @@ private struct ExamplesCellView: View {
 #Preview {
     TypicalTasksView(
         viewModel: TypicalTasksViewModel(
-            coordinator: TypicalTasksCoordinator()
+            coordinator: TypicalTasksCoordinator(networkService: .init()),
+            authRepository: .init(networkService: .init())
         )
     )
 }

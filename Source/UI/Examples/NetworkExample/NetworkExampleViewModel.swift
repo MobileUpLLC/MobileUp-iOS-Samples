@@ -9,24 +9,24 @@ final class NetworkExampleViewModel: ObservableObject {
     @Published var restultText: String = .empty
     
     private let coordinator: NetworkExampleCoordinator
-    private let mobileService: MobileService
+    private let networkService: NetworkService
 
     private var task: Task<(), any Error>?
     
-    init(coordinator: NetworkExampleCoordinator, mobileService: MobileService) {
+    init(coordinator: NetworkExampleCoordinator, networkService: NetworkService) {
         self.coordinator = coordinator
-        self.mobileService = mobileService
+        self.networkService = networkService
     }
         
-    func onRequestDataButtonTapped() {
+    func handleTapOnRequestDataButton() {
         restultText = "in progress"
         
         task?.cancel()
         
         task = Task {
             do {
-                let _: [ExampleModel] = try await self.mobileService.request(target: .example(.testItems))
-                
+                let _: [ExampleModel] = try await self.networkService.executeRequest(target: .example(.testItems))
+
                 Log.refreshTokenFlow.debug(logEntry: .text("NetworkExampleViewModel. Data received successfully"))
 
                 onMain { [weak self] in
@@ -42,7 +42,7 @@ final class NetworkExampleViewModel: ObservableObject {
         }
     }
     
-    func onCancelRequestButtonTapped() {
+    func handleTapOnCancelRequestButton() {
         task?.cancel()
         
         Log.refreshTokenFlow.debug(logEntry: .text("NetworkExampleViewModel. Cancel task"))
