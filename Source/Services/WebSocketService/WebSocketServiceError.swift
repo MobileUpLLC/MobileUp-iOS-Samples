@@ -5,9 +5,9 @@ enum WebSocketServiceError: Error {
     var errorDescription: String? {
         switch self {
         case .notInitialized:
-            return "WebSocket is not initialized"
+            return R.string.common.webSocketNotInitializationErrorDescription()
         case .notConnected:
-            return "WebSocket is not connected"
+            return R.string.common.webSocketNotConnectedErrorDescription()
         }
     }
 }
