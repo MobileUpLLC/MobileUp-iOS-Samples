@@ -94,6 +94,7 @@ targets:
         PRIVACY_POLICY_URL: $(PRIVACY_POLICY_URL)
         DEEPLINK_SCHEME: $(DEEPLINK_SCHEME)
         APP_DISPLAY_NAME: $(APP_DISPLAY_NAME)
+        CHAT_WEBSOCKET_URL: $(CHAT_WEBSOCKET_URL)
         CFBundleURLTypes:
           - CFBundleTypeRole: Editor
             CFBundleURLSchemes: [template]
@@ -162,7 +163,8 @@ targets:
         product: PulseUI
       - package: PagingList
       - package: munkit
-      
+      - package: Starscream
+
 packages:
   InputMask:
     url: https://github.com/RedMadRobot/input-mask-ios
@@ -206,3 +208,6 @@ packages:
   munkit:
     url: https://github.com/MobileUpLLC/munkit
     exactVersion: 1.1.2
+  Starscream:
+    url: https://github.com/daltoniam/Starscream
+    exactVersion: 4.0.8

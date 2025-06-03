@@ -117,6 +117,10 @@ final class TypicalTasksViewModel: ViewModel {
             .init(
                 title: R.string.examples.examplesFavoritesCellTitle(),
                 action: { [weak self] in self?.coordinator.showFavouritesModule() }
+            ),
+            .init(
+                title: R.string.typicalTasks.typicalTasksChats(),
+                action: { [weak self] in self?.coordinator.showChatsModule() }
             )
         ]
     }

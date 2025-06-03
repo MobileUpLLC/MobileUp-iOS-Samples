@@ -14,3 +14,5 @@ TERMS_OF_USE_URL = https:/$(SLASH)mobileup.ru
 PRIVACY_POLICY_URL = https:/$(SLASH)mobileup.ru
 
 APP_DISPLAY_NAME = Template app
+
+CHAT_WEBSOCKET_URL = wss:$(SLASH)/echo.websocket.org

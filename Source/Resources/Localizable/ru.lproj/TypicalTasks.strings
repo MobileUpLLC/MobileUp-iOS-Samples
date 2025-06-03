@@ -10,6 +10,7 @@
 "typical-tasks-not-authorized-message" = "Пожалуйста авторизируйтесь";
 "typical-tasks-phone-authorization" = "Авторизация через телефон";
 "typical-tasks-input-forms" = "Формы ввода";
+"typical-tasks-chats" = "Чаты";
 
 // ComplexUIComponents
 "image-carousel-title" = "Image Carousel";
@@ -26,3 +27,7 @@
 "favorites-navigation-title" = "Posts";
 "favorites-error-title" = "Error loading posts";
 "favorites-like-error-toast-title" = "Не получилось обновить лайк: %@";
+
+// Chats
+"typical-tasks-native-chats" = "Чат на URLSessionWebSocketTask";
+"typical-tasks-starscream-chats" = "Чат на Starscream";

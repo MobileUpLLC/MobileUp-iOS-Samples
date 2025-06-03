@@ -66,7 +66,11 @@ final class TypicalTasksCoordinator {
 
     func showFavouritesModule() {
         let controller = FavouritesListFactory.createFavouritesListController()
-        
+        router?.push(controller: controller, isAnimated: true)
+    }
+
+    func showChatsModule() {
+        let controller = ChatsFactory.createChatsController(networkService: networkService)
         router?.push(controller: controller, isAnimated: true)
     }
 }
