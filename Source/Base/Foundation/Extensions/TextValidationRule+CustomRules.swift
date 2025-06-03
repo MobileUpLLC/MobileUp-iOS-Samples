@@ -8,53 +8,70 @@
 import FormView
 import Foundation
 
-extension TextValidationRule {
+extension ValidationRule {
     static var email: Self {
-        .email(message: R.string.common.ruleEmail())
+        .email(conditions: [.onFieldValueChanged, .manual], message: R.string.common.ruleEmail())
     }
     
-    static var oneUppercaseLetter: Self {
-        .atLeastOneUppercaseLetter(message: R.string.common.ruleAtLeastOneCapitalLetter())
+    static func oneUppercaseLetter(conditions: [ValidationBehaviour]) -> Self {
+        .atLeastOneUppercaseLetter(
+            conditions: conditions,
+            message: R.string.common.ruleAtLeastOneCapitalLetter()
+        )
     }
     
     static var oneDigit: Self {
-        .atLeastOneDigit(message: R.string.common.ruleAtLeastOneDigit())
+        .atLeastOneDigit(
+            conditions: [.onFieldValueChanged, .manual],
+            message: R.string.common.ruleAtLeastOneDigit()
+        )
     }
     
-    static var excludingSpace: Self {
-        TextValidationRule(message: R.string.common.ruleNotContainSpaces()) {
-            $0.contains(.space) == false
+    static func excludingSpace(conditions: [ValidationBehaviour]) -> Self {
+        .custom(conditions: conditions) {
+            return ($0.contains(.space) == false, R.string.common.ruleNotContainSpaces())
         }
     }
     
-    static func correspondsMinMaxLength(min: Int, max: Int) -> Self {
-        TextValidationRule(message: R.string.common.ruleMinMaxLength(String(min), String(max))) {
-            $0.count >= min && $0.count <= max
+    static func correspondsMinMaxLength(conditions: [ValidationBehaviour], min: Int, max: Int) -> Self {
+        .custom(conditions: conditions) {
+            return ($0.count >= min && $0.count <= max, R.string.common.ruleMinMaxLength(String(min), String(max)))
         }
     }
     
     static func confirmPassword(value: String) -> Self {
-        .equalTo(value: value, message: R.string.common.ruleConfirmPassword())
+        .custom(conditions: [.onFieldValueChanged]) {
+            return ($0 == value, R.string.common.ruleConfirmPassword())
+        }
     }
     
-    static func atLeastOneOfSpecifiedSpecialCharacters(message: String) -> Self {
-        TextValidationRule(message: message) {
+    static func atLeastOneOfSpecifiedSpecialCharacters(
+        conditions: [ValidationBehaviour],
+        message: String
+    ) -> Self {
+        .custom(conditions: conditions) {
             let allowedSpecialChar = $0.range(of: "[!?#@&><€%/\\\\]", options: .regularExpression) != nil
             let noOtherSpecialChars = $0.range(
                 of: "[^A-Za-zА-Яа-яё0-9 !?#@&><€%/\\\\]",
                 options: .regularExpression
             ) == nil
-            return allowedSpecialChar && noOtherSpecialChars
+            return (allowedSpecialChar && noOtherSpecialChars, message)
         }
     }
 }
 
-extension Array<TextValidationRule> {
+extension Array<ValidationRule> {
     static let password: Self = [
-        .correspondsMinMaxLength(min: 8, max: 32),
-        .oneUppercaseLetter,
-        .oneDigit,
-        .atLeastOneOfSpecifiedSpecialCharacters(message: R.string.common.ruleAtLeastOneSpecialChar()),
-        .excludingSpace
+        .correspondsMinMaxLength(conditions: [.onFieldFocus, .onFieldValueChanged], min: 8, max: 32),
+        .oneUppercaseLetter(conditions: [.onFieldFocus, .onFieldValueChanged]),
+        .atLeastOneDigit(
+            conditions: [.onFieldFocus, .onFieldValueChanged],
+            message: R.string.common.ruleAtLeastOneDigit()
+        ),
+        .atLeastOneOfSpecifiedSpecialCharacters(
+            conditions: [.onFieldFocus, .onFieldValueChanged],
+            message: R.string.common.ruleAtLeastOneSpecialChar()
+        ),
+        .excludingSpace(conditions: [.onFieldFocus, .onFieldValueChanged])
     ]
 }

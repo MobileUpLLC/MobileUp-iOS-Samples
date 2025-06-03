@@ -10,10 +10,16 @@ struct PhoneNumberInputBlock: View {
     @Binding private var isValid: Bool
     @Binding private var outerValidationStatus: InputOuterValidationStatus
     
-    private let rules: [TextValidationRule] = [.regex(value: .phoneNumberRegularExpression, message: .empty)]
+    private let rules: [ValidationRule] = [
+        .regex(
+            conditions: [.onFieldValueChanged, .manual],
+            value: .phoneNumberRegularExpression,
+            message: .empty
+        )
+    ]
         
     var body: some View {
-        FormField(value: $phoneNumber, rules: rules) { _ in
+        FormField(value: $phoneNumber, rules: rules, isRequired: true) { _ in
             HStack(spacing: 0) {
                 if phoneNumber.isEmpty {
                     Text(String.phoneNumberRegionCode)

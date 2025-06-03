@@ -111,6 +111,14 @@ final class TypicalTasksViewModel: ViewModel {
                 action: { [weak self] in self?.showOnboardingExample() }
             ),
             .init(
+                title: R.string.typicalTasks.typicalTasksInputForms(),
+                action: { [weak self] in self?.coordinator.showInputFormsModule() }
+			),
+            .init(
+                title: R.string.examples.examplesFavoritesCellTitle(),
+                action: { [weak self] in self?.coordinator.showFavouritesModule() }
+            ),
+            .init(
                 title: R.string.typicalTasks.typicalTasksChats(),
                 action: { [weak self] in self?.coordinator.showChatsModule() }
             )
