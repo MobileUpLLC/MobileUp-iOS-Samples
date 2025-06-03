@@ -55,7 +55,7 @@ private struct SignInPhoneBodyView: View {
                     .foregroundColor(.gray)
                     .padding(.top, 20)
                 
-                FormView(validate: .onFieldValueChanged) { _ in
+                FormView(validate: [.onFieldValueChanged]) { _ in
                     PhoneNumberInputBlock(
                         phoneNumber: $phoneNumber,
                         isValid: $isPhoneNumberValid

@@ -7,6 +7,7 @@ enum InputFieldBlockType {
     case confirmPassword
 }
 
+// swiftlint: disable file_length
 struct InputFieldView: View {
     @Binding private var text: String
     @Binding private var outerRules: [OuterValidationRule]
@@ -17,7 +18,7 @@ struct InputFieldView: View {
     private let header: String
     private let title: String
     private let placeholder: String?
-    private let validationRules: [TextValidationRule]
+    private let validationRules: [ValidationRule]
     private let mask: String?
     private let type: InputFieldBlockType
     private let isRequired: Bool
@@ -33,7 +34,7 @@ struct InputFieldView: View {
                     .foregroundStyle(.gray)
             }
             
-            FormField(value: $text, rules: validationRules) { failedRules in
+            FormField(value: $text, rules: validationRules, isRequired: isRequired) { failedRules in
                 VStack(alignment: .leading, spacing: 0) {
                     SingleInputField(
                         title: title,
@@ -73,7 +74,7 @@ struct InputFieldView: View {
         outerRules: Binding<[OuterValidationRule]> = .constant([]),
         title: String,
         placeholder: String? = nil,
-        validationRules: [TextValidationRule] = [],
+        validationRules: [ValidationRule] = [],
         mask: String? = nil,
         type: InputFieldBlockType = .text,
         isRequired: Bool,
@@ -93,12 +94,12 @@ struct InputFieldView: View {
         self.textLimit = textLimit
     }
     
-    private func checkErrorState(with failedRules: [TextValidationRule]) -> Bool {
+    private func checkErrorState(with failedRules: [ValidationRule]) -> Bool {
         let isValidationFailed = outerRules.isEmpty == false || failedRules.isEmpty == false
         return isValidationFailed && isFocusedState == false && text.isEmpty == false
     }
     
-    private func getHints(with failedRules: [TextValidationRule]) -> [FieldHintViewType] {
+    private func getHints(with failedRules: [ValidationRule]) -> [FieldHintViewType] {
         switch type {
         case .text, .confirmPassword:
             return getHintsForText(with: failedRules)
@@ -107,7 +108,7 @@ struct InputFieldView: View {
         }
     }
     
-    private func getHintsForText(with failedRules: [TextValidationRule]) -> [FieldHintViewType] {
+    private func getHintsForText(with failedRules: [ValidationRule]) -> [FieldHintViewType] {
         if isNotFilled {
             return [.error(R.string.common.ruleForFieldNotEmpty())]
         } else if let message = failedRules.first?.message {
@@ -119,7 +120,7 @@ struct InputFieldView: View {
         }
     }
     
-    private func getHintsForPassword(with failedRules: [TextValidationRule]) -> [FieldHintViewType] {
+    private func getHintsForPassword(with failedRules: [ValidationRule]) -> [FieldHintViewType] {
         if isNotFilled {
             return [.error(R.string.common.ruleForFieldNotEmpty())]
         } else if let message = outerRules.first?.message {
@@ -131,7 +132,7 @@ struct InputFieldView: View {
         }
     }
     
-    private func getPasswordFieldRuleHints(with failedRules: [TextValidationRule]) -> [FieldHintViewType] {
+    private func getPasswordFieldRuleHints(with failedRules: [ValidationRule]) -> [FieldHintViewType] {
         if isFocusedState == false, failedRules.isEmpty {
             return []
         } else {
@@ -139,7 +140,7 @@ struct InputFieldView: View {
         }
     }
     
-    private func getMappedPasswordFieldRuleHints(with failedRules: [TextValidationRule]) -> [FieldHintViewType] {
+    private func getMappedPasswordFieldRuleHints(with failedRules: [ValidationRule]) -> [FieldHintViewType] {
         let hints: [FieldHintViewType] = validationRules.map { hint in
             if text.isEmpty || failedRules.contains(where: { $0.message == hint.message }) {
                 return .hintNotFulfilled(hint.message)
@@ -278,7 +279,13 @@ private struct InputField: View {
         InputFieldView(
             text: .constant("text"),
             title: "This is a title",
-            validationRules: [TextValidationRule.maxLength(count: 8, message: "maxLength 8")],
+            validationRules: [
+                ValidationRule.maxLength(
+                    conditions: [.onFieldValueChanged],
+                    count: 8,
+                    message: "maxLength 8"
+                )
+            ],
             mask: nil,
             type: .password,
             isRequired: true
@@ -295,3 +302,4 @@ private struct InputField: View {
     .padding(.horizontal)
     .background(.white)
 }
+// swiftlint: enable file_length

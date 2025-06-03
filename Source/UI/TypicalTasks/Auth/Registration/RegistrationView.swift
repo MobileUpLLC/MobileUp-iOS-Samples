@@ -15,7 +15,7 @@ struct RegistrationView: View {
 
     var body: some View {
         VStack {
-            FormView(validate: .onFieldValueChanged) { proxy in
+            FormView(validate: [.onFieldValueChanged, .manual]) { proxy in
                 ScrollWithToolBarView {
                     InputContentView(viewModel: viewModel, isFocused: _isFocused)
                         .padding(.horizontal, 20)
@@ -25,11 +25,13 @@ struct RegistrationView: View {
                         isShowDivider: isContentOverToolBar,
                         isLoading: $viewModel.isLoading,
                         action: {
-                            if proxy.validate() {
-                                isFocused = false
-                                viewModel.handleNextButtonTapped()
-                            } else {
-                                viewModel.handleFailedValid()
+                            Task { @MainActor in
+                                if await proxy.validate() {
+                                    isFocused = false
+                                    viewModel.handleNextButtonTapped()
+                                } else {
+                                    viewModel.handleFailedValid()
+                                }
                             }
                         }
                     )
@@ -57,7 +59,12 @@ private struct InputContentView: View {
                     text: $viewModel.email,
                     outerRules: $viewModel.outerEmailRules,
                     title: R.string.auth.registrationEmailFieldTitle(),
-                    validationRules: [.email(message: R.string.common.ruleEmail())],
+                    validationRules: [
+                        .email(
+                            conditions: [.onFieldValueChanged],
+                            message: R.string.common.ruleEmail()
+                        )
+                    ],
                     type: .text,
                     isRequired: true
                 )
@@ -82,7 +89,9 @@ private struct InputContentView: View {
                     text: $viewModel.confirmPassword,
                     outerRules: $viewModel.outerPasswordRules,
                     title: R.string.auth.registrationConfirmPasswordFieldTitle(),
-                    validationRules: [.confirmPassword(value: viewModel.password)],
+                    validationRules: [
+                        .confirmPassword(value: viewModel.password)
+                    ],
                     type: .confirmPassword,
                     isRequired: true
                 )

@@ -8,18 +8,20 @@ struct AuthorizationView: View {
     private var isSignButtonDisabled: Bool { getIsSignButtonDisabled() }
     
     var body: some View {
-        FormView(validate: .onFieldValueChanged) { proxy in
+        FormView(validate: [.onFieldValueChanged, .manual]) { proxy in
             ScrollWithToolBarView {
                 InputContentView(viewModel: viewModel, isFocused: _isFocused)
                     .padding(.horizontal, 20)
                     .background(.white)
             } bottomToolBar: { _ in
                 Button(R.string.auth.authorizationSignButtonTitle()) {
-                    if proxy.validate() {
-                        isFocused = false
-                        viewModel.handleSignButtonTapped()
-                    } else {
-                        viewModel.handleFailedValid()
+                    Task { @MainActor in
+                        if await proxy.validate() {
+                            isFocused = false
+                            viewModel.handleSignButtonTapped()
+                        } else {
+                            viewModel.handleFailedValid()
+                        }
                     }
                 }
                 .disabled(isSignButtonDisabled)
@@ -49,7 +51,11 @@ private struct InputContentView: View {
                 text: $viewModel.email,
                 outerRules: $viewModel.outerEmailRules,
                 title: R.string.auth.registrationEmailFieldTitle(),
-                validationRules: [.email(message: R.string.common.ruleEmail())],
+                validationRules: [
+                    .email(
+                        conditions: [.manual, .onFieldValueChanged],
+                        message: R.string.common.ruleEmail())
+                ],
                 type: .text,
                 isRequired: true
             )
