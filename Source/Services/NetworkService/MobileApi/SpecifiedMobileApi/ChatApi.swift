@@ -7,18 +7,26 @@ enum ChatApi {
 }
 
 extension ChatApi: MUNAPITarget {
-    var parameters: [String: Any] { getParameters() }
-    var isAccessTokenRequired: Bool { getIsAccessTokenRequired() }
-    var isRefreshTokenRequest: Bool { getIsRefreshTokenRequest() }
     var baseURL: URL { getBaseURL() }
     var path: String { getPath() }
     var method: Moya.Method { getMethod() }
     var task: Moya.Task { getTask() }
     var headers: [String: String]? { getHeaders() }
     var authorizationType: Moya.AuthorizationType? { getAuthorizationType() }
-    
+    var parameters: [String: Any] { getParameters() }
+    var isAccessTokenRequired: Bool { getIsAccessTokenRequired() }
+    var isRefreshTokenRequest: Bool { getIsRefreshTokenRequest() }
     var mockFileName: String? { getmockFileName() }
-    var isMockEnabled: Bool { true }
+    var isMockEnabled: Bool { getIsMockEnabled() }
+    
+    private func getBaseURL() -> URL { Environments.mobileApiUrl }
+    
+    private func getPath() -> String {
+        switch self {
+        case .getMessages:
+            return "/api/messages"
+        }
+    }
     
     private func getParameters() -> [String: Any] {
         switch self {
@@ -38,22 +46,6 @@ extension ChatApi: MUNAPITarget {
         switch self {
         case .getMessages:
             return false
-        }
-    }
-    
-    // swiftlint:disable force_unwrapping
-    private func getBaseURL() -> URL {
-        switch self {
-        case .getMessages:
-            return URL(string: "https://www.example.com")! // Заглушка
-        }
-    }
-    // swiftlint:enable force_unwrapping
-    
-    private func getPath() -> String {
-        switch self {
-        case .getMessages:
-            return "/api/messages" // Заглушка
         }
     }
     
@@ -87,5 +79,12 @@ extension ChatApi: MUNAPITarget {
     
     private func getmockFileName() -> String? {
         return "MockMessages"
+    }
+    
+    private func getIsMockEnabled() -> Bool {
+        switch self {
+        case .getMessages:
+            return true
+        }
     }
 }

@@ -5,13 +5,10 @@ final class NativeWebSocketService: WebSocketService {
     
     private var webSocketTask: URLSessionWebSocketTask?
     
-    // swiftlint:disable:next force_unwrapping
-    private let url = URL(string: "wss://echo.websocket.org")!
-    
     deinit { disconnect() }
     
     func connect() async throws {
-        webSocketTask = URLSession(configuration: .default).webSocketTask(with: url)
+        webSocketTask = URLSession(configuration: .default).webSocketTask(with: Environments.chatWebSocketUrl)
         webSocketTask?.resume()
         
         try await receiveMessages()

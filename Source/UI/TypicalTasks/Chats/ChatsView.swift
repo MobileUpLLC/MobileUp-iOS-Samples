@@ -25,11 +25,9 @@ private struct ChatsContentView: View {
     let items: [ChatsViewItem]
     let onItemTap: Closure.Generic<ChatsViewItem>
     
-    private let columns: [GridItem] = [GridItem(.fixed(UIScreen.main.bounds.width))]
-    
     var body: some View {
         ScrollView {
-            LazyVGrid(columns: columns, spacing: 10) {
+            LazyVStack(spacing: 10) {
                 ForEach(items) { item in
                     ChatsCellView(text: item.title)
                         .contentShape(Rectangle())

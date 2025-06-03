@@ -39,3 +39,7 @@
 // Buttons
 "button-title-send" = "Отправить";
 "button-title-skip" = "Пропустить";
+
+// WebSocket
+"web-socket-not-initialization-error-description" = "WebSocket is not initialized";
+"web-socket-not-connected-error-description" = "WebSocket is not connected";

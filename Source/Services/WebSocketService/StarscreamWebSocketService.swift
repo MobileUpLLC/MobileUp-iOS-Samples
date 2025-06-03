@@ -7,14 +7,11 @@ final class StarscreamWebSocketService: WebSocketService {
     private var socket: WebSocket?
     private var isConnected: Bool = false
     
-    // swiftlint:disable:next force_unwrapping
-    private let url = URL(string: "wss://echo.websocket.org")!
-    
     deinit { disconnect() }
     
     func connect() async throws {
         try await withCheckedThrowingContinuation { (_: CheckedContinuation<Void, Error>) in
-            let request = URLRequest(url: url, timeoutInterval: 5)
+            let request = URLRequest(url: Environments.chatWebSocketUrl, timeoutInterval: 5)
             let socket = WebSocket(request: request)
             
             socket.delegate = self

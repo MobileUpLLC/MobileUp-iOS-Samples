@@ -94,6 +94,7 @@ targets:
         PRIVACY_POLICY_URL: $(PRIVACY_POLICY_URL)
         DEEPLINK_SCHEME: $(DEEPLINK_SCHEME)
         APP_DISPLAY_NAME: $(APP_DISPLAY_NAME)
+        CHAT_WEBSOCKET_URL: $(CHAT_WEBSOCKET_URL)
         CFBundleURLTypes:
           - CFBundleTypeRole: Editor
             CFBundleURLSchemes: [template]
