@@ -1,16 +1,18 @@
 import Foundation
 
 final class StarscreamChatViewModel: ObservableObject {
-    @Published var messages: [Message] = []
+    private enum Constants {
+        static let chatId = "1"
+    }
+    
     @Published var messageText: String = ""
-    @Published var isLoading: Bool = true
+    @Published private(set) var messages: [Message] = []
+    @Published private(set) var isLoading: Bool = true
     
     private let coordinator: StarscreamChatCoordinator
     private let chatRepository: ChatRepository
     private let starscreamWebSocketService: StarscreamWebSocketService
-    
-    private let chatId = "1"
-    
+        
     init(
         coordinator: StarscreamChatCoordinator,
         chatRepository: ChatRepository,
@@ -69,7 +71,7 @@ final class StarscreamChatViewModel: ObservableObject {
     private func getMessages() {
         Task {
             do {
-                let fetchedMessages = try await chatRepository.getMessages(chatId: chatId)
+                let fetchedMessages = try await chatRepository.getMessages(chatId: Constants.chatId)
                 
                 await MainActor.run {
                     messages.append(contentsOf: fetchedMessages)

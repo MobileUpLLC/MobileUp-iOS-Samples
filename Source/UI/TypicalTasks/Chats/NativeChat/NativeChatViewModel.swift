@@ -1,15 +1,17 @@
 import Foundation
 
 final class NativeChatViewModel: ObservableObject {
-    @Published var messages: [Message] = []
+    private enum Constants {
+        static let chatId = "1"
+    }
+    
     @Published var messageText: String = ""
-    @Published var isLoading: Bool = true
+    @Published private(set) var messages: [Message] = []
+    @Published private(set) var isLoading: Bool = true
     
     private let coordinator: NativeChatCoordinator
     private let chatRepository: ChatRepository
     private let nativeWebSocketService: NativeWebSocketService
-    
-    private let chatId = "1"
     
     init(
         coordinator: NativeChatCoordinator,
@@ -71,7 +73,7 @@ final class NativeChatViewModel: ObservableObject {
     private func getMessages() {
         Task {
             do {
-                let fetchedMessages = try await chatRepository.getMessages(chatId: chatId)
+                let fetchedMessages = try await chatRepository.getMessages(chatId: Constants.chatId)
                 
                 await MainActor.run {
                     messages.append(contentsOf: fetchedMessages)
