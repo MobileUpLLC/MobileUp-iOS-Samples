@@ -27,9 +27,9 @@ struct FavouritesListView: View {
                             }
                     }
                 }
-                .navigationTitle("Posts")
+                .navigationTitle(R.string.typicalTasks.favoritesNavigationTitle())
             case .error:
-                Text("Error loading posts")
+                Text(R.string.typicalTasks.favoritesErrorTitle)
             }
         }
         .onAppear { viewModel.handleOnAppear() }

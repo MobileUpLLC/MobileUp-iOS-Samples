@@ -30,15 +30,15 @@ struct FavouritesDetailView: View {
                             Image(systemName: viewItem.isLiked ? "heart.fill" : "heart")
                                 .foregroundColor(viewItem.isLiked ? .red : .gray)
                         }
-                        Text("Likes: \(viewItem.likeCount)")
+                        Text(R.string.typicalTasks.favoritesDetailLikeTitle(viewItem.likeCount))
                     }
                     Spacer()
                 }
                 .frame(maxWidth: .infinity)
-                .navigationTitle("Post Detail")
+                .navigationTitle(R.string.typicalTasks.favoritesDetailNavigationTitle())
             }
         case .error:
-            Text("Error loading post detail")
+            Text(R.string.typicalTasks.favoritesDetailErrorTitle())
         }
     }
 }

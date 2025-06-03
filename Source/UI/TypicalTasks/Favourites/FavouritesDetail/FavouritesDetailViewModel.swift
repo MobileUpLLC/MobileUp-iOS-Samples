@@ -13,6 +13,7 @@ final class FavouritesDetailViewModel: PostLikeableViewModel {
     
     let postRepository: PostRepository
     let likeService: LikeService
+    
     private let coordinator: FavouritesDetailCoordinator
     private let imageId: String
     
@@ -50,7 +51,9 @@ final class FavouritesDetailViewModel: PostLikeableViewModel {
             currentLikeCount: item.likeCount,
             errorHandler: { [weak self] error in
                 Task { @MainActor in
-                    self?.coordinator.showErrorToast(message: "Не получилось обновить лайк: \(error)")
+                    self?.coordinator.showErrorToast(
+                        message: R.string.typicalTasks.favoritesDetailLikeErrorToastTitle("\(error)")
+                    )
                 }
             }
         )

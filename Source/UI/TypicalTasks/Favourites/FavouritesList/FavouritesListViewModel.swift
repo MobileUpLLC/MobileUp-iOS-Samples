@@ -8,8 +8,8 @@ final class FavouritesListViewModel: PostLikeableViewModel {
         case error
     }
     
-    @Published private(set) var state: ViewState = .initial
     @Published var viewItems: [FavouritesListViewItem] = []
+    @Published private(set) var state: ViewState = .initial
     
     private let coordinator: FavouritesListCoordinator
     let postRepository: PostRepository
@@ -68,7 +68,9 @@ final class FavouritesListViewModel: PostLikeableViewModel {
             currentLikeCount: item.likeCount,
             errorHandler: { [weak self] error in
                 Task { @MainActor in
-                    self?.coordinator.showErrorToast(message: "Не получилось обновить лайк: \(error)")
+                    self?.coordinator.showErrorToast(
+                        message: R.string.typicalTasks.favoritesLikeErrorToastTitle("\(error)")
+                    )
                 }
             }
         )
