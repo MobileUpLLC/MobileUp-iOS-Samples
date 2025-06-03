@@ -14,17 +14,20 @@ struct TextFieldConfiguration {
 }
 
 struct UniversalFieldView: View {
-    private let config: TextFieldConfiguration
-    private let isSecureField: Bool
-    
     @FocusState private var isFocused: Bool
-    @State private var isSecure = false
+    
+    private let config: TextFieldConfiguration
     
     var body: some View {
         VStack(alignment: .leading) {
             switch config.mode {
-            case .singleline:
-                fieldView
+            case .singleline(let isSecure):
+                FieldView(
+                    text: config.value,
+                    isFocused: _isFocused,
+                    title: config.title,
+                    isSecureField: isSecure
+                )
             case let .multiline(lineLimit, isDynamic):
                 TextField(config.title, text: config.value, axis: .vertical)
                     .lineLimit(lineLimit, reservesSpace: isDynamic == false)
@@ -43,29 +46,38 @@ struct UniversalFieldView: View {
     
     init(config: TextFieldConfiguration) {
         self.config = config
-        if case let .singleline(isSecure) = config.mode {
-            self._isSecure = State(initialValue: isSecure)
-            isSecureField = isSecure
-        } else {
-            isSecureField = false
-        }
     }
+}
+
+private struct FieldView: View {
+    @Binding private var text: String
+    @State private var isSecure: Bool
+    @FocusState var isFocused: Bool
     
-    private var fieldView: some View {
+    private let title: LocalizedStringKey
+    private let isSecureField: Bool
+    
+    var body: some View {
         HStack(spacing: .five) {
             Group {
                 if isSecure {
-                    SecureField(config.title, text: config.value)
+                    SecureField(title, text: $text)
                         .textContentType(.newPassword)
                 } else {
-                    TextField(config.title, text: config.value)
+                    TextField(title, text: $text)
                 }
             }
             .textFieldStyle(.plain)
             .focused($isFocused)
             .disableAutocorrection(true)
             if isSecureField {
-                eyeImage
+                Image(systemName: isSecure ? "eye" : "eye.slash")
+                    .onTapGesture {
+                        isSecure.toggle()
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            isFocused = true
+                        }
+                    }
             }
         }
         .frame(height: 28)
@@ -73,13 +85,11 @@ struct UniversalFieldView: View {
         .defaultStroke(cornerRadius: 5, lineWidth: 1, color: .gray)
     }
     
-    private var eyeImage: some View {
-        Image(systemName: isSecure ? "eye" : "eye.slash")
-            .onTapGesture {
-                isSecure.toggle()
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    isFocused = true
-                }
-            }
+    init(text: Binding<String>, isFocused: FocusState<Bool>, title: LocalizedStringKey, isSecureField: Bool) {
+        self._text = text
+        self._isFocused = isFocused
+        self.title = title
+        self.isSecureField = isSecureField
+        self.isSecure = isSecureField
     }
 }
