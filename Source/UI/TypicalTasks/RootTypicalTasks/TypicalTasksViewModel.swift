@@ -109,6 +109,10 @@ final class TypicalTasksViewModel: ViewModel {
             .init(
                 title: R.string.examples.examplesOnboardingCellTitle(),
                 action: { [weak self] in self?.showOnboardingExample() }
+            ),
+            .init(
+                title: R.string.typicalTasks.typicalTasksInputForms(),
+                action: { [weak self] in self?.coordinator.showInputFormsModule() }
 			),
             .init(
                 title: R.string.examples.examplesFavoritesCellTitle(),

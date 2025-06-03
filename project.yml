@@ -162,14 +162,14 @@ targets:
         product: PulseUI
       - package: PagingList
       - package: munkit
-
+      
 packages:
   InputMask:
     url: https://github.com/RedMadRobot/input-mask-ios
     exactVersion: 6.1.0
   FormView:
     url: https://github.com/MobileUpLLC/FormView
-    exactVersion: 1.2.0
+    exactVersion: 1.3.0
   SnapKit:
     url: https://github.com/SnapKit/SnapKit.git
     exactVersion: 5.7.1
