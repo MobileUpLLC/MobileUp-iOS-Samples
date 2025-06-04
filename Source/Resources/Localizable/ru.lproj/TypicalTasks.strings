@@ -35,7 +35,10 @@
 
 // Multimedia
 "capture-photo-title" = "Capture photo";
+"capture-photo-error-title" = "There is no photo yet";
+"capture-photo-take-button-title" = "Take photo";
 "capture-video-title" = "Capture video";
 "scan-code-title" = "Scan Code";
 "video-player-title" = "Video player";
 "crop-image-title" = "Crop image";
+"video-player-url-error-title" = "Invalid url";

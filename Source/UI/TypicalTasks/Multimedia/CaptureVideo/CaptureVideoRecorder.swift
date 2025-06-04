@@ -7,6 +7,7 @@ final class CaptureVideoRecorder: NSObject, ObservableObject {
     }
     
     @Published private(set) var isRecording = false
+    
     let session = AVCaptureSession()
     
     private let movieOutput = AVCaptureMovieFileOutput()

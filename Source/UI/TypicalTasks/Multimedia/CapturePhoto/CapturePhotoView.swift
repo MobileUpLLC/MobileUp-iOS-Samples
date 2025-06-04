@@ -13,12 +13,12 @@ struct CapturePhotoView: View {
                     .resizable()
                     .scaledToFit()
             } else {
-                Text("There is no photo yet")
+                Text(R.string.typicalTasks.capturePhotoErrorTitle())
             }
             Button {
                 showCamera.toggle()
             } label: {
-                Text("Take photo")
+                Text(R.string.typicalTasks.capturePhotoTakeButtonTitle())
                     .padding()
                     .background(Color.blue)
                     .foregroundColor(.white)
