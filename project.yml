@@ -81,7 +81,9 @@ targets:
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         LSRequiresIPhoneOS: true
         NSCameraUsageDescription:
+        NSMicrophoneUsageDescription:
         NSUserTrackingUsageDescription:
+        NSPhotoLibraryAddUsageDescription:
         UIApplicationSceneManifest:
           UIApplicationSupportsMultipleScenes: false
           UISceneConfigurations:
@@ -164,7 +166,8 @@ targets:
       - package: PagingList
       - package: munkit
       - package: Starscream
-
+      - package: SwiftyCrop
+      
 packages:
   InputMask:
     url: https://github.com/RedMadRobot/input-mask-ios
@@ -211,3 +214,6 @@ packages:
   Starscream:
     url: https://github.com/daltoniam/Starscream
     exactVersion: 4.0.8
+  SwiftyCrop:
+    url: https://github.com/benedom/SwiftyCrop.git
+    exactVersion: 1.0.8

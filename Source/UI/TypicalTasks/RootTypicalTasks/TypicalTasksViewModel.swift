@@ -121,6 +121,10 @@ final class TypicalTasksViewModel: ViewModel {
             .init(
                 title: R.string.typicalTasks.typicalTasksChats(),
                 action: { [weak self] in self?.coordinator.showChatsModule() }
+            ),
+            .init(
+                title: R.string.typicalTasks.multimedia(),
+                action: { [weak self] in self?.coordinator.showMultimedia() }
             )
         ]
     }

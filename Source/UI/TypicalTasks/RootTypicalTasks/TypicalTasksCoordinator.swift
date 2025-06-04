@@ -73,4 +73,10 @@ final class TypicalTasksCoordinator {
         let controller = ChatsFactory.createChatsController(networkService: networkService)
         router?.push(controller: controller, isAnimated: true)
     }
+    
+    func showMultimedia() {
+        let controller = MultimediaFactory.createMiltimediaController()
+        controller.modalPresentationStyle = .fullScreen
+        router?.present(controller: controller, isAnimated: true, completion: nil)
+    }
 }

@@ -11,6 +11,7 @@
 "typical-tasks-phone-authorization" = "Авторизация через телефон";
 "typical-tasks-input-forms" = "Формы ввода";
 "typical-tasks-chats" = "Чаты";
+"multimedia" = "Мультимедиа";
 
 // ComplexUIComponents
 "image-carousel-title" = "Image Carousel";
@@ -31,3 +32,13 @@
 // Chats
 "typical-tasks-native-chats" = "Чат на URLSessionWebSocketTask";
 "typical-tasks-starscream-chats" = "Чат на Starscream";
+
+// Multimedia
+"capture-photo-title" = "Capture photo";
+"capture-photo-error-title" = "There is no photo yet";
+"capture-photo-take-button-title" = "Take photo";
+"capture-video-title" = "Capture video";
+"scan-code-title" = "Scan Code";
+"video-player-title" = "Video player";
+"crop-image-title" = "Crop image";
+"video-player-url-error-title" = "Invalid url";
