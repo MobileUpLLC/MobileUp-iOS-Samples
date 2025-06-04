@@ -10,8 +10,7 @@ struct ScanCodeView: UIViewRepresentable {
         containerView.frame = UIScreen.main.bounds
         context.coordinator.createLayer()
         
-        if let previewLayer = context.coordinator.videoPreviewLayer {
-            previewLayer.frame = containerView.layer.bounds
+        if let previewLayer = context.coordinator.getVideoPreviewLayer(frame: containerView.layer.bounds) {
             containerView.layer.addSublayer(previewLayer)
         }
         
@@ -25,7 +24,7 @@ struct ScanCodeView: UIViewRepresentable {
     }
     
     static func dismantleUIView(_ uiView: UIView, coordinator: Coordinator) {
-        coordinator.captureSession.stopRunning()
+        coordinator.stopSessionRunning()
     }
     
     final class Coordinator: NSObject, AVCaptureMetadataOutputObjectsDelegate {
@@ -33,13 +32,33 @@ struct ScanCodeView: UIViewRepresentable {
             static let scanRestartDelay: TimeInterval = 5
         }
         
-        var captureSession = AVCaptureSession()
-        var videoPreviewLayer: AVCaptureVideoPreviewLayer?
+        private var captureSession = AVCaptureSession()
+        private var videoPreviewLayer: AVCaptureVideoPreviewLayer?
         
         private let handleScanCompletion: Closure.String
         
         init(handleScanCompletion: @escaping Closure.String) {
             self.handleScanCompletion = handleScanCompletion
+        }
+        
+        func getVideoPreviewLayer(frame: CGRect) -> AVCaptureVideoPreviewLayer? {
+            if let previewLayer = videoPreviewLayer {
+                previewLayer.frame = frame
+                return previewLayer
+            }
+            
+            return nil
+        }
+        
+        func stopSessionRunning() {
+            DispatchQueue.global().async { [weak self] in
+                guard let self else {
+                    return
+                }
+                
+                // просит вызов не на главном потоке иначе возможны зависания
+                self.captureSession.startRunning()
+            }
         }
         
         func createLayer() {

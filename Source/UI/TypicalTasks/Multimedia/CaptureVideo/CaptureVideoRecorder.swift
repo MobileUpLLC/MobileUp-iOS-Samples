@@ -2,7 +2,11 @@ import AVFoundation
 import Photos
 
 final class CaptureVideoRecorder: NSObject, ObservableObject {
-    @Published var isRecording = false
+    private enum Constants {
+        static let videoPathComponent = "video.mp4"
+    }
+    
+    @Published private(set) var isRecording = false
     let session = AVCaptureSession()
     
     private let movieOutput = AVCaptureMovieFileOutput()
@@ -26,7 +30,7 @@ final class CaptureVideoRecorder: NSObject, ObservableObject {
         guard
             let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
                 .first?
-                .appendingPathComponent("video.mp4")
+                .appendingPathComponent(Constants.videoPathComponent)
         else {
             return
         }

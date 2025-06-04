@@ -20,7 +20,7 @@ struct CapturePhotoPreview: UIViewControllerRepresentable {
     }
     
     class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
-        let parent: CapturePhotoPreview
+        private let parent: CapturePhotoPreview
         
         init(_ parent: CapturePhotoPreview) {
             self.parent = parent
