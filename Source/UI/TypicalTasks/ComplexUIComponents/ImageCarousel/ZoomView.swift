@@ -17,7 +17,11 @@ struct ZoomView<Content: View>: UIViewRepresentable {
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
         
-        if let hostedView = context.coordinator.hostingController.view {
+        let controller = UIHostingController(rootView: content)
+        controller.view.backgroundColor = .clear
+        context.coordinator.setupHostingController(with: controller)
+        
+        if let hostedView = context.coordinator.getViewForZooming() {
             hostedView.translatesAutoresizingMaskIntoConstraints = true
             hostedView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
             hostedView.frame = scrollView.bounds
@@ -30,21 +34,18 @@ struct ZoomView<Content: View>: UIViewRepresentable {
     func updateUIView(_ uiView: UIScrollView, context: Context) {}
     
     func makeCoordinator() -> Coordinator {
-        let controller = UIHostingController(rootView: content)
-        controller.view.backgroundColor = .clear
-        
-        return Coordinator(hostingController: controller)
+        return Coordinator()
     }
 
     class Coordinator: NSObject, UIScrollViewDelegate {
-        var hostingController: UIHostingController<Content>
+        private var hostingController: UIHostingController<Content>?
         
-        init(hostingController: UIHostingController<Content>) {
-            self.hostingController = hostingController
+        func setupHostingController(with controller: UIHostingController<Content>) {
+            hostingController = controller
         }
         
-        func viewForZooming(in scrollView: UIScrollView) -> UIView? {
-            hostingController.view
+        func getViewForZooming() -> UIView? {
+            hostingController?.view
         }
     }
 }

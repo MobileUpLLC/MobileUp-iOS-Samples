@@ -3,12 +3,13 @@
 "examples-skeleton" = "Skeleton";
 "examples-qr-scanner" = "QrScanner";
 "examples-help" = "Help";
-"examples-onboarding" = "Onboarding";
 "examples-bottomSheet" = "Bottom sheet example";
 "examples-multipleBottomSheet" = "Multiple bottom sheet example";
 "examples-network" = "Network example";
 "examples-web-page-navigation-title" = "Mobile Up";
 "examples-error-handling" = "Error handling example";
+"examples-onboarding-cell-title" = "Onboarding example";
+"examples-favorites-cell-title" = "Favourites";
 
 "examples-toast" = "Toast example";
 
@@ -43,3 +44,22 @@
 "alert-logout-button-title" = "Выйти";
 "alert-cancel-button-title" = "Отмена";
 "second-alert-message" = "Данные аккунта будут удалены";
+
+"onboarding-navigation-bar-title" = "Onboarding";
+"onboarding-show-common-onboarding-button-title" = "Show common onboarding";
+"onboarding-show-onboarding-with-element-focus-button-title" = "Show onboarding with element focus";
+
+"common-onboarding-next-button-title" = "Next";
+"common-onboarding-back-button-title" = "Back";
+
+"tip-onboarding-add-to-favorite-title" = "Добавить в избранное";
+"tip-onboarding-learn-more-title" = "Узнать больше";
+
+"test-onboarding-finish-Button-Title" = "Finish";
+"test-onboarding-first-item-title" = "Это первый заголовок онбординга";
+"test-onboarding-first-item-description" = "Описание первого онбординга";
+"test-onboarding-second-item-title" = "Это второй заголовок онбординга но уже по длинней что бы в две строки";
+"test-onboarding-second-item-description" = "Описание второго онбординга но так же длинное что бы быть в две строки";
+"test-onboarding-third-item-title" = "Это третий заголовок онбординга";
+"test-onboarding-third-item-description" = "Описание третьего онбординга но длинное что бы быть в две строки";
+

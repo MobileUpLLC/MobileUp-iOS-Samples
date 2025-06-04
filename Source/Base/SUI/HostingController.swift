@@ -13,7 +13,7 @@ class HostingController<T: View>: UIHostingController<T>, Navigatable {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .clear
+        view.backgroundColor = .white
         configureNavigationBar()
     }
     
@@ -23,6 +23,12 @@ class HostingController<T: View>: UIHostingController<T>, Navigatable {
         configureNavigationBarVisibility()
         customTabBarController?.setTabBarViewVisibility(isHidden: isTabBarHidden)
         typicalCustomTabBarController?.setTabBarViewVisibility(isHidden: isTabBarHidden)
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        navigationItem.setHidesBackButton(isBackButtonHidden, animated: false)
     }
     
     override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {

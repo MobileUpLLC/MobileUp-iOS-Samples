@@ -23,11 +23,17 @@ final class Environments {
         case instance = "INSTANCE"
         case deeplinkScheme = "DEEPLINK_SCHEME"
         case mobileApiUrl = "MOBILE_API_URL"
+        case termsOfUseUrl = "TERMS_OF_USE_URL"
+        case privacyPolicyUrl = "PRIVACY_POLICY_URL"
+        case chatWebSocketUrl = "CHAT_WEBSOCKET_URL"
     }
     
     static var instance: Instance { value(for: .instance)! }
     static var deeplinkScheme: String { value(for: .deeplinkScheme)! }
     static var mobileApiUrl: URL { value(for: .mobileApiUrl)! }
+    static var termsOfUseUrl: URL { value(for: .termsOfUseUrl)! }
+    static var privacyPolicyUrl: URL { value(for: .privacyPolicyUrl)! }
+    static var chatWebSocketUrl: URL { value(for: .chatWebSocketUrl)! }
     
     static var isRelease: Bool { instance.isRelease }
     

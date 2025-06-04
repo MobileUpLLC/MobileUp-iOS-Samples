@@ -5,7 +5,7 @@ final class WebPageController: HostingController<WebPageView> {
         super.init(rootView: WebPageView(viewModel: viewModel))
         
         let rightItem = NavigationBarSideItem(
-            type: .icon(R.image.cancel24.asUIImage),
+            type: .icon(R.image.ic24.cancel.asUIImage),
             onTapAction: { [weak self] in self?.rootView.viewModel.dismiss() }
         )
         

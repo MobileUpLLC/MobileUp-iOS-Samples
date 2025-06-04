@@ -2,6 +2,15 @@
 "typical-tasks-authorization" = "Авторизация";
 "typical-tasks-lists" = "Списки";
 "complex-ui-elements" = "Сложные UI-элементы";
+"typical-tasks-navigation" = "Навигация";
+"typical-tasks-registration" = "Регистрация";
+"typical-tasks-delete-account-sheet-title" = "Удалить аккаунт";
+"typical-tasks-limited-by-auth-title" = "Недоступный для неавторизованного юзера экран";
+"typical-tasks-authorized-message" = "Пользователь авторизирован";
+"typical-tasks-not-authorized-message" = "Пожалуйста авторизируйтесь";
+"typical-tasks-phone-authorization" = "Авторизация через телефон";
+"typical-tasks-input-forms" = "Формы ввода";
+"typical-tasks-chats" = "Чаты";
 "multimedia" = "Мультимедиа";
 
 // ComplexUIComponents
@@ -10,6 +19,19 @@
 "collapsing-view-title" = "Collapsing View";
 "tabbar-button-title" = "TabBar";
 "close-button-title" = "Close";
+
+// Favorites
+"favorites-detail-navigation-title" = "Post Detail";
+"favorites-detail-error-title" = "Error loading post detail";
+"favorites-detail-like-title" = "Likes: %d";
+"favorites-detail-like-error-toast-title" = "Не получилось обновить лайк: %@";
+"favorites-navigation-title" = "Posts";
+"favorites-error-title" = "Error loading posts";
+"favorites-like-error-toast-title" = "Не получилось обновить лайк: %@";
+
+// Chats
+"typical-tasks-native-chats" = "Чат на URLSessionWebSocketTask";
+"typical-tasks-starscream-chats" = "Чат на Starscream";
 
 // Multimedia
 "capture-photo-title" = "Capture photo";

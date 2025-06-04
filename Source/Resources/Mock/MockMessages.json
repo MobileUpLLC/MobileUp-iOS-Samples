@@ -1,0 +1,14 @@
+[
+    {
+        "id": "1",
+        "text": "Hello!",
+        "timestamp": 1747329803,
+        "senderId": "user"
+    },
+    {
+        "id": "2", 
+        "text": "Welcome!",
+        "timestamp": 1747329809,
+        "senderId": "echo"
+    }
+]

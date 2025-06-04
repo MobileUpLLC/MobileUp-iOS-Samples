@@ -1,0 +1,26 @@
+"navigation-stack-button-title" = "Навигационный стек";
+"presentation-button-title" = "Модальная презентация";
+"data-transfer-button-title" = "Передача данных между модулями";
+"show-share-sheet-button-title" = "Показать Share Sheet";
+"show-bottom-sheet-button-title" = "Показать Bottom Sheet";
+"multiple-bottom-sheet-button-title" = "Использование нескольких Bottom Sheet";
+"show-bottom-sheet-with-scroll-button-title" = "Показать Bottom Sheet со скроллом";
+"toast-button-title" = "Тосты";
+"show-alert-button-title" = "Показать Алерт";
+
+
+"navigation-stack-module-demo-title" = "Навигационный стек";
+"presentation-module-demo-title" = "Модальная презентация";
+"data-transfer-module-demo-title" = "Передача данных между модулями";
+
+"navigation-push-controller-button" = "Добавить контроллер в стек";
+"navigation-pop-controller-button" = "Убрать контроллер из стека";
+"navigation-pop-to-root-button" = "К рутовому контроллеру";
+"navigation-pop-to-navigation-controller-button" = "К модулю Навигация";
+
+"presentation-present-full-screen-controller-button" = "Презентовать на весь экран";
+"presentation-present-transparent-full-screen-controller-button" = "Презентовать на весь экран без фона";
+
+"share-sheet-message" = "Пример Share Sheet";
+"alert-title" = "Пример Алерта";
+"alert-message" = "Нажмите ОК, чтобы закрыть";

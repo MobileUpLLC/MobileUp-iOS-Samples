@@ -16,7 +16,6 @@ struct ExamplesView: View {
                 .foregroundStyle(.black)
                 .padding(.vertical, 20)
                 .padding(.horizontal, 28)
-            
             ExamplesContentView(items: viewModel.examples, onItemTap: viewModel.onItemTap(item:))
         }
         .background(.white)
@@ -51,13 +50,10 @@ private struct ExamplesCellView: View {
                 Text(text)
                     .font(UIFont.Heading.medium.asFont)
                     .foregroundStyle(.black)
-                
                 Spacer()
-                
                 Image(systemName: "chevron.right")
             }
             .padding(.bottom, 10)
-            
             Rectangle()
                 .fill(.gray.opacity(0.5))
                 .frame(maxWidth: .infinity)
@@ -71,7 +67,7 @@ struct ExamplesView_Previews: PreviewProvider {
     static var previews: some View {
         ExamplesView(
             viewModel: ExamplesViewModel(
-                coordinator: ExamplesCoordinator()
+                coordinator: ExamplesCoordinator(networkService: .init())
             )
         )
     }
